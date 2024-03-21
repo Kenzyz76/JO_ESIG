@@ -25,14 +25,14 @@ CREATE TABLE Athletes (
 	ath_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	ath_nom VARCHAR(30) NOT NULL,
     ath_prenom VARCHAR(30) NOT NULL, 
-	ath_naissance DATE
+	ath_naissance DATE,
 	ath_pays INT UNSIGNED NOT NULL,
 	ath_discipline INT UNSIGNED NOT NULL,
 	ath_equipe INT UNSIGNED
 	ath_recompense INT UNSIGNED
     PRIMARY KEY (ath_id),
     CONSTRAINT fk_ath_pays FOREIGN KEY (ath_pays) REFERENCES Pays(pays_id)
-	CONSTRAINT fk_dis_id FOREIGN KEY (dis_id) REFERENCES Athletes(ath_discipline)
+	CONSTRAINT fk_ath_discipline FOREIGN KEY (ath_discipline) REFERENCES Disciplines(dis_id)
 )
 ENGINE=INNODB;
 
