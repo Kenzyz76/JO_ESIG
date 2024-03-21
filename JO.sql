@@ -2,7 +2,7 @@
 -- Création de la base de données :
 --
 
-DROP DATABASE IF EXISTS Cinema;
+DROP DATABASE IF EXISTS Olympiques;
 
 CREATE DATABASE Olympiques CHARACTER SET 'utf8';
 
