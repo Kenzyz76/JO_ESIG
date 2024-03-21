@@ -68,28 +68,25 @@ CREATE TABLE Equipe (
 --
 
 INSERT INTO Pays
-VALUES	(1, 'FONDA', 'Henry', '1905-05-16', 'M', 'USA'),
-	(2, 'LEIGH', 'Viven', '1913-11-05', 'F', 'UK'),
-	(3, 'FORD', 'Harrison', '1942-07-13', 'M', 'USA'),
-	(4, 'HAMIL', 'Mark', '1951-09-25', 'M', 'USA'),
-	(5, 'WINSLET', 'Kate', '1975-10-05', 'F', 'UK'),
-	(6, 'DI CAPRIO', 'Leonardo', '1974-11-11', 'M', 'USA'),
-	(7, 'CONNERY', 'Sean', '1930-08-30', 'M', 'UK'),
-	(8, 'BRONSON', 'Charles', '1921-11-03', 'M', 'USA'),
-	(9, 'FONDA', 'Jane', '1937-12-21', 'F', 'USA'),
-	(10, 'FONDA', 'Peter', '1940-02-23', 'M', 'USA'),
-	(11, 'COPPOLA', 'Sofia', '1971-05-14', 'F', 'USA'),
-	(12, 'ALLEN', 'Woody', '1935-12-01', 'M', 'USA'),
-	(13, 'FONDA', 'Bridget', '1964-01-27', 'F', 'USA'),
-	(14, 'DUJARDIN', 'Jean', '1972-06-19', 'M', 'France'),
-	(15, 'DELON', 'Alain', '1935-11-08', 'M', 'France'),
-	(16, 'DEPARDIEU', 'Gérard', '1948-12-27', 'M', 'France'),
-	(17, 'DELON', 'Anthony', '1964-09-30', 'M', 'France'),
-	(18, 'DEPARDIEU', 'Guillaume', '1971-04-07', 'M', 'France'),
-	(19, 'DEPARDIEU', 'Julie', '1973-06-18', 'F', 'France');
+VALUES	(1, 'FRANCE', 'EUROPE'),
+	(2, 'ALGÉRIE', 'AFRIQUE'),
+	(3, 'MAROC', 'AFRIQUE'),
+	(4, 'TUNISIE', 'AFRIQUE'),
+	(5, 'MEXIQUE', 'AMÉRIQUE'),
+	(6, 'ÉTATS-UNIS', 'AMÉRIQUE'),
+	(7, 'JAMAÏQUE', 'AMÉRIQUE'),
+	(8, 'CHINE', 'ASIE'),
+	(9, 'JAPON', 'ASIE'),
+	(10, 'CORÉE DU SUD', 'ASIE'),
+	(11, 'ALLEMAGNE', 'EUROPE'),
+	(12, 'ROYAUME-UNI', 'EUROPE'),
+	(13, 'PAYS-BAS', 'EUROPE'),
+	(14, 'ITALIE', 'EUROPE'),
+	(15, 'AUSTRALIE', 'OCÉANIE'),
+	(16, 'NOUVELLE-ZÉLANDE','OCEANIE');
 
 
-INSERT INTO Studio	
+INSERT INTO Athletes	
 VALUES	(1, '20th Century Fox'),
 	(2, 'United Artists'),
 	(3, 'Paramount Pictures'),
