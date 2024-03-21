@@ -29,8 +29,10 @@ CREATE TABLE Athletes (
 	ath_pays INT UNSIGNED NOT NULL,
 	ath_discipline INT UNSIGNED NOT NULL,
 	ath_equipe INT UNSIGNED
+	ath_recompense INT UNSIGNED
     PRIMARY KEY (ath_id),
     CONSTRAINT fk_ath_pays FOREIGN KEY (ath_pays) REFERENCES Pays(pays_id)
+	CONSTRAINT fk_dis_id FOREIGN KEY (dis_id) REFERENCES Athletes(ath_discipline)
 )
 ENGINE=INNODB;
 
@@ -56,8 +58,8 @@ ENGINE=INNODB
 CREATE TABLE Equipe (
 	equ_discipline INT UNSIGNED NOT NULL,
 	equ_athlete INT UNSIGNED NOT NULL
-	CONSTRAINT pk_equipe PRIMARY KEY(equ_id, equ_discipline),
-	CONSTRAINT fk_equ_id FOREIGN KEY (equ_id) REFERENCES Athletes(ath_equipe)
+	CONSTRAINT pk_equipe PRIMARY KEY(equ_athlete, equ_discipline),
+	CONSTRAINT fk_equ_id FOREIGN KEY (equ_id) REFERENCES Athletes(ath_equipe),
 	CONSTRAINT fk_equ_athlete FOREIGN KEY (equ_athlete) REFERENCES Athletes(ath_id)
 )
 
