@@ -56,7 +56,7 @@ ENGINE=INNODB
 
 
 CREATE TABLE Equipe (
-	equ_discipline INT UNSIGNED NOT NULL,
+	equ_disciplin INT UNSIGNED NOT NULL,
 	equ_athlete INT UNSIGNED NOT NULL
 	CONSTRAINT pk_equipe PRIMARY KEY(equ_athlete, equ_discipline),
 	CONSTRAINT fk_equ_id FOREIGN KEY (equ_id) REFERENCES Athletes(ath_equipe),
