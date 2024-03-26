@@ -1,3 +1,4 @@
+from datetime import datetime
 class Athlete:
     def __init__(self,nom0,prenom0,nais0,pays0,dis0,rec0):
         self.nom=nom0
@@ -8,7 +9,8 @@ class Athlete:
         self.rec=rec0
 
     def afficher_all(self):
-        liste=[self.nom,self.prenom,self.nais,self.pays,self.dis,self.rec]
+        p=self.nais.strftime("%d/%m/%Y")
+        liste=[self.nom,self.prenom,self.pays,p,self.dis,self.rec]
         return (liste)
     
     def ajouter_rec(self):
@@ -21,4 +23,3 @@ class Athlete:
             print("Erreur, l'athlète possède déjà une récompense !")   
         
     
-        ùjlljlj
