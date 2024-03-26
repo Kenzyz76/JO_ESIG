@@ -9,7 +9,7 @@ class Administrateur:
                     password="root",database="Olympiques")
         return(bdd)
 
-def lire_athlete(self):
+    def lire_athlete(self):
         bdd=self.connection()
         cursor=bdd.cursor()
         cursor.execute("SELECT ath_nom, ath_prenom, ath_naissance, act_pays, act_discipline, act_recompense FROM Athletes")
@@ -19,3 +19,5 @@ def lire_athlete(self):
             athlete0=Athlete(nom,prenom,naissance,pays,discipline, recompense)
             liste0.append(athlete0)
         return(liste0)
+
+print(Administrateur.lire_athlete())

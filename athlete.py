@@ -1,4 +1,4 @@
-class Athlètes:
+class Athlete:
     def __init__(self,nom0,prenom0,nais0,pays0,dis0,rec0):
         self.nom=nom0
         self.prenom=prenom0
@@ -21,4 +21,4 @@ class Athlètes:
             print("Erreur, l'athlète possède déjà une récompense !")   
         
     
-        
+        ùjlljlj

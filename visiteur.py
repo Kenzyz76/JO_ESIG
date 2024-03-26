@@ -1,4 +1,4 @@
-class Visiteurs :
+class Visiteur :
     def __init__(self, nom0, prenom0, numero_billet):
         self.nom = nom0
         self.prenom = prenom0
