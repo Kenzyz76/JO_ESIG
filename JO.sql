@@ -52,6 +52,14 @@ CREATE TABLE Recompenses (
 )
 ENGINE=INNODB;
 
+CREATE TABLE Visiteurs (
+	vis_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	vis_nom VARCHAR(30) NOT NULL,
+	vis_prenom VARCHAR(30) NOT NULL,
+	vis_numero INT UNSIGNED ,
+	FOREIGN KEY (vis_discipline) REFERENCES Discipline(dis_id)
+)
+ENGINE=INNODB; 
 
 
 
@@ -109,7 +117,8 @@ VALUES	(1, 'RINER','Teddy','1989-04-07', 1, 1, NULL),
  
 SELECT *
 FROM Athletes
-
+INNER JOIN Disciplines
+	ON ath_discipline = dis_id
 
 
 
