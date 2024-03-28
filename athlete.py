@@ -8,7 +8,7 @@ class Athlete:
         self.dis=dis0
         self.rec=rec0
 
-    def afficher_all(self):
+    def afficher(self):
         p=self.nais.strftime("%d/%m/%Y")
         liste=[self.nom,self.prenom,self.pays,p,self.dis,self.rec]
         return (liste)
@@ -19,7 +19,8 @@ class Athlete:
             self.rec=m
 
         if self.rec!=None:
+            print("Erreur, l'athlète possède déjà une récompense !")
             return False
-            print("Erreur, l'athlète possède déjà une récompense !")   
+            
         
     

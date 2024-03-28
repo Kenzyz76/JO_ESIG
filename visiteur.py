@@ -1,11 +1,11 @@
 class Visiteur :
-    def __init__(self, nom0, prenom0, numero_billet):
+    def __init__(self, nom0, prenom0, numero0):
         self.nom = nom0
         self.prenom = prenom0
-        self.billet = numero_billet
+        self.numero = numero0
 
-    def afficher (self):
-        liste=[self.nom, self.prenom, self.billet]
+    def afficher(self):
+        liste=[self.nom, self.prenom, self.numero]
         return liste
     
     
