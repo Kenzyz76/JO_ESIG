@@ -76,10 +76,13 @@ class Administrateur:
                 print(infos)
                 break
             
-    
+    def ad_athlete(self):
+        ordre="INSERT INTO Athletes(ath_nom, ath_prenom, ath_naissance, ath_pays, ath_discipline, ath_recompense) VALUES (%s,%s,%s,%s,%s,%s)"
+        cursor.execute(ordre,)
+
 ##### Programme d'éxécution #####
 admin=Administrateur() #on créer un administrateur
 #admin.afficher_athlete() #on appel la fonction
 #admin.afficher_visiteur()
-admin.search_athlete()
-#admin.search_visiteur()
+#admin.search_athlete()
+admin.search_visiteur()
