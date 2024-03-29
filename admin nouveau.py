@@ -35,8 +35,8 @@ class Administrateur:
         resultat=admin.lecture_athlete()
         admin.ecriture_athlete()
         while True:
-            cle=input("Saissisez:NOM Prénom") #on demande le nom et prenom du visiteur à afficher
-            if cle not in dic_ath.keys():
+            cle=input("Saissisez:NOM Prénom  ") #on demande le nom et prenom du visiteur à afficher
+            if cle not in dic_ath.keys(): #on test si cette personne existe dans notre dico visiteur
                 print("Réessayer, cette personne n'est pas renseignée !")
             else:
                 infos=dic_ath[cle].afficher()
@@ -68,8 +68,8 @@ class Administrateur:
         resultat=admin.lecture_visiteur()
         admin.ecriture_visiteur()
         while True:
-            cle=input("Saissisez votre:NOM Prénom") #on demande le nom et prenom du visiteur à afficher
-            if cle not in dic_vis.keys():
+            cle=input("Saissisez votre:NOM Prénom  ") #on demande le nom et prenom du visiteur à afficher
+            if cle not in dic_vis.keys(): #on test si cette personne existe dans notre dico visiteur
                 print("Réessayer, cette personne n'est pas renseignée !")
             else:
                 infos=dic_vis[cle].afficher()
@@ -81,5 +81,5 @@ class Administrateur:
 admin=Administrateur() #on créer un administrateur
 #admin.afficher_athlete() #on appel la fonction
 #admin.afficher_visiteur()
-#admin.search_athlete()
-admin.search_visiteur()
+admin.search_athlete()
+#admin.search_visiteur()
