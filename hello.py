@@ -62,18 +62,22 @@ def afficher_interface_athlete():
     creer_bouton(cadre_droit, f"caca", afficher, 20, 2,'#9ef0f6','Tw Cen MT',12)
     creer_bouton(cadre_droit, f"pipi", afficher, 20, 2,'#6ecaf2','Tw Cen MT',12)
     creer_bouton(cadre_droit, f"popo", afficher, 20, 2,'#2969eb','Tw Cen MT',12)
-    cadre_bouton_retour1.lift()
+    cadre_bouton_retour1.lift() # permet de placer le cadre cadre_bouton_retour1 au premier plan
 
 
 
 def afficher_interface_visiteur():
     effacer()
     # Supprimer les boutons initiaux
+    cadre_bouton_retour2 = tk.Frame(fenêtre, width=100, height=100, bg='grey')
+    cadre_bouton_retour2.place(x=0, y=500, anchor='sw')
 
+    creer_bouton(cadre_bouton_retour2, f"Retour", interface_principale, 3, 2, '#EE5F5F' , 'Tw Cen MT',20)
 
     # Créer un Frame à gauche pour les boutons de gauche
     cadre_gauche = tk.Frame(fenêtre)
     cadre_gauche.pack(side="left", fill="y")
+
 
     # Ajouter trois boutons au Frame de gauche
     for i in range(1, 4):
@@ -101,6 +105,8 @@ def afficher_interface_visiteur():
     # Ajouter trois boutons au Frame de droite
     for i in range(1, 4):
         creer_bouton(frame, f"Bouton D{i}", afficher,20,2, 'red','Tw Cen MT',12)
+    cadre_bouton_retour2.lift() # permet de placer le cadre cadre_bouton_retour1 au premier plan
+
 
 # Créer la fenêtre principale
 fenêtre = tk.Tk()
