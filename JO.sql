@@ -56,8 +56,7 @@ CREATE TABLE Visiteurs (
 	vis_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	vis_nom VARCHAR(30) NOT NULL,
 	vis_prenom VARCHAR(30) NOT NULL,
-	vis_numero INT UNSIGNED ,
-	FOREIGN KEY (vis_discipline) REFERENCES Discipline(dis_id)
+	vis_numero INT UNSIGNED 
 )
 ENGINE=INNODB; 
 
