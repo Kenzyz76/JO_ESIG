@@ -48,18 +48,15 @@ Ce fichier permettra d’appeler les différentes fonctions qu’on utilisera da
 
 visiteur.py
 Ce fichier nous permettra d’appeler les différentes fonctions qu’on utilisera dans le menu « Visiteurs » tel que l’affichage du nom, prénom et le numéro de billet de la personne qui se connecte.
-Dates :	Objectifs :
-26 MARS 2024 – 3H	- terminer la base de données (Kenzi)
-- création des différentes classes (Dylan)
-28 MARS 2024 – 2H	- terminer les classes (Dylan)
-- commencer le programme avec les fonctions principales (Kenzi)
-08 AVRIL 2024 – 3H	- continuer le programme avec l’utilisation de ces fonctions (Dylan)
-- création d’une première interface graphique BETA pour visualiser les résultats des fonctions (Kenzi)
-18 AVRIL 2024 – 2H	- Epurer notre interface graphique (Kenzi)
-- continuer le programme (Dylan)
-23 MAI 2024 – 3H	- création de l’interface graphique finale (Kenzi)
-- finalisation du programme (Dylan)
-27 MAI 2024 – 2H	- finitions des détails graphiques, du programme en ajoutant un maximum de commentaires (Kenzi)
-- création du contre-rendu indicatif du travail effectué (Dylan)
+
+
 Planning prévisionnel :
-![image](https://github.com/Kenzyz76/JO_ESIG/assets/92575631/90c3678e-eaed-4278-b434-9bd2e943f42d)
+
+|   Dates :		|   Objectifs :	|   
+|   :------------------ |   :----------:|
+|26 MARS 2024 – 3H	|	- terminer la base de données (Kenzi) <br> - création des différentes classes (Dylan)|
+|28 MARS 2024 – 2H	|	- terminer les classes (Dylan) <br> - commencer le programme avec les fonctions principales (Kenzi)|
+|08 AVRIL 2024 – 3H	|	- continuer le programme avec l’utilisation de ces fonctions (Dylan) <br> - création d’une première interface graphique BETA pour visualiser les résultats des fonctions (Kenzi)|
+|18 AVRIL 2024 – 2H	|	- Epurer notre interface graphique (Kenzi) <br> - continuer le programme (Dylan)|
+|23 MAI 2024 – 3H	|	- création de l’interface graphique finale (Kenzi) <br> - finalisation du programme (Dylan)
+|27 MAI 2024 – 2H	|	- finitions des détails graphiques, du programme en ajoutant un maximum de commentaires (Kenzi) <br> - création du contre-rendu indicatif du travail effectué (Dylan)|
