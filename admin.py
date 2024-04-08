@@ -92,9 +92,9 @@ class Administrateur:
                 print(infos)
                 break
             
-   # def ad_athlete(self):
-       # ordre="INSERT INTO Athletes(ath_nom, ath_prenom, ath_naissance, ath_pays, ath_discipline, ath_recompense) VALUES (%s,%s,%s,%s,%s,%s)"
-       # cursor.execute(ordre,)
+    #def ad_athlete(self):
+       #ordre="INSERT INTO Athletes(ath_nom, ath_prenom, ath_naissance, ath_pays, ath_discipline, ath_recompense) VALUES (%s,%s,%s,%s,%s,%s)"
+       #cursor.execute(ordre,)
 
 ##### Programme d'éxécution #####
 admin=Administrateur() #on créer un administrateur
