@@ -12,7 +12,10 @@ class Administrateur:
 
     def ecriture_athlete(self):
         cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée
-        cursor.execute("SELECT ath_nom, ath_prenom, ath_naissance, Pays.pays_nom, Disciplines.dis_nom, ath_recompense FROM Athletes INNER JOIN Pays ON Athletes.ath_pays=Pays.pays_id INNER JOIN Disciplines ON ath_discipline=dis_id") #on lui donne l'ordre
+        cursor.execute("""SELECT ath_nom, ath_prenom, ath_naissance, Pays.pays_nom, Disciplines.dis_nom, ath_recompense 
+                       FROM Athletes INNER JOIN Pays ON Athletes.ath_pays=Pays.pays_id 
+                       INNER JOIN Disciplines
+                       ON ath_discipline=dis_id""") #on lui donne l'ordre
         resultat=cursor.fetchall() #on utilise l'attribut fetchall pour récupérer ce qu'il a lu en renvoyant un tuple1 qui contient des tuples
         for iathlete in resultat: #on parcours le tuple1 
             nom, prenom, naissance, pays, discipline, recompense= iathlete #on assigne à chaque valeur du tuple une variable sous forme de nom
@@ -56,10 +59,9 @@ class Administrateur:
     def search_pays(self):
         admin.ecriture_athlete()
         while True:
-            valref=input("Saissisez le pays:  ") #on demande le pays à afficher
             test=False #pour ne pas afficher l'erreur le nombre de fois où le pays est différent
             for (cle,athlete) in dic_ath.items(): #on lit notre dico 
-                if valref==athlete.pays: 
+                if ENTREE==athlete.pays: 
                     infos=dic_ath[cle].afficher()
                     print(infos)
                     test=True
@@ -70,7 +72,8 @@ class Administrateur:
 
     def ecriture_visiteur(self):
         cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée
-        cursor.execute("SELECT vis_nom, vis_prenom, vis_numero FROM Visiteurs") #on lui donne l'ordre
+        cursor.execute("""SELECT vis_nom, vis_prenom, vis_numero 
+                          FROM Visiteurs""") #on lui donne l'ordre
         resultat=cursor.fetchall() #on utilise l'attribut fetchall pour récupérer ce qu'il a lu en renvoyant un tuple1 qui contient des tuples
         for ivisiteur in resultat: #on parcours le tuple1 
             nom, prenom, numero= ivisiteur #on assigne à chaque valeur du tuple une variable sous forme de nom
@@ -80,8 +83,10 @@ class Administrateur:
 
     def show_visiteur(self):
         admin.ecriture_visiteur()
-        for cle in dic_vis:#on parcours notre liste pour l'afficher
-            print(dic_vis[cle].afficher())
+        list_SORTIE=[]
+        for cle in dic_vis:
+            list_SORTIE.append(dic_vis[cle].afficher())
+        return(list_SORTIE)
 
     def search_visiteur(self):
         admin.ecriture_visiteur()
