@@ -56,7 +56,7 @@ class Administrateur:
             if test==True:
                 break
                 
-    def search_pays(self):
+    def search_pays(self, ENTREE):
         admin.ecriture_athlete()
         while True:
             test=False #pour ne pas afficher l'erreur le nombre de fois où le pays est différent
