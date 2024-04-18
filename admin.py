@@ -6,7 +6,7 @@ dic_ath={}
 dic_vis={}
 
 lien=connect(host="localhost",user="root", #on utilise la méthode "connect" du module "mysql.connector" pour que python se connect à notre base de donnée
-                password="root",database="Olympiques")
+                password="Akenzi06",database="Olympiques")
 
 class Administrateur:
 
@@ -22,8 +22,8 @@ class Administrateur:
 
     def afficher_athlete(self):
         admin.ecriture_athlete()
-        for cle in dic_ath: #on parcours notre liste pour l'afficher
-            print(dic_ath[cle].afficher())
+        for cle in dic_ath: #on parcours notre dico pour l'afficher
+            return dic_ath[cle].afficher()
 
     def search_athlete(self):
         admin.ecriture_athlete()
@@ -78,8 +78,8 @@ class Administrateur:
 
     def afficher_visiteur(self):
         admin.ecriture_visiteur()
-        for cle in dic_vis:#on parcours notre liste pour l'afficher
-            print(dic_vis[cle].afficher())
+        for cle in dic_vis:#on parcours notre dico pour l'afficher
+            return dic_vis[cle].afficher()
 
     def search_visiteur(self):
         admin.ecriture_visiteur()
@@ -98,9 +98,9 @@ class Administrateur:
 
 ##### Programme d'éxécution #####
 admin=Administrateur() #on créer un administrateur
-#admin.afficher_athlete() #on appel la fonction
+print(admin.afficher_athlete()) #on appel la fonction
 #admin.afficher_visiteur()
 #admin.search_athlete()
 #admin.search_visiteur()
 #admin.search_dis()
-admin.search_pays()
+#admin.search_pays()

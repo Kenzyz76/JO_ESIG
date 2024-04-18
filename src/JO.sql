@@ -76,9 +76,9 @@ VALUES	(1, 'FRANCE', 'EUROPE'),
 INSERT INTO Disciplines
 VALUES	(1, 'JUDO', 'Arena Champ-de-Mars'),
 	(2, 'NATATION', 'Paris La Défense Arena'),
-	(3, 'TENNIS DE TABLE', 'Arena Paris Sud 4'),
+	(3, 'TENNIS_DE_TABLE', 'Arena Paris Sud 4'),
 	(4, 'ATHLETISME', 'Stade de France'),
-	(5, 'GYMNASTIQUE ARTISTIQUE', 'Arena Bercy');
+	(5, 'GYMNASTIQUE_ARTISTIQUE', 'Arena Bercy');
 INSERT INTO Athletes	
 VALUES	(1, 'RINER','Teddy','1989-04-07', 1, 1, NULL),
 	(2, 'MARCHAND','Léon','2002-05-17',1, 2, NULL),
@@ -96,7 +96,8 @@ VALUES	(1, 'RINER','Teddy','1989-04-07', 1, 1, NULL),
 	(14, 'YUFEI', 'Zhang', '1998-04-19', 5, 2, NULL),
 	(15, 'RUOTENG', 'Xiao', '1996-01-30', 5, 5, NULL);
 
-
+INSERT INTO Visiteurs
+VALUES	(1, 'DARDINIER', 'Foucauld', 0100010)
 
 
 

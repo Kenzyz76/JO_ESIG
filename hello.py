@@ -1,5 +1,9 @@
 import tkinter as tk
+<<<<<<< Updated upstream
 import main
+=======
+import admin
+>>>>>>> Stashed changes
 
 def effacer_fenetre():
     for child in fenêtre.winfo_children():
@@ -10,6 +14,7 @@ def effacer_label():
     for child in fenêtre.winfo_children():
         if isinstance(child, tk.Label):
             child.destroy()
+<<<<<<< Updated upstream
 
 def afficher_athlete():
     effacer_label()
@@ -64,6 +69,27 @@ def rechercher_visiteur():
         text.configure(bg='#3399FF')
         text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
         y_position += 30
+=======
+
+def afficher_athlete():
+    effacer_label()
+    y_position = 10
+    for element in admin.admin.afficher_athlete():
+        athlete = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
+        athlete.configure(bg='#3399FF')
+        athlete.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
+        y_position += 30
+
+def afficher_visiteur():
+    effacer_label()
+    y_position = 10
+    for element in admin.admin.afficher_visiteur():
+        text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
+        text.configure(bg='#3399FF')
+        text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
+        y_position += 30
+
+>>>>>>> Stashed changes
 
 def creer_bouton(fenetre, texte, commande, largeur, hauteur, couleur,police, taille):
     bouton = tk.Button(fenetre, text=texte, command=lambda: commande(), width=largeur, height=hauteur, bg=couleur, font=(police, taille))
@@ -152,7 +178,11 @@ def interface_principale():
     # Créer et placer deux boutons initiaux au centre
     creer_bouton(cadre_bouton_athlete, "Athlètes", afficher_interface_athlete, 20, 10, '#5FD4EE','Tw Cen MT',20)
     creer_bouton(cadre_bouton_visiteur, "Visiteurs", afficher_interface_visiteur, 20, 10, '#EE5F5F','Tw Cen MT',20)
+<<<<<<< Updated upstream
     creer_bouton(cadre_bouton_retour, "Quitter", fenêtre.destroy, 5, 1, '#EE5F5F' , 'Tw Cen MT',20)
+=======
+    creer_bouton(cadre_bouton_retour, "Quitter", fenêtre.destroy, 3, 2, '#EE5F5F' , 'Tw Cen MT',20)
+>>>>>>> Stashed changes
 
 interface_principale()
 fenêtre.mainloop()
