@@ -99,7 +99,6 @@ VALUES	(1, 'THIERRY','Nicolas',NULL),
 -- 
 -- Requêtes :
 --
-
  
 SELECT *
 FROM Visiteurs

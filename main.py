@@ -30,16 +30,11 @@ class Administrateur:
             list_SORTIE.append(dic_ath[cle].afficher())
         return(list_SORTIE)
 
-    def search_athlete(self):
+    def search_athlete(self,ENTRE):
         admin.ecriture_athlete()
-        while True:
-            cle=input("Saissisez:NOM Prénom  ") #on demande le nom et prenom du visiteur à afficher
-            if cle not in dic_ath.keys(): #on test si cette personne existe dans notre dico visiteur
-                print("Réessayer, cette personne n'est pas renseignée !")
-            else:
-                infos=dic_ath[cle].afficher()
-                print(infos)
-                break
+        infos=dic_ath[ENTRE].afficher()
+        return(infos)
+            
 
     def search_dis(self):
         admin.ecriture_athlete()
