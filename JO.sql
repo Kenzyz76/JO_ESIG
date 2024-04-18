@@ -66,11 +66,11 @@ VALUES	(1, 'FRANCE', 'EUROPE'),
 	(4, 'JAPON', 'ASIE'),
 	(5, 'CHINE', 'ASIE');
 INSERT INTO Disciplines
-VALUES	(1, 'JUDO', 'Arena Champ-de-Mars'),
-	(2, 'NATATION', 'Paris La Défense Arena'),
-	(3, 'TENNIS DE TABLE', 'Arena Paris Sud 4'),
-	(4, 'ATHLETISME', 'Stade de France'),
-	(5, 'GYMNASTIQUE ARTISTIQUE', 'Arena Bercy');
+VALUES	(1, 'JUDO', 'Arena_Champ-de-Mars'),
+	(2, 'NATATION', 'Paris_La_Défense_Arena'),
+	(3, 'TENNIS_DE_TABLE', 'Arena_Paris_Sud_4'),
+	(4, 'ATHLETISME', 'Stade_de_France'),
+	(5, 'GYMNASTIQUE_ARTISTIQUE', 'Arena_Bercy');
 INSERT INTO Athletes	
 VALUES	(1, 'RINER','Teddy','1989-04-07', 1, 1, NULL),
 	(2, 'MARCHAND','Léon','2002-05-17',1, 2, NULL),
@@ -91,7 +91,10 @@ INSERT INTO Visiteurs
 VALUES	(1, 'THIERRY','Nicolas',NULL),
 	(2, 'MICHEL','Baptiste',NULL),
 	(3, 'NARCISSE','Jolann',NULL),
-	(4, 'DARDINIER','Foucauld',NULL);
+	(4, 'DARDINIER','Foucauld',NULL),
+	(5, 'CARPENTIER','Gaulthier',NULL),
+	(6, 'ALLAM','Kenzi',NULL),
+	(7, 'DEBERGNE','Dylan',NULL);
 	
 -- 
 -- Requêtes :
