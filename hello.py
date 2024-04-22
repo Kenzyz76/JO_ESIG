@@ -16,7 +16,7 @@ def effacer_fenetre():
 
 def effacer_label():
     for child in fenetre.winfo_children():
-        if isinstance(child, tk.Label):
+        if isinstance(child, tk.Label) or isinstance(child, tk.Entry):
             child.destroy()
 
 def creer_bouton(fenetre, texte, commande, largeur, hauteur, couleur, police, taille):
@@ -56,7 +56,7 @@ def afficher_interface_athlete():
 
     # Ajouter trois boutons au Frame de gauche
     creer_bouton(cadre_gauche, "Afficher tous les athlètes", afficher_athlete, 20, 2, '#9ef0f6','Tw Cen MT',12)
-    creer_bouton(cadre_gauche, "Afficher par pays", zone_de_texte, 20, 2,'#6ecaf2','Tw Cen MT',12)
+    creer_bouton(cadre_gauche, "Afficher par pays", zone_texte, 20, 2,'#6ecaf2','Tw Cen MT',12)
     creer_bouton(cadre_gauche, "Afficher par discipline", afficher_athlete, 20, 2, '#2969eb','Tw Cen MT',12)
 
     # Créer un Frame à droite pour les boutons de droite
@@ -120,13 +120,20 @@ def zone_texte():
     zone.pack()
 
 def recup_entree(event = None):
-    texte = tk.Label(fenetre, text = zone.get())
-    texte.place(x=200, y=200)
-    
+    SORTIE=zone.get()
+    return SORTIE
+
 fenetre.bind("<Return>", recup_entree)
 
+def rechercher_pays():
+    zone_texte()
+    SORTIE=recup_entree
+    for element in main.admin.search_pays():
+        text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
+        text.configure(bg='#3399FF')
+        text.place(x=500, 50)  # Placer le Label dans la fenêtre
 
-def rechercher_athlete(ENTRE):
+def rechercher_athlete(ENTREE):
     effacer_label()
     dic_ath=main.admin.ecriture_visiteur()
     while True:
@@ -137,15 +144,6 @@ def rechercher_athlete(ENTRE):
                 infos=dic_ath[cle].afficher()
                 print(infos)
                 break
-
-def rechercher_pays():
-    effacer_label()
-    y_position = 10
-    for element in main.admin.search_pays():
-        text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
-        text.configure(bg='#3399FF')
-        text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
-        y_position += 30
 
 def rechercher_dis():
     effacer_label()
