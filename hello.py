@@ -112,29 +112,31 @@ def afficher_visiteur():
         text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
         y_position += 30
 
-#Création d'une zone texte pour demandé une entrée à l'utilisateur et l'a récupéré
+#Création d'une zone texte pour demandé une entrée à l'utilisateur
 def zone_texte():
     effacer_label()
     global zone
     zone = tk.Entry()
     zone.pack()
 
+#Récupération de l'entrée
 def recup_entree(event = None):
-    SORTIE=zone.get()
-    return SORTIE
+    ENTREE=zone.get()
+    return ENTREE
 
-fenetre.bind("<Return>", recup_entree)
+fenetre.bind("<Return>", recup_entree) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction recup_entree qui s'exécute
 
 def rechercher_pays():
     zone_texte()
-    SORTIE=recup_entree
-    for element in main.admin.search_pays():
+    ENTREE=recup_entree
+    for element in main.admin.search_pays(ENTREE):
         text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
         text.configure(bg='#3399FF')
-        text.place(x=500, 50)  # Placer le Label dans la fenêtre
+        text.place(x=500, y=50)  # Placer le Label dans la fenêtre
 
-def rechercher_athlete(ENTREE):
-    effacer_label()
+def rechercher_athlete():
+    zone_texte()
+    ENTREE=recup_entree
     dic_ath=main.admin.ecriture_visiteur()
     while True:
             cle=input("Saissisez:NOM Prénom  ") #on demande le nom et prenom du visiteur à afficher

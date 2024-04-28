@@ -44,7 +44,7 @@ CREATE TABLE Visiteurs (
 	vis_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,#auto-increment pour que MySQL génére automatique les id de 1 à ...,primary key on spécifie que c'est la clé primaire de la table
 	vis_nom VARCHAR(30) NOT NULL,
 	vis_prenom VARCHAR(30) NOT NULL,
-	vis_numero INT UNSIGNED
+	vis_numero VARCHAR(30) NOT NULL
 )
 ENGINE=INNODB; #on utilise le moteur de stockage INNODB pour enregistrer notre table dans la base de donnée
 
@@ -80,13 +80,13 @@ VALUES	(1, 'RINER','Teddy','1989-04-07', 1, 1, NULL),
 	(14, 'YUFEI', 'Zhang', '1998-04-19', 5, 2, NULL),
 	(15, 'RUOTENG', 'Xiao', '1996-01-30', 5, 5, NULL);
 INSERT INTO Visiteurs	
-VALUES	(1, 'THIERRY','Nicolas',"A698736489"),
-	(2, 'MICHEL','Baptiste',"B235746248"),
-	(3, 'NARCISSE','Jolann',"C672349820"),
-	(4, 'DARDINIER','Foucauld',"D574136209"),
-	(5, 'CARPENTIER','Gaulthier',"E412670987"),
-	(6, 'ALLAM','Kenzi',"F159036715"),
-	(7, 'DEBERGNE','Dylan',"G753429861");	
+VALUES	(1, 'THIERRY','Nicolas','A698736489'),
+	(2, 'MICHEL','Baptiste','B235746248'),
+	(3, 'NARCISSE','Jolann','C672349820'),
+	(4, 'DARDINIER','Foucauld','D574136209'),
+	(5, 'CARPENTIER','Gaulthier','E412670987'),
+	(6, 'ALLAM','Kenzi','F159036715'),
+	(7, 'DEBERGNE','Dylan','G753429861');	
 
 -- 
 -- Requêtes :

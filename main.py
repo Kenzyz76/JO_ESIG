@@ -33,6 +33,17 @@ class Administrateur:
         cursor.execute(ordre,(nom0,prenom0,nais0,pays0,dis0,rec0))
         lien.commit()#pour que la modification soit conservée
 
+    def ecriture_visiteur(self):
+        cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée
+        cursor.execute("""SELECT vis_nom, vis_prenom, vis_numero 
+                          FROM Visiteurs""") #on lui donne l'ordre
+        resultat=cursor.fetchall() #on utilise l'attribut fetchall pour récupérer ce qu'il a lu en renvoyant un tuple1 qui contient des tuples
+        for ivisiteur in resultat: #on parcours le tuple1 
+            nom, prenom, numero= ivisiteur #on assigne à chaque valeur du tuple une variable sous forme de nom
+            visiteur0=Visiteur(nom,prenom,numero) #on créer (instancie) un visiteur
+            dic_vis[nom+" "+prenom]=visiteur0 #on ajoute le visiteur à notre dico de visiteur
+        return(dic_vis)
+
     def ad_athlete(self,nom0,prenom0,nais0):
         cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
         ordre="""INSERT INTO Athletes(ath_nom, ath_prenom, ath_naissance) 
@@ -45,7 +56,7 @@ class Administrateur:
         cursor_num.execute("""SELECT vis_numero 
                         FROM Visiteurs""") #on lui donne l'ordre
         numeros=cursor_num.fetchall() #on utilise l'attribut fetchall pour récupérer ce qu'il a lu en renvoyant un tuple1 qui contient des tuples
-        print(numeros)
+        #print(numeros)
         num0="A698736489"
         while num0 in numeros:
             suite0=random.choices("0123456789", k=10)
@@ -66,6 +77,28 @@ class Administrateur:
             list_SORTIE.append(dic_ath[cle].afficher())
         print(list_SORTIE)
 
+    def show_visiteur(self):
+        admin.ecriture_visiteur()
+        list_SORTIE=[]
+        for cle in dic_vis:
+            list_SORTIE.append(dic_vis[cle].afficher())
+        return(list_SORTIE)
+
+    def search_pays(self,ENTREE):
+        admin.ecriture_athlete()
+        while True:
+            test=False #pour ne pas afficher l'erreur le nombre de fois où le pays est différent
+            for (cle,athlete) in dic_ath.items(): #on lit notre dico 
+                if ENTREE==athlete.pays: 
+                    infos=dic_ath[cle].afficher()
+                    test=True
+                    SORTIE=infos
+            if test==False:
+                SORTIE="Réessayer, ce pays n'est pas présent aux jeux !"
+            if test==True:
+                break
+        return (SORTIE)
+
     def search_athlete(self,ENTREE):
         admin.ecriture_athlete()
         infos=dic_ath[ENTREE].afficher()
@@ -79,44 +112,12 @@ class Administrateur:
             for (cle,athlete) in dic_ath.items(): #on lit notre dico 
                 if valref==athlete.dis: 
                     infos=dic_ath[cle].afficher()
-                    print(infos)
                     test=True
+                    print(infos)
             if test==False:
-                print("Réessayer, cette discipline n'est pas présente aux jeux !")
+                return("Réessayer, cette discipline n'est pas présente aux jeux !")
             if test==True:
                 break
-                
-    def search_pays(self):
-        admin.ecriture_athlete()
-        while True:
-            test=False #pour ne pas afficher l'erreur le nombre de fois où le pays est différent
-            for (cle,athlete) in dic_ath.items(): #on lit notre dico 
-                if ENTREE==athlete.pays: 
-                    infos=dic_ath[cle].afficher()
-                    print(infos)
-                    test=True
-            if test==False:
-                print("Réessayer, ce pays n'est pas présent aux jeux !")
-            if test==True:
-                break
-
-    def ecriture_visiteur(self):
-        cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée
-        cursor.execute("""SELECT vis_nom, vis_prenom, vis_numero 
-                          FROM Visiteurs""") #on lui donne l'ordre
-        resultat=cursor.fetchall() #on utilise l'attribut fetchall pour récupérer ce qu'il a lu en renvoyant un tuple1 qui contient des tuples
-        for ivisiteur in resultat: #on parcours le tuple1 
-            nom, prenom, numero= ivisiteur #on assigne à chaque valeur du tuple une variable sous forme de nom
-            visiteur0=Visiteur(nom,prenom,numero) #on créer (instancie) un visiteur
-            dic_vis[nom+" "+prenom]=visiteur0 #on ajoute le visiteur à notre dico de visiteur
-        return(dic_vis)
-
-    def show_visiteur(self):
-        admin.ecriture_visiteur()
-        list_SORTIE=[]
-        for cle in dic_vis:
-            list_SORTIE.append(dic_vis[cle].afficher())
-        return(list_SORTIE)
 
     def search_visiteur(self):
         admin.ecriture_visiteur()
@@ -128,11 +129,12 @@ class Administrateur:
                 infos=dic_vis[cle].afficher()
                 print(infos)
                 break
+
             
 ##### Programme d'éxécution #####
 admin=Administrateur() #on créer un administrateur
 #admin.ad_athlete()
-admin.ad_visiteur("FGHC","cvgsh")
+#admin.ad_visiteur("FGHC","cvgsh")
 #admin.show_athlete() #on appel la fonction
 #admin.show_visiteur()
 #admin.search_athlete()
