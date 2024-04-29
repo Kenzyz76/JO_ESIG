@@ -131,7 +131,7 @@ def rechercher_pays():
     ENTREE=recup_entree
     for element in main.admin.search_pays(ENTREE):
         text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
-        text.configure(bg='#3399FF')
+        text.configure(bg='#3399FF') #on définit le background du texte
         text.place(x=500, y=50)  # Placer le Label dans la fenêtre
 
 def rechercher_athlete():

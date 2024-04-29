@@ -44,11 +44,11 @@ class Administrateur:
             dic_vis[nom+" "+prenom]=visiteur0 #on ajoute le visiteur à notre dico de visiteur
         return(dic_vis)
 
-    def ad_athlete(self,nom0,prenom0,nais0):
+    def ad_athlete(self,nom0,prenom0,nais0,pays0,disc0):
         cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
-        ordre="""INSERT INTO Athletes(ath_nom, ath_prenom, ath_naissance) 
-                VALUES (%s,%s,%s)"""#on donne l'ordre
-        cursor.execute(ordre,(nom0,prenom0,nais0))
+        ordre="""INSERT INTO Athletes(ath_nom, ath_prenom, ath_naissance, ath_pays, ath_discipline) 
+                VALUES (%s,%s,%s,%s,%s)"""#on donne l'ordre
+        cursor.execute(ordre,(nom0,prenom0,nais0,pays0,disc0))
         lien.commit()#pour que la modification soit conservée
 
     def ad_visiteur(self,nom0,prenom0):
@@ -71,20 +71,20 @@ class Administrateur:
         lien.commit()#pour que la modification soit conservée
 
     def show_athlete(self):
-        admin.ecriture_athlete()
+        dic_ath=admin.ecriture_athlete()
         list_SORTIE=[]
         for cle in dic_ath:
             list_SORTIE.append(dic_ath[cle].afficher())
         print(list_SORTIE)
 
     def show_visiteur(self):
-        admin.ecriture_visiteur()
+        dic_vis=admin.ecriture_visiteur()
         list_SORTIE=[]
         for cle in dic_vis:
             list_SORTIE.append(dic_vis[cle].afficher())
         return(list_SORTIE)
 
-    def search_pays(self,ENTREE):
+    #def search_pays(self,ENTREE):
         admin.ecriture_athlete()
         while True:
             test=False #pour ne pas afficher l'erreur le nombre de fois où le pays est différent
@@ -99,8 +99,16 @@ class Administrateur:
                 break
         return (SORTIE)
 
+    def search_pays(self,ENTREE):
+        dic_ath=admin.ecriture_athlete()
+        for (cle,athlete) in dic_ath.items(): #on lit notre dico 
+            if ENTREE==athlete.pays: 
+                infos=dic_ath[cle].afficher()
+                SORTIE=infos
+        return SORTIE
+
     def search_athlete(self,ENTREE):
-        admin.ecriture_athlete()
+        dic_ath=admin.ecriture_athlete()
         infos=dic_ath[ENTREE].afficher()
         return(infos)
             
@@ -120,7 +128,7 @@ class Administrateur:
                 break
 
     def search_visiteur(self):
-        admin.ecriture_visiteur()
+        dic_vis=admin.ecriture_visiteur()
         while True:
             cle=input("Saissisez votre:NOM Prénom  ") #on demande le nom et prenom du visiteur à afficher
             if cle not in dic_vis.keys(): #on test si cette personne existe dans notre dico visiteur
@@ -133,7 +141,7 @@ class Administrateur:
             
 ##### Programme d'éxécution #####
 admin=Administrateur() #on créer un administrateur
-#admin.ad_athlete()
+admin.ad_athlete("Darius","TOP","1955-06-19","FRANCE","JUDO")
 #admin.ad_visiteur("FGHC","cvgsh")
 #admin.show_athlete() #on appel la fonction
 #admin.show_visiteur()
