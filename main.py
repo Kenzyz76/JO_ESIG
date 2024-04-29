@@ -18,20 +18,13 @@ class Administrateur:
                         INNER JOIN Pays 
                             ON Athletes.ath_pays=Pays.pays_id 
                         INNER JOIN Disciplines
-                            ON Disciplines.ath_discipline=Disciplines.dis_id""") #on lui donne l'ordre
+                            ON Athletes.ath_discipline=Disciplines.dis_id""") #on lui donne l'ordre
         resultat=cursor.fetchall() #on utilise l'attribut fetchall pour récupérer ce qu'il a lu en renvoyant un tuple1 qui contient des tuples
         for iathlete in resultat: #on parcours le tuple1 
             nom, prenom, naissance, pays, discipline, recompense= iathlete #on assigne à chaque valeur du tuple une variable sous forme de nom
             athlete0=Athlete(nom,prenom,naissance,pays,discipline, recompense) #on créer (instancie) un athlète
             dic_ath[nom+" "+prenom]=athlete0 #on ajoute l'athlete à notre dico d'athlete
         return(dic_ath)
-    
-    #def ad_athlete(self,nom0,prenom0,nais0,pays0,dis0,rec0):
-        cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
-        ordre="""INSERT INTO Athletes(ath_nom, ath_prenom, ath_naissance, ath_pays, ath_discipline, ath_recompense) 
-                VALUES (%s,%s,%s,%s,%s,%s)"""
-        cursor.execute(ordre,(nom0,prenom0,nais0,pays0,dis0,rec0))
-        lien.commit()#pour que la modification soit conservée
 
     def ecriture_visiteur(self):
         cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée
@@ -52,17 +45,11 @@ class Administrateur:
         lien.commit()#pour que la modification soit conservée
 
     def ad_visiteur(self,nom0,prenom0):
-        cursor_num=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
-        cursor_num.execute("""SELECT vis_numero 
-                        FROM Visiteurs""") #on lui donne l'ordre
-        numeros=cursor_num.fetchall() #on utilise l'attribut fetchall pour récupérer ce qu'il a lu en renvoyant un tuple1 qui contient des tuples
-        #print(numeros)
-        num0="A698736489"
-        while num0 in numeros:
-            suite0=random.choices("0123456789", k=10)
-            for i in suite0:
-                numf=numf+str(i)
-            num0=numf
+        suite0=random.choices("0123456789", k=10) #on prend une sequence de 10 chiffres dans une liste
+        numf=""
+        for i in suite0:
+            numf=numf+str(i)#on créer une seule et unique chaine de caractère de cette séquence
+        num0=numf
 
         cursor_insert=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
         ordre="""INSERT INTO Visiteurs(vis_nom, vis_prenom, vis_numero) 
@@ -75,7 +62,7 @@ class Administrateur:
         list_SORTIE=[]
         for cle in dic_ath:
             list_SORTIE.append(dic_ath[cle].afficher())
-        print(list_SORTIE)
+        return(list_SORTIE)
 
     def show_visiteur(self):
         dic_vis=admin.ecriture_visiteur()
@@ -83,21 +70,6 @@ class Administrateur:
         for cle in dic_vis:
             list_SORTIE.append(dic_vis[cle].afficher())
         return(list_SORTIE)
-
-    #def search_pays(self,ENTREE):
-        admin.ecriture_athlete()
-        while True:
-            test=False #pour ne pas afficher l'erreur le nombre de fois où le pays est différent
-            for (cle,athlete) in dic_ath.items(): #on lit notre dico 
-                if ENTREE==athlete.pays: 
-                    infos=dic_ath[cle].afficher()
-                    test=True
-                    SORTIE=infos
-            if test==False:
-                SORTIE="Réessayer, ce pays n'est pas présent aux jeux !"
-            if test==True:
-                break
-        return (SORTIE)
 
     def search_pays(self,ENTREE):
         dic_ath=admin.ecriture_athlete()
@@ -109,8 +81,11 @@ class Administrateur:
 
     def search_athlete(self,ENTREE):
         dic_ath=admin.ecriture_athlete()
-        infos=dic_ath[ENTREE].afficher()
-        return(infos)
+        if ENTREE in dic_ath.keys():
+            infos=dic_ath[ENTREE].afficher()
+            return(infos)
+        else:
+            return ("ERREUR")
             
     def search_dis(self):
         admin.ecriture_athlete()
@@ -141,12 +116,11 @@ class Administrateur:
             
 ##### Programme d'éxécution #####
 admin=Administrateur() #on créer un administrateur
-admin.ad_athlete("Darius","TOP","1955-06-19","FRANCE","JUDO")
+#admin.ad_athlete("Darius","TOP","1955-06-19","FRANCE","JUDO")
 #admin.ad_visiteur("FGHC","cvgsh")
 #admin.show_athlete() #on appel la fonction
 #admin.show_visiteur()
-#admin.search_athlete()
+#admin.search_athlete("RINER Teddy")
 #admin.search_visiteur()
 #admin.search_dis()
 #admin.search_pays()
-lien.close()

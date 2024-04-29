@@ -16,7 +16,12 @@ def effacer_fenetre():
 
 def effacer_label():
     for child in fenetre.winfo_children():
-        if isinstance(child, tk.Label) or isinstance(child, tk.Entry):
+        if isinstance(child, tk.Label):
+            child.destroy()
+
+def effacer_texte(): #Obligatoire pour pouvoir rafraichir la zone de texte 
+    for child in fenetre.winfo_children():
+        if isinstance(child, tk.Entry):
             child.destroy()
 
 def creer_bouton(fenetre, texte, commande, largeur, hauteur, couleur, police, taille):
@@ -58,6 +63,7 @@ def afficher_interface_athlete():
     creer_bouton(cadre_gauche, "Afficher tous les athlètes", afficher_athlete, 20, 2, '#9ef0f6','Tw Cen MT',12)
     creer_bouton(cadre_gauche, "Afficher par pays", zone_texte, 20, 2,'#6ecaf2','Tw Cen MT',12)
     creer_bouton(cadre_gauche, "Afficher par discipline", afficher_athlete, 20, 2, '#2969eb','Tw Cen MT',12)
+    creer_bouton(cadre_gauche, "Rechercher un athlète", zone_texte, 20, 2, '#2969eb','Tw Cen MT',12)
 
     # Créer un Frame à droite pour les boutons de droite
     cadre_droit = tk.Frame(fenetre)
@@ -115,37 +121,46 @@ def afficher_visiteur():
 #Création d'une zone texte pour demandé une entrée à l'utilisateur
 def zone_texte():
     effacer_label()
+    effacer_texte()
     global zone
     zone = tk.Entry()
     zone.pack()
 
-#Récupération de l'entrée
-def recup_entree(event = None):
+def rechercher_athlete(event=None):
+    effacer_label()
     ENTREE=zone.get()
-    return ENTREE
+    #print (ENTREE)
+    dic_ath=main.admin.ecriture_visiteur()
+    if main.admin.search_athlete(ENTREE)=="ERREUR": #on test si cette personne existe dans notre dico visiteur
+            text = tk.Label(text = "Réessayer cet(te) athlète ne participe pas aux jeux !")  # Créer un Label avec les informations de l'athlète
+            text.configure(bg='#3399FF') #on définit le background du texte
+            text.place(x=400, y=50)
+    else:
+        infos=main.admin.search_athlete(ENTREE)
+        text = tk.Label(text = infos)  # Créer un Label avec les informations de l'athlète
+        text.configure(bg='#3399FF') #on définit le background du texte
+        text.place(x=400, y=50)  # Placer le Label dans la fenêtre
 
-fenetre.bind("<Return>", recup_entree) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction recup_entree qui s'exécute
-
-def rechercher_pays():
+def rechercher_pays(event=None):
     zone_texte()
-    ENTREE=recup_entree
+    ENTREE=zone.get()
+    y_position = 10
     for element in main.admin.search_pays(ENTREE):
         text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
         text.configure(bg='#3399FF') #on définit le background du texte
-        text.place(x=500, y=50)  # Placer le Label dans la fenêtre
+        text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
+        y_position += 30
 
-def rechercher_athlete():
-    zone_texte()
-    ENTREE=recup_entree
-    dic_ath=main.admin.ecriture_visiteur()
-    while True:
-            cle=input("Saissisez:NOM Prénom  ") #on demande le nom et prenom du visiteur à afficher
-            if cle not in dic_ath.keys(): #on test si cette personne existe dans notre dico visiteur
-                print("Réessayer, cette personne n'est pas renseignée !")
-            else:
-                infos=dic_ath[cle].afficher()
-                print(infos)
-                break
+fenetre.bind("<Return>", rechercher_athlete) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction recup_entree qui s'exécute
+
+def rechercher_visiteur():
+    effacer_label()
+    y_position = 10
+    for element in main.admin.search_visiteur():
+        text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
+        text.configure(bg='#3399FF')
+        text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
+        y_position += 30
 
 def rechercher_dis():
     effacer_label()
@@ -158,14 +173,6 @@ def rechercher_dis():
 
 
 
-def rechercher_visiteur():
-    effacer_label()
-    y_position = 10
-    for element in main.admin.search_visiteur():
-        text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
-        text.configure(bg='#3399FF')
-        text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
-        y_position += 30
 
 interface_principale()
 fenetre.mainloop()
