@@ -59,29 +59,37 @@ class Administrateur:
 
     def show_athlete(self):
         dic_ath=admin.ecriture_athlete()
-        list_SORTIE=[]
+        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
         for cle in dic_ath:
-            list_SORTIE.append(dic_ath[cle].afficher())
-        return(list_SORTIE)
+            athlete_infos=dic_ath[cle].afficher()
+            liste_SORTIE.append(athlete_infos)
+        return(liste_SORTIE)
 
     def show_visiteur(self):
         dic_vis=admin.ecriture_visiteur()
-        list_SORTIE=[]
+        list_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque visiteur dans une liste pour seulement à faire un for element dans notre I.G
         for cle in dic_vis:
             list_SORTIE.append(dic_vis[cle].afficher())
         return(list_SORTIE)
 
     def search_pays(self,ENTREE):
         dic_ath=admin.ecriture_athlete()
-        for (cle,athlete) in dic_ath.items(): #on lit notre dico 
-            if ENTREE==athlete.pays: 
-                infos=dic_ath[cle].afficher()
-                SORTIE=infos
-        return SORTIE
+        liste_pays=[]
+        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
+        for (cle,athlete) in dic_ath.items(): #on lit notre dico pour ajouter tous les pays dans la liste_pays
+            liste_pays.append(athlete.pays)
+        if ENTREE in liste_pays: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
+            for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
+                if ENTREE==athlete.pays: 
+                    athlete_infos=dic_ath[cle].afficher()
+                    liste_SORTIE.append(athlete_infos)
+            return(liste_SORTIE)
+        else:
+            return("ERREUR")
 
     def search_athlete(self,ENTREE):
         dic_ath=admin.ecriture_athlete()
-        if ENTREE in dic_ath.keys():
+        if ENTREE in dic_ath.keys(): #on test si l'athlète rentrée par l'utilisateur est dans notre dico
             infos=dic_ath[ENTREE].afficher()
             return(infos)
         else:
@@ -123,4 +131,4 @@ admin=Administrateur() #on créer un administrateur
 #admin.search_athlete("RINER Teddy")
 #admin.search_visiteur()
 #admin.search_dis()
-#admin.search_pays()
+admin.search_pays("FRANCE")

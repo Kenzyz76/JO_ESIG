@@ -44,67 +44,77 @@ def interface_principale():
     # Créer et placer deux boutons initiaux au centre
     creer_bouton(cadre_bouton_athlete, "Athlètes", afficher_interface_athlete, 20, 10, '#5FD4EE','Tw Cen MT',20)
     creer_bouton(cadre_bouton_visiteur, "Visiteurs", afficher_interface_visiteur, 20, 10, '#EE5F5F','Tw Cen MT',20)
-    creer_bouton(cadre_bouton_retour, "Quitter", fenetre.destroy, 5, 1, '#EE5F5F' , 'Tw Cen MT',20)
+    creer_bouton(cadre_bouton_retour, "Quitter", fenetre.destroy, 5, 1, '#b50000' , 'Tw Cen MT',20)
 
 def afficher_interface_athlete():
-    effacer_fenetre()
     # Supprimer les boutons initiaux
-
+    effacer_fenetre()
+    
+    #Créer un cadre pour le bouton retour
     cadre_bouton_retour1 = tk.Frame(fenetre, width=100, height=100, bg='grey')
     cadre_bouton_retour1.place(x=0, y=500, anchor='sw') #anchor sert a superpositionner ce bouton au dessus du cadre gauche
-
-    creer_bouton(cadre_bouton_retour1, "Retour", interface_principale, 5, 1, '#EE5F5F' , 'Tw Cen MT',20)
+    #On créer le bouton retour
+    creer_bouton(cadre_bouton_retour1, "Retour", interface_principale, 5, 1, '#b50000' , 'Tw Cen MT',20)
 
     # Créer un Frame à gauche pour les boutons de gauche
-    cadre_gauche = tk.Frame(fenetre)
+    cadre_gauche = tk.Frame(fenetre, bg='#cbd4d4')
     cadre_gauche.pack(side="left", fill="y") #fill=y pour créer un cadre a gauche de haut en bas et pour fill=x un cadre à gauche en haut
 
-    # Ajouter trois boutons au Frame de gauche
+    # Ajouter les boutons au Frame de gauche
     creer_bouton(cadre_gauche, "Afficher tous les athlètes", afficher_athlete, 20, 2, '#9ef0f6','Tw Cen MT',12)
-    creer_bouton(cadre_gauche, "Afficher par pays", zone_texte, 20, 2,'#6ecaf2','Tw Cen MT',12)
-    creer_bouton(cadre_gauche, "Afficher par discipline", afficher_athlete, 20, 2, '#2969eb','Tw Cen MT',12)
-    creer_bouton(cadre_gauche, "Rechercher un athlète", zone_texte, 20, 2, '#2969eb','Tw Cen MT',12)
-
+    creer_bouton(cadre_gauche, "Rechercher un athlète", zone_texte_ath, 20, 2, '#6ecaf2','Tw Cen MT',12)
+    creer_bouton(cadre_gauche, "Afficher par pays", zone_texte_pays, 20, 2,'#2969eb','Tw Cen MT',12)
+    creer_bouton(cadre_gauche, "Afficher par discipline", afficher_athlete, 20, 2, '#0a55ea','Tw Cen MT',12)
+    
     # Créer un Frame à droite pour les boutons de droite
-    cadre_droit = tk.Frame(fenetre)
+    cadre_droit = tk.Frame(fenetre,bg='#cbd4d4')
     cadre_droit.pack(side="right", fill="y")
 
-    # Ajouter trois boutons au Frame de droite
-    creer_bouton(cadre_droit, "caca", afficher_athlete, 20, 2,'#9ef0f6','Tw Cen MT',12)
-    creer_bouton(cadre_droit, "pipi", afficher_athlete, 20, 2,'#6ecaf2','Tw Cen MT',12)
-    creer_bouton(cadre_droit, "popo", afficher_athlete, 20, 2,'#2969eb','Tw Cen MT',12)
-    cadre_bouton_retour1.lift() # permet de placer le cadre cadre_bouton_retour1 au premier plan
+    # Ajouter les boutons au Frame de droite
+    creer_bouton(cadre_droit, "Ajouter un athlète", afficher_athlete, 20, 2,'#9ef0f6','Tw Cen MT',12)
+    creer_bouton(cadre_droit, "Supprimer un athlète", afficher_athlete, 20, 2,'#6ecaf2','Tw Cen MT',12)
+    creer_bouton(cadre_droit, "Ajouter une récompense", afficher_athlete, 20, 2,'#2969eb','Tw Cen MT',12)
+    creer_bouton(cadre_droit, "Supprimer une récompense", afficher_athlete, 20, 2,'#0a55ea','Tw Cen MT',12)
+
+    # permet de placer le cadre cadre_bouton_retour1 au premier plan
+    cadre_bouton_retour1.lift() 
 
 def afficher_interface_visiteur():
-    effacer_fenetre()
     # Supprimer les boutons initiaux
+    effacer_fenetre()
+
+    #Créer un cadre pour le bouton retour
     cadre_bouton_retour2 = tk.Frame(fenetre, width=100, height=100, bg='grey')
     cadre_bouton_retour2.place(x=0, y=500, anchor='sw')
-
-    creer_bouton(cadre_bouton_retour2, "Retour", interface_principale, 5, 1, '#EE5F5F' , 'Tw Cen MT',20)
+    #On créer le bouton retour
+    creer_bouton(cadre_bouton_retour2, "Retour", interface_principale, 5, 1, '#b50000' , 'Tw Cen MT',20)
 
     # Créer un Frame à gauche pour les boutons de gauche
-    cadre_gauche = tk.Frame(fenetre)
-    cadre_gauche.pack(side="left", fill="y")
+    cadre_gauche = tk.Frame(fenetre,bg='#cbd4d4')
+    cadre_gauche.pack(side="left", fill="y")#fill=y pour créer un cadre a gauche de haut en bas et pour fill=x un cadre à gauche en haut
 
-
-    # Ajouter trois boutons au Frame de gauche
-    creer_bouton(cadre_gauche, "Afficher tous les visiteurs", afficher_visiteur, 20,2, 'red','Tw Cen MT',12)
+    # Ajouter les boutons au Frame de gauche
+    creer_bouton(cadre_gauche, "Afficher tous les visiteurs", afficher_visiteur, 20,2, '#ff7070','Tw Cen MT',12)
+    creer_bouton(cadre_gauche, "Rechercher un visiteur par son nom", zone_texte_visi_nom, 20, 2, '#ff3f3f','Tw Cen MT',12)
+    creer_bouton(cadre_gauche, "Rechercher un visiteur par son numéro", zone_texte_visi_num, 20, 2,'#ff0000','Tw Cen MT',12)
 
     # Créer un Frame à droite pour les boutons de droite
-    cadre_droit = tk.Frame(fenetre)
+    cadre_droit = tk.Frame(fenetre,bg='#cbd4d4')
     cadre_droit.pack(side="right", fill="both")
 
-    # Ajouter trois boutons au Frame de droite
-
-    creer_bouton(cadre_droit, "caca", afficher_athlete,20,2, 'red','Tw Cen MT',12)
+    # Ajouter les boutons au Frame de droite
+    creer_bouton(cadre_droit, "Ajouter un visiteur", afficher_athlete,20,2, 'red','Tw Cen MT',12)
+    creer_bouton(cadre_droit, "Supprimer un visiteur", afficher_athlete,20,2, 'red','Tw Cen MT',12)
+    creer_bouton(fenetre=cadre_droit, texte="",commande=None, largeur=20, hauteur=2, couleur='#cbd4d4',police='Tw Cen MT',taille=12)
+    creer_bouton(cadre_droit, "Afficher la map", afficher_athlete, 20, 2, '#00ff73','Tw Cen MT',12)
     cadre_bouton_retour2.lift() # permet de placer le cadre cadre_bouton_retour1 au premier plan
 
+#Définition des fonctions:
 def afficher_athlete():
     effacer_label()
     y_position = 10
-    for element in main.admin.show_athlete():
-        athlete = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
+    for lignes in main.admin.show_athlete():
+        athlete = tk.Label(text = lignes)  # Créer un Label avec les informations de l'athlète
         athlete.configure(bg='#3399FF')
         athlete.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
         y_position += 30
@@ -112,52 +122,93 @@ def afficher_athlete():
 def afficher_visiteur():
     effacer_label()
     y_position = 10
-    for element in main.admin.show_visiteur():
-        text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
+    for lignes in main.admin.show_visiteur():
+        text = tk.Label(text = lignes)  # Créer un Label avec les informations de l'athlète
         text.configure(bg='#3399FF')
         text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
         y_position += 30
 
 #Création d'une zone texte pour demandé une entrée à l'utilisateur
-def zone_texte():
+def zone_texte_ath():
     effacer_label()
     effacer_texte()
-    global zone
-    zone = tk.Entry()
-    zone.pack()
+    global zone_ath
+    zone_ath = tk.Entry()
+    zone_ath.pack()
+    fenetre.bind("<Return>", rechercher_athlete) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction recherhcer athlete qui s'exécute
 
 def rechercher_athlete(event=None):
     effacer_label()
-    ENTREE=zone.get()
+    ENTREE=zone_ath.get()
     #print (ENTREE)
     dic_ath=main.admin.ecriture_visiteur()
     if main.admin.search_athlete(ENTREE)=="ERREUR": #on test si cette personne existe dans notre dico visiteur
             text = tk.Label(text = "Réessayer cet(te) athlète ne participe pas aux jeux !")  # Créer un Label avec les informations de l'athlète
             text.configure(bg='#3399FF') #on définit le background du texte
             text.place(x=400, y=50)
+            
     else:
         infos=main.admin.search_athlete(ENTREE)
         text = tk.Label(text = infos)  # Créer un Label avec les informations de l'athlète
         text.configure(bg='#3399FF') #on définit le background du texte
         text.place(x=400, y=50)  # Placer le Label dans la fenêtre
+        
+def zone_texte_pays():
+    effacer_label()
+    effacer_texte()
+    global zone_pays
+    zone_pays = tk.Entry()
+    zone_pays.pack()
+    fenetre.bind("<Return>", rechercher_pays) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction rechercher pays qui s'exécute
 
 def rechercher_pays(event=None):
-    zone_texte()
-    ENTREE=zone.get()
-    y_position = 10
-    for element in main.admin.search_pays(ENTREE):
-        text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
-        text.configure(bg='#3399FF') #on définit le background du texte
-        text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
-        y_position += 30
+    effacer_label()
+    ENTREE=zone_pays.get()
+    #print (ENTREE)
+    y_position = 50
+    if main.admin.search_pays(ENTREE)=="ERREUR": #on test si cette personne existe dans notre dico visiteur
+            text = tk.Label(text = "Réessayer ce pays ne participe pas aux jeux !")  # Créer un Label avec les informations de l'athlète
+            text.configure(bg='#3399FF') #on définit le background du texte
+            text.place(x=400, y=50)   
+    else:
+        infos=main.admin.search_pays(ENTREE)
+        #print (infos)
+        for lignes in infos:
+            text = tk.Label(text = lignes)  # Créer un Label avec les informations de l'athlète
+            text.configure(bg='#3399FF') #on définit le background du texte
+            text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
+            y_position += 30
 
-fenetre.bind("<Return>", rechercher_athlete) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction recup_entree qui s'exécute
+def zone_texte_visi_nom():
+    effacer_label()
+    effacer_texte()
+    global zone_visiteur_nom
+    zone_visiteur_nom = tk.Entry()
+    zone_visiteur_nom.pack()
+    fenetre.bind("<Return>", rechercher_visiteur_nom) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction rechercher_visiteur_nom qui s'exécute
 
-def rechercher_visiteur():
+def rechercher_visiteur_nom():
     effacer_label()
     y_position = 10
     for element in main.admin.search_visiteur():
-        text = tk.Label(text = element)  # Créer un Label avec les informations de l'athlète
+        text = tk.Label(text = element)  # Créer un Label avec les informations du visiteur
+        text.configure(bg='#3399FF')
+        text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
+        y_position += 30
+
+def zone_texte_visi_num():
+    effacer_label()
+    effacer_texte()
+    global zone_visiteur_num
+    zone_visiteur_num = tk.Entry()
+    zone_visiteur_num.pack()
+    fenetre.bind("<Return>", rechercher_visiteur_num) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction rechercher_visiteur_num qui s'exécute
+
+def rechercher_visiteur_num():
+    effacer_label()
+    y_position = 10
+    for element in main.admin.search_visiteur():
+        text = tk.Label(text = element)  # Créer un Label avec les informations du visiteur
         text.configure(bg='#3399FF')
         text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
         y_position += 30
