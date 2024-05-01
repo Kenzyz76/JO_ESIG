@@ -95,32 +95,43 @@ class Administrateur:
         else:
             return ("ERREUR")
             
-    def search_dis(self):
-        admin.ecriture_athlete()
-        while True:
-            valref=input("Saissisez la discipline:  ") #on demande la discipline à afficher
-            test=False #pour ne pas afficher l'erreur le nombre de fois où la discipline est différente
-            for (cle,athlete) in dic_ath.items(): #on lit notre dico 
-                if valref==athlete.dis: 
-                    infos=dic_ath[cle].afficher()
-                    test=True
-                    print(infos)
-            if test==False:
-                return("Réessayer, cette discipline n'est pas présente aux jeux !")
-            if test==True:
-                break
+    def search_dis(self,ENTREE):
+        dic_ath=admin.ecriture_athlete()
+        liste_dis=[]
+        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
+        for (cle,athlete) in dic_ath.items(): #on lit notre dico pour ajouter tous les pays dans la liste_pays
+            liste_dis.append(athlete.dis)
+        if ENTREE in liste_dis: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
+            for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
+                if ENTREE==athlete.dis: 
+                    athlete_infos=dic_ath[cle].afficher()
+                    liste_SORTIE.append(athlete_infos)
+            return(liste_SORTIE)
+        else:
+            return("ERREUR")
 
-    def search_visiteur(self):
+    def search_visiteur_nom(self,ENTREE):
         dic_vis=admin.ecriture_visiteur()
-        while True:
-            cle=input("Saissisez votre:NOM Prénom  ") #on demande le nom et prenom du visiteur à afficher
-            if cle not in dic_vis.keys(): #on test si cette personne existe dans notre dico visiteur
-                print("Réessayer, cette personne n'est pas renseignée !")
-            else:
-                infos=dic_vis[cle].afficher()
-                print(infos)
-                break
+        if ENTREE in dic_vis.keys(): #on test si l'athlète rentrée par l'utilisateur est dans notre dico
+            infos=dic_vis[ENTREE].afficher()
+            return(infos)
+        else:
+            return ("ERREUR")
 
+    def search_visiteur_num(self,ENTREE):
+        dic_vis=admin.ecriture_visiteur()
+        liste_num=[]
+        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
+        for (cle,athlete) in dic_vis.items(): #on lit notre dico pour ajouter tous les pays dans la liste_pays
+            liste_num.append(athlete.numero)
+        if ENTREE in liste_num: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
+            for (cle,visiteur) in dic_vis.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
+                if ENTREE==visiteur.numero: 
+                    visiteur_infos=dic_vis[cle].afficher()
+                    liste_SORTIE.append(visiteur_infos)
+            return(liste_SORTIE)
+        else:
+            return("ERREUR")
             
 ##### Programme d'éxécution #####
 admin=Administrateur() #on créer un administrateur
