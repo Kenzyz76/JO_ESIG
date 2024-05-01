@@ -49,7 +49,8 @@ def interface_principale():
 def afficher_interface_athlete():
     # Supprimer les boutons initiaux
     effacer_fenetre()
-    
+    effacer_label()
+    effacer_texte()
     #Créer un cadre pour le bouton retour
     cadre_bouton_retour1 = tk.Frame(fenetre, width=100, height=100, bg='grey')
     cadre_bouton_retour1.place(x=0, y=500, anchor='sw') #anchor sert a superpositionner ce bouton au dessus du cadre gauche
@@ -82,7 +83,8 @@ def afficher_interface_athlete():
 def afficher_interface_visiteur():
     # Supprimer les boutons initiaux
     effacer_fenetre()
-
+    effacer_label()
+    effacer_texte()
     #Créer un cadre pour le bouton retour
     cadre_bouton_retour2 = tk.Frame(fenetre, width=100, height=100, bg='grey')
     cadre_bouton_retour2.place(x=0, y=500, anchor='sw')
@@ -128,18 +130,53 @@ def afficher_visiteur():
         text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
         y_position += 30
 
-#Création d'une zone texte pour demandé une entrée à l'utilisateur
+#Configuration de deux petites fonctions qui vont permettre de supprimer la justification des ENTRY lorsque l'on veut clique dessus
+#et lorsque l'on y sort elle réapparait
+def retire_justi_nom(event=None):
+    if zone_ath_nom.get() == "NOM":
+        zone_ath_nom.delete(0,'end')
+        zone_ath_nom.config(fg="Black")
+
+def remise_justi_nom(event=None):
+    if zone_ath_nom.get() == "":
+        zone_ath_nom.insert(0,"NOM")
+        zone_ath_nom.config(fg="gray")
+
+def retire_justi_prenom(event=None):
+    if zone_ath_prenom.get() == "Prénom":
+        zone_ath_prenom.delete(0,'end')
+        zone_ath_prenom.config(fg="Black")
+
+def remise_justi_prenom(event=None):
+    if zone_ath_prenom.get() == "":
+        zone_ath_prenom.insert(0,"Prénom")
+        zone_ath_prenom.config(fg="gray")
+
+#Création des zones textes pour demandé les différentes entrées à l'utilisateur
 def zone_texte_ath():
     effacer_label()
     effacer_texte()
-    global zone_ath
-    zone_ath = tk.Entry()
-    zone_ath.pack()
+    global zone_ath_nom
+    zone_ath_nom = tk.Entry()
+    zone_ath_nom.insert(0,"NOM")
+    zone_ath_nom.config(fg="gray")
+    zone_ath_nom.bind("<FocusIn>", retire_justi_nom)
+    zone_ath_nom.bind("<FocusOut>", remise_justi_nom)
+    zone_ath_nom.pack()
+    global zone_ath_prenom
+    zone_ath_prenom = tk.Entry()
+    zone_ath_prenom.insert(0,"Prénom")
+    zone_ath_prenom.config(fg="gray")
+    zone_ath_prenom.bind("<FocusIn>", retire_justi_prenom)
+    zone_ath_prenom.bind("<FocusOut>", remise_justi_prenom)
+    zone_ath_prenom.pack()
     fenetre.bind("<Return>", rechercher_athlete) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction recherhcer athlete qui s'exécute
 
 def rechercher_athlete(event=None):
     effacer_label()
-    ENTREE=zone_ath.get()
+    Nom=zone_ath_nom.get()
+    Prénom=zone_ath_prenom.get()
+    ENTREE=Nom+" "+Prénom
     #print (ENTREE)
     dic_ath=main.admin.ecriture_visiteur()
     if main.admin.search_athlete(ENTREE)=="ERREUR": #on test si cette personne existe dans notre dico visiteur
