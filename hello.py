@@ -114,6 +114,7 @@ def afficher_interface_visiteur():
 #Définition des fonctions:
 def afficher_athlete():
     effacer_label()
+    effacer_texte()
     y_position = 10
     for lignes in main.admin.show_athlete():
         athlete = tk.Label(text = lignes)  # Créer un Label avec les informations de l'athlète
@@ -123,6 +124,7 @@ def afficher_athlete():
 
 def afficher_visiteur():
     effacer_label()
+    effacer_texte()
     y_position = 10
     for lignes in main.admin.show_visiteur():
         text = tk.Label(text = lignes)  # Créer un Label avec les informations de l'athlète
@@ -132,43 +134,41 @@ def afficher_visiteur():
 
 #Configuration de deux petites fonctions qui vont permettre de supprimer la justification des ENTRY lorsque l'on veut clique dessus
 #et lorsque l'on y sort elle réapparait
-def retire_justi_nom(event=None):
+def retire_justi_ath_nom(event=None):
     if zone_ath_nom.get() == "NOM":
-        zone_ath_nom.delete(0,'end')
-        zone_ath_nom.config(fg="Black")
+        zone_ath_nom.delete(0,'end')#les parametres sont les positions des caractères à retirer, ici du débu (0) à la fin ("end")
+        zone_ath_nom.config(fg="Black",font=("Tw Cent Mt",13))
 
-def remise_justi_nom(event=None):
+def remise_justi_ath_nom(event=None):
     if zone_ath_nom.get() == "":
         zone_ath_nom.insert(0,"NOM")
-        zone_ath_nom.config(fg="gray")
+        zone_ath_nom.config(fg="gray",font=("Tw Cent Mt",13))
 
-def retire_justi_prenom(event=None):
+def retire_justi_ath_prenom(event=None):
     if zone_ath_prenom.get() == "Prénom":
-        zone_ath_prenom.delete(0,'end')
-        zone_ath_prenom.config(fg="Black")
+        zone_ath_prenom.delete(0,'end')#les parametres sont les positions des caractères à retirer, ici du débu (0) à la fin ("end")
+        zone_ath_prenom.config(fg="Black",font=("Tw Cent Mt",13))
 
-def remise_justi_prenom(event=None):
+def remise_justi_ath_prenom(event=None):
     if zone_ath_prenom.get() == "":
         zone_ath_prenom.insert(0,"Prénom")
-        zone_ath_prenom.config(fg="gray")
+        zone_ath_prenom.config(fg="gray",font=("Tw Cent Mt",13))
 
 #Création des zones textes pour demandé les différentes entrées à l'utilisateur
 def zone_texte_ath():
     effacer_label()
     effacer_texte()
     global zone_ath_nom
-    zone_ath_nom = tk.Entry()
+    zone_ath_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
     zone_ath_nom.insert(0,"NOM")
-    zone_ath_nom.config(fg="gray")
-    zone_ath_nom.bind("<FocusIn>", retire_justi_nom)
-    zone_ath_nom.bind("<FocusOut>", remise_justi_nom)
+    zone_ath_nom.bind("<FocusIn>", retire_justi_ath_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
+    zone_ath_nom.bind("<FocusOut>", remise_justi_ath_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
     zone_ath_nom.pack()
     global zone_ath_prenom
-    zone_ath_prenom = tk.Entry()
+    zone_ath_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
     zone_ath_prenom.insert(0,"Prénom")
-    zone_ath_prenom.config(fg="gray")
-    zone_ath_prenom.bind("<FocusIn>", retire_justi_prenom)
-    zone_ath_prenom.bind("<FocusOut>", remise_justi_prenom)
+    zone_ath_prenom.bind("<FocusIn>", retire_justi_ath_prenom)
+    zone_ath_prenom.bind("<FocusOut>", remise_justi_ath_prenom)
     zone_ath_prenom.pack()
     fenetre.bind("<Return>", rechercher_athlete) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction recherhcer athlete qui s'exécute
 
@@ -179,7 +179,7 @@ def rechercher_athlete(event=None):
     ENTREE=Nom+" "+Prénom
     #print (ENTREE)
     dic_ath=main.admin.ecriture_visiteur()
-    if main.admin.search_athlete(ENTREE)=="ERREUR": #on test si cette personne existe dans notre dico visiteur
+    if main.admin.search_athlete(ENTREE)=="ERREUR": #on test si cette personne est bien dans notre dico athlete
             text = tk.Label(text = "Réessayer cet(te) athlète ne participe pas aux jeux !")  # Créer un Label avec les informations de l'athlète
             text.configure(bg='#3399FF') #on définit le background du texte
             text.place(x=400, y=50)
@@ -189,12 +189,20 @@ def rechercher_athlete(event=None):
         text = tk.Label(text = infos)  # Créer un Label avec les informations de l'athlète
         text.configure(bg='#3399FF') #on définit le background du texte
         text.place(x=400, y=50)  # Placer le Label dans la fenêtre
-        
+
+#Configuration d'une petite fonction qui vont permettre de supprimer la justification des ENTRY lorsque l'on veut clique dessus
+def retire_justi_pays(event=None):
+    if zone_pays.get() == "PAYS":
+        zone_pays.delete(0,'end')#les parametres sont les positions des caractères à retirer, ici du débu (0) à la fin ("end")
+        zone_pays.config(fg="Black",font=("Tw Cent Mt",13))
+
 def zone_texte_pays():
     effacer_label()
     effacer_texte()
     global zone_pays
-    zone_pays = tk.Entry()
+    zone_pays = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_pays.insert(0,"PAYS")
+    zone_pays.bind("<FocusIn>", retire_justi_pays)
     zone_pays.pack()
     fenetre.bind("<Return>", rechercher_pays) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction rechercher pays qui s'exécute
 
@@ -203,7 +211,7 @@ def rechercher_pays(event=None):
     ENTREE=zone_pays.get()
     #print (ENTREE)
     y_position = 50
-    if main.admin.search_pays(ENTREE)=="ERREUR": #on test si cette personne existe dans notre dico visiteur
+    if main.admin.search_pays(ENTREE)=="ERREUR": #on test si le paus rentré est bien dans les jeux
             text = tk.Label(text = "Réessayer ce pays ne participe pas aux jeux !")  # Créer un Label avec les informations de l'athlète
             text.configure(bg='#3399FF') #on définit le background du texte
             text.place(x=400, y=50)   
@@ -213,15 +221,46 @@ def rechercher_pays(event=None):
         for lignes in infos:
             text = tk.Label(text = lignes)  # Créer un Label avec les informations de l'athlète
             text.configure(bg='#3399FF') #on définit le background du texte
-            text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
+            text.place(x=200, y=y_position)  # Place le Label dans la fenêtre
             y_position += 30
+
+#Configuration de deux petites fonctions qui vont permettre de supprimer la justification des ENTRY lorsque l'on veut clique dessus
+#et lorsque l'on y sort elle réapparait
+def retire_justi_visiteur_nom(event=None):
+    if zone_visiteur_nom.get() == "NOM":
+        zone_visiteur_nom.delete(0,'end')#les parametres sont les positions des caractères à retirer, ici du débu (0) à la fin ("end")
+        zone_visiteur_nom.config(fg="Black",font=("Tw Cent Mt",13))
+
+def remise_justi_visiteur_nom(event=None):
+    if zone_visiteur_nom.get() == "":
+        zone_ath_nom.insert(0,"NOM")
+        zone_ath_nom.config(fg="gray",font=("Tw Cent Mt",13))
+
+def retire_justi_visiteur_prenom(event=None):
+    if zone_visiteur_prenom.get() == "Prénom":
+        zone_visiteur_prenom.delete(0,'end')#les parametres sont les positions des caractères à retirer, ici du débu (0) à la fin ("end")
+        zone_visiteur_prenom.config(fg="Black",font=("Tw Cent Mt",13))
+
+def remise_justi_visiteur_prenom(event=None):
+    if zone_visiteur_prenom.get() == "":
+        zone_visiteur_prenom.insert(0,"Prénom")
+        zone_visiteur_prenom.config(fg="gray",font=("Tw Cent Mt",13))
 
 def zone_texte_visi_nom():
     effacer_label()
     effacer_texte()
     global zone_visiteur_nom
-    zone_visiteur_nom = tk.Entry()
+    zone_visiteur_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_visiteur_nom.insert(0,"NOM")
+    zone_visiteur_nom.bind("<FocusIn>", retire_justi_visiteur_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
+    zone_visiteur_nom.bind("<FocusOut>", remise_justi_visiteur_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
     zone_visiteur_nom.pack()
+    global zone_visiteur_prenom
+    zone_visiteur_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_visiteur_prenom.insert(0,"Prénom")
+    zone_visiteur_prenom.bind("<FocusIn>", retire_justi_visiteur_prenom)
+    zone_visiteur_prenom.bind("<FocusOut>", remise_justi_visiteur_prenom)
+    zone_visiteur_prenom.pack()
     fenetre.bind("<Return>", rechercher_visiteur_nom) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction rechercher_visiteur_nom qui s'exécute
 
 def rechercher_visiteur_nom():
@@ -258,9 +297,6 @@ def rechercher_dis():
         text.configure(bg='#3399FF')
         text.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
         y_position += 30
-
-
-
 
 interface_principale()
 fenetre.mainloop()
