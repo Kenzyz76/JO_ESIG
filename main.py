@@ -37,11 +37,22 @@ class Administrateur:
             dic_vis[nom+" "+prenom]=visiteur0 #on ajoute le visiteur à notre dico de visiteur
         return(dic_vis)
 
-    def ad_athlete(self,nom0,prenom0,nais0,pays0,disc0):
+    def ad_athlete(self,nom0,prenom0,nais0,pays0,dis0):
+#ici pour associer chaque id aux pays et à la discipline on a choisit d'utiliser un dictionnaire, cela évite les nombreuses boucle IF...ELIF...ELSE...
+        id_pays={"FRANCE":"1",
+               "ALGÉRIE":"2",
+               "JAMAÏQUE":"3",
+               "JAPON":"4",
+               "CHINE":"5",}.get(pays0)
+        id_dis={"JUDO":"1",
+               "NATATION":"2",
+               "TENNIS_DE_TABLE":"3",
+               "ATHLETISME":"4",
+               "GYMNASTIQUE_ARTISTIQUE":"5",}.get(dis0)
         cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
         ordre="""INSERT INTO Athletes(ath_nom, ath_prenom, ath_naissance, ath_pays, ath_discipline) 
                 VALUES (%s,%s,%s,%s,%s)"""#on donne l'ordre
-        cursor.execute(ordre,(nom0,prenom0,nais0,pays0,disc0))
+        cursor.execute(ordre,(nom0,prenom0,nais0,id_pays,id_dis))
         lien.commit()#pour que la modification soit conservée
 
     def ad_visiteur(self,nom0,prenom0):
@@ -72,6 +83,14 @@ class Administrateur:
             list_SORTIE.append(dic_vis[cle].afficher())
         return(list_SORTIE)
 
+    def search_athlete(self,ENTREE):
+        dic_ath=admin.ecriture_athlete()
+        if ENTREE in dic_ath.keys(): #on test si l'athlète rentrée par l'utilisateur est dans notre dico
+            infos=dic_ath[ENTREE].afficher()
+            return(infos)
+        else:
+            return ("ERREUR")
+
     def search_pays(self,ENTREE):
         dic_ath=admin.ecriture_athlete()
         liste_pays=[]
@@ -81,29 +100,6 @@ class Administrateur:
         if ENTREE in liste_pays: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
             for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
                 if ENTREE==athlete.pays: 
-                    athlete_infos=dic_ath[cle].afficher()
-                    liste_SORTIE.append(athlete_infos)
-            return(liste_SORTIE)
-        else:
-            return("ERREUR")
-
-    def search_athlete(self,ENTREE):
-        dic_ath=admin.ecriture_athlete()
-        if ENTREE in dic_ath.keys(): #on test si l'athlète rentrée par l'utilisateur est dans notre dico
-            infos=dic_ath[ENTREE].afficher()
-            return(infos)
-        else:
-            return ("ERREUR")
-            
-    def search_dis(self,ENTREE):
-        dic_ath=admin.ecriture_athlete()
-        liste_dis=[]
-        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
-        for (cle,athlete) in dic_ath.items(): #on lit notre dico pour ajouter tous les pays dans la liste_pays
-            liste_dis.append(athlete.dis)
-        if ENTREE in liste_dis: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
-            for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
-                if ENTREE==athlete.dis: 
                     athlete_infos=dic_ath[cle].afficher()
                     liste_SORTIE.append(athlete_infos)
             return(liste_SORTIE)
@@ -121,25 +117,40 @@ class Administrateur:
     def search_visiteur_num(self,ENTREE):
         dic_vis=admin.ecriture_visiteur()
         liste_num=[]
-        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
-        for (cle,athlete) in dic_vis.items(): #on lit notre dico pour ajouter tous les pays dans la liste_pays
+        for (cle,athlete) in dic_vis.items(): #on lit notre dico pour ajouter tous les numeros dans la liste_num
             liste_num.append(athlete.numero)
         if ENTREE in liste_num: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
-            for (cle,visiteur) in dic_vis.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
+            for (cle,visiteur) in dic_vis.items(): #et on re-parcours le dico pour afficher les infos du visiteur aillant le m^me numéro que celui rentré par l'utilisateur 
                 if ENTREE==visiteur.numero: 
                     visiteur_infos=dic_vis[cle].afficher()
-                    liste_SORTIE.append(visiteur_infos)
+            return(visiteur_infos)
+        else:
+            return("ERREUR")
+
+    def search_dis(self,ENTREE):
+        dic_ath=admin.ecriture_athlete()
+        liste_dis=[]
+        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
+        for (cle,athlete) in dic_ath.items(): #on lit notre dico pour ajouter tous les pays dans la liste_pays
+            liste_dis.append(athlete.dis)
+        if ENTREE in liste_dis: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
+            for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
+                if ENTREE==athlete.dis: 
+                    athlete_infos=dic_ath[cle].afficher()
+                    liste_SORTIE.append(athlete_infos)
             return(liste_SORTIE)
         else:
             return("ERREUR")
+
             
 ##### Programme d'éxécution #####
+
 admin=Administrateur() #on créer un administrateur
 #admin.ad_athlete("Darius","TOP","1955-06-19","FRANCE","JUDO")
 #admin.ad_visiteur("FGHC","cvgsh")
 #admin.show_athlete() #on appel la fonction
 #admin.show_visiteur()
 #admin.search_athlete("RINER Teddy")
-#admin.search_visiteur()
+#admin.search_visiteur_num("1698736489")
 #admin.search_dis()
-admin.search_pays("FRANCE")
+#admin.search_pays("FRANCE")
