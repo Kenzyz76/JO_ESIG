@@ -176,8 +176,8 @@ def zone_texte_ath():
 
 def rechercher_athlete(event=None):
     effacer_label()
-    Nom=zone_ath_nom.get()
-    Prénom=zone_ath_prenom.get()
+    Nom=zone_ath_nom.get().upper()
+    Prénom=zone_ath_prenom.get().capitalize()
     ENTREE=Nom+" "+Prénom
     #print (ENTREE)
     if main.admin.search_athlete(ENTREE)=="ERREUR": #on test si cette personne est bien dans notre dico athlete
@@ -210,7 +210,7 @@ def zone_texte_pays():
 
 def rechercher_pays(event=None):
     effacer_label()
-    ENTREE=zone_pays.get()
+    ENTREE=zone_pays.get().upper()
     #print (ENTREE)
     y_position = 50
     if main.admin.search_pays(ENTREE)=="ERREUR": #on test si le paus rentré est bien dans les jeux
@@ -267,8 +267,8 @@ def zone_texte_visi_nom():
 
 def rechercher_visiteur_nom(event=None):
     effacer_label()
-    Nom=zone_visiteur_nom.get()
-    Prénom=zone_visiteur_prenom.get()
+    Nom=zone_visiteur_nom.get().upper()
+    Prénom=zone_visiteur_prenom.get().capitalize()
     ENTREE=Nom+" "+Prénom
     #print (ENTREE)
     if main.admin.search_visiteur_nom(ENTREE)=="ERREUR": #on test si cette personne est bien dans notre dico athlete
@@ -336,7 +336,7 @@ def zone_texte_dis():
 
 def rechercher_dis(event=None):
     effacer_label()
-    ENTREE=zone_dis.get()
+    ENTREE=zone_dis.get().upper().replace(" ","_")
     #print (ENTREE)
     y_position = 50
     if main.admin.search_dis(ENTREE)=="ERREUR": #on test si le paus rentré est bien dans les jeux
@@ -443,8 +443,8 @@ def zone_texte_ajout_ath():
 
 def ajout_athlete(event=None):
     effacer_label()
-    Nom=zone_ajout_ath_nom.get()
-    Prénom=zone_ajout_ath_prenom.get()
+    Nom=zone_ajout_ath_nom.get().upper()
+    Prénom=zone_ajout_ath_prenom.get().capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
     Naissance=zone_ajout_ath_naissance.get()
     Pays=zone_ajout_ath_pays.get().upper().replace(" ","_") #pour ne pas avoir le problème des majuscules et des espaces avec le replace
     Discipline=zone_ajout_ath_dis.get().upper().replace(" ","_")
@@ -503,8 +503,8 @@ def zone_texte_ajout_visiteur():
 
 def ajout_visiteur(event=None):
     effacer_label()
-    Nom=zone_ajout_visiteur_nom.get()
-    Prénom=zone_ajout_visiteur_prenom.get()
+    Nom=zone_ajout_visiteur_nom.get().upper()
+    Prénom=zone_ajout_visiteur_prenom.get().capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
     ENTREE=str(Nom)+" "+str(Prénom)
     #print (ENTREE)
     try:
