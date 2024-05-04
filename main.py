@@ -24,6 +24,7 @@ class Administrateur:
             nom, prenom, naissance, pays, discipline, recompense= iathlete #on assigne à chaque valeur du tuple une variable sous forme de nom
             athlete0=Athlete(nom,prenom,naissance,pays,discipline, recompense) #on créer (instancie) un athlète
             dic_ath[nom+" "+prenom]=athlete0 #on ajoute l'athlete à notre dico d'athlete
+        cursor.close()
         return(dic_ath)
 
     def ecriture_visiteur(self):
@@ -35,6 +36,7 @@ class Administrateur:
             nom, prenom, numero= ivisiteur #on assigne à chaque valeur du tuple une variable sous forme de nom
             visiteur0=Visiteur(nom,prenom,numero) #on créer (instancie) un visiteur
             dic_vis[nom+" "+prenom]=visiteur0 #on ajoute le visiteur à notre dico de visiteur
+        cursor.close()
         return(dic_vis)
 
     def ad_athlete(self,nom0,prenom0,nais0,pays0,dis0):
@@ -49,11 +51,12 @@ class Administrateur:
                "TENNIS_DE_TABLE":"3",
                "ATHLETISME":"4",
                "GYMNASTIQUE_ARTISTIQUE":"5",}.get(dis0)
-        cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
+        cursor_insert=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
         ordre="""INSERT INTO Athletes(ath_nom, ath_prenom, ath_naissance, ath_pays, ath_discipline) 
                 VALUES (%s,%s,%s,%s,%s)"""#on donne l'ordre
-        cursor.execute(ordre,(nom0,prenom0,nais0,id_pays,id_dis))
+        cursor_insert.execute(ordre,(nom0,prenom0,nais0,id_pays,id_dis))
         lien.commit()#pour que la modification soit conservée
+        cursor_insert.close()
 
     def ad_visiteur(self,nom0,prenom0):
         suite0=random.choices("0123456789", k=10) #on prend une sequence de 10 chiffres dans une liste
@@ -67,23 +70,50 @@ class Administrateur:
                 VALUES (%s,%s,%s)"""#on donne l'ordre
         cursor_insert.execute(ordre,(nom0,prenom0,num0))
         lien.commit()#pour que la modification soit conservée
+        cursor_insert.close()
 
     def del_athlete(self,nom0,prenom0):
-        cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
-        ordre="""DELETE FROM Athletes 
-                WHERE ath_nom=%s AND ath_prenom=%s"""#on donne l'ordre
-        cursor.execute(ordre,(nom0,prenom0))
-        lien.commit()#pour que la modification soit conservée
+        ENTREE=nom0+" "+prenom0
+        dic_ath=admin.ecriture_athlete()
+        if ENTREE in dic_ath.keys():
+            cursor_del=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
+            ordre="""DELETE FROM Athletes 
+                    WHERE ath_nom=%s AND ath_prenom=%s"""#on donne l'ordre
+            cursor_del.execute(ordre,(nom0,prenom0))
+            lien.commit()#pour que la modification soit conservée
+            cursor_del.close()
+        else:
+            return("ERREUR")
 
     def del_visiteur(self,nom0,prenom0):
         ENTREE=nom0+" "+prenom0
         dic_vis=admin.ecriture_visiteur()
         if ENTREE in dic_vis.keys():
-            cursor_insert=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
+            cursor_del=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
             ordre="""DELETE FROM Visiteurs 
                     WHERE vis_nom=%s AND vis_prenom=%s""" #on donne l'ordre
-            cursor_insert.execute(ordre,(nom0,prenom0))
+            cursor_del.execute(ordre,(nom0,prenom0))
             lien.commit()#pour que la modification soit conservée
+            cursor_del.close()
+        else:
+            return("ERREUR")
+   
+    def update_recompense(self,nom0,prenom0,rec0):
+        ENTREE=nom0+" "+prenom0
+        if rec0=="None" or rec0=="Rien" or rec0==" ": #ici on traduit le none str ou le rien rentré par l'utilisateur par la valeur <None>
+            rec0=None
+        dic_ath=admin.ecriture_athlete()
+        if ENTREE in dic_ath.keys():
+            if dic_ath[ENTREE].rec!=rec0:
+                cursor_up=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
+                ordre="""UPDATE Athletes
+                        SET ath_recompense=%s 
+                        WHERE ath_nom=%s AND ath_prenom=%s"""#on donne l'ordre
+                cursor_up.execute(ordre,(rec0,nom0,prenom0))
+                lien.commit()#pour que la modification soit conservée
+                cursor_up.close()
+            else:
+                return("DEJA LA MEDAILLE")
         else:
             return("ERREUR")
 
@@ -120,6 +150,23 @@ class Administrateur:
         if ENTREE in liste_pays: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
             for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
                 if ENTREE==athlete.pays: 
+                    athlete_infos=dic_ath[cle].afficher()
+                    liste_SORTIE.append(athlete_infos)
+            return(liste_SORTIE)
+        else:
+            return("ERREUR")
+        
+    def search_recompense(self,ENTREE):
+        dic_ath=admin.ecriture_athlete()
+        liste_rec=[]
+        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
+        if ENTREE=="None" or ENTREE=="Rien" or ENTREE==" ": #ici on traduit le none str ou le rien rentré par l'utilisateur par la valeur <None>
+            ENTREE=None
+        for (cle,athlete) in dic_ath.items(): #on lit notre dico pour ajouter toutes les récompenses dans la liste_rec
+            liste_rec.append(athlete.rec)
+        if ENTREE in liste_rec: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
+            for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
+                if ENTREE==athlete.rec: 
                     athlete_infos=dic_ath[cle].afficher()
                     liste_SORTIE.append(athlete_infos)
             return(liste_SORTIE)
