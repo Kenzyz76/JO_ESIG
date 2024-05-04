@@ -68,6 +68,25 @@ class Administrateur:
         cursor_insert.execute(ordre,(nom0,prenom0,num0))
         lien.commit()#pour que la modification soit conservée
 
+    def del_athlete(self,nom0,prenom0):
+        cursor=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
+        ordre="""DELETE FROM Athletes 
+                WHERE ath_nom=%s AND ath_prenom=%s"""#on donne l'ordre
+        cursor.execute(ordre,(nom0,prenom0))
+        lien.commit()#pour que la modification soit conservée
+
+    def del_visiteur(self,nom0,prenom0):
+        ENTREE=nom0+" "+prenom0
+        dic_vis=admin.ecriture_visiteur()
+        if ENTREE in dic_vis.keys():
+            cursor_insert=lien.cursor() #on créer un curseur où lorsque qu'on lui donnera un ordre de lecture il lira la base de donnée qu'on lui a renseigner dans lien
+            ordre="""DELETE FROM Visiteurs 
+                    WHERE vis_nom=%s AND vis_prenom=%s""" #on donne l'ordre
+            cursor_insert.execute(ordre,(nom0,prenom0))
+            lien.commit()#pour que la modification soit conservée
+        else:
+            return("ERREUR")
+
     def show_athlete(self):
         dic_ath=admin.ecriture_athlete()
         liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
@@ -80,7 +99,8 @@ class Administrateur:
         dic_vis=admin.ecriture_visiteur()
         list_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque visiteur dans une liste pour seulement à faire un for element dans notre I.G
         for cle in dic_vis:
-            list_SORTIE.append(dic_vis[cle].afficher())
+            visiteur_infos=dic_vis[cle].afficher()
+            list_SORTIE.append(visiteur_infos)
         return(list_SORTIE)
 
     def search_athlete(self,ENTREE):
@@ -105,7 +125,22 @@ class Administrateur:
             return(liste_SORTIE)
         else:
             return("ERREUR")
-
+        
+    def search_dis(self,ENTREE):
+        dic_ath=admin.ecriture_athlete()
+        liste_dis=[]
+        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
+        for (cle,athlete) in dic_ath.items(): #on lit notre dico pour ajouter tous les pays dans la liste_pays
+            liste_dis.append(athlete.dis)
+        if ENTREE in liste_dis: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
+            for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
+                if ENTREE==athlete.dis: 
+                    athlete_infos=dic_ath[cle].afficher()
+                    liste_SORTIE.append(athlete_infos)
+            return(liste_SORTIE)
+        else:
+            return("ERREUR")
+        
     def search_visiteur_nom(self,ENTREE):
         dic_vis=admin.ecriture_visiteur()
         if ENTREE in dic_vis.keys(): #on test si l'athlète rentrée par l'utilisateur est dans notre dico
@@ -126,31 +161,18 @@ class Administrateur:
             return(visiteur_infos)
         else:
             return("ERREUR")
-
-    def search_dis(self,ENTREE):
-        dic_ath=admin.ecriture_athlete()
-        liste_dis=[]
-        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
-        for (cle,athlete) in dic_ath.items(): #on lit notre dico pour ajouter tous les pays dans la liste_pays
-            liste_dis.append(athlete.dis)
-        if ENTREE in liste_dis: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
-            for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
-                if ENTREE==athlete.dis: 
-                    athlete_infos=dic_ath[cle].afficher()
-                    liste_SORTIE.append(athlete_infos)
-            return(liste_SORTIE)
-        else:
-            return("ERREUR")
-
             
 ##### Programme d'éxécution #####
 
 admin=Administrateur() #on créer un administrateur
 #admin.ad_athlete("Darius","TOP","1955-06-19","FRANCE","JUDO")
-#admin.ad_visiteur("FGHC","cvgsh")
-#admin.show_athlete() #on appel la fonction
+#admin.ad_visiteur("DEBERGNE","Dylan")
+#admin.del_visiteur("DEBEGNE","Dylan")
+#admin.del_athlete("DARIUS","TOP")
+#admin.show_athlete()
 #admin.show_visiteur()
 #admin.search_athlete("RINER Teddy")
 #admin.search_visiteur_num("1698736489")
-#admin.search_dis()
+#admin.search_dis("JUDO")
 #admin.search_pays("FRANCE")
+

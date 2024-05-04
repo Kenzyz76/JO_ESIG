@@ -105,8 +105,8 @@ def afficher_interface_visiteur():
     cadre_droit.pack(side="right", fill="both")
 
     # Ajouter les boutons au Frame de droite
-    creer_bouton(cadre_droit, "Ajouter un visiteur", zone_texte_ajout_visiteur,20,2, 'red','Tw Cen MT',12)
-    creer_bouton(cadre_droit, "Supprimer un visiteur", afficher_athlete,20,2, 'red','Tw Cen MT',12)
+    creer_bouton(cadre_droit, "Ajouter un visiteur", zone_texte_ajout_visiteur,20,2, '#ff7070','Tw Cen MT',12)
+    creer_bouton(cadre_droit, "Supprimer un visiteur", zone_texte_suppr_visiteur,20,2, '#ff3f3f','Tw Cen MT',12)
     creer_bouton(fenetre=cadre_droit, texte="",commande=None, largeur=20, hauteur=2, couleur='#cbd4d4',police='Tw Cen MT',taille=12)
     creer_bouton(cadre_droit, "Afficher la map", afficher_athlete, 20, 2, '#00ff73','Tw Cen MT',12)
     cadre_bouton_retour2.lift() # permet de placer le cadre cadre_bouton_retour1 au premier plan
@@ -176,9 +176,11 @@ def zone_texte_ath():
 
 def rechercher_athlete(event=None):
     effacer_label()
-    Nom=zone_ath_nom.get().upper()
-    Prénom=zone_ath_prenom.get().capitalize()
-    ENTREE=Nom+" "+Prénom
+    Nom=zone_ath_nom.get()
+    NOM=Nom.upper
+    prénom=zone_ath_prenom.get()
+    Prénom=prénom.capitalize()
+    ENTREE=NOM+" "+Prénom
     #print (ENTREE)
     if main.admin.search_athlete(ENTREE)=="ERREUR": #on test si cette personne est bien dans notre dico athlete
             erreur = tk.Label(text = "Réessayer cet(te) athlète ne participe pas aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
@@ -210,7 +212,8 @@ def zone_texte_pays():
 
 def rechercher_pays(event=None):
     effacer_label()
-    ENTREE=zone_pays.get().upper()
+    entree=zone_pays.get()
+    ENTREE=entree.upper()
     #print (ENTREE)
     y_position = 50
     if main.admin.search_pays(ENTREE)=="ERREUR": #on test si le paus rentré est bien dans les jeux
@@ -267,9 +270,11 @@ def zone_texte_visi_nom():
 
 def rechercher_visiteur_nom(event=None):
     effacer_label()
-    Nom=zone_visiteur_nom.get().upper()
-    Prénom=zone_visiteur_prenom.get().capitalize()
-    ENTREE=Nom+" "+Prénom
+    Nom=zone_visiteur_nom.get()
+    NOM=Nom.upper()
+    prénom=zone_visiteur_prenom.get()
+    Prénom=prénom.capitalize()
+    ENTREE=NOM+" "+Prénom
     #print (ENTREE)
     if main.admin.search_visiteur_nom(ENTREE)=="ERREUR": #on test si cette personne est bien dans notre dico athlete
             erreur = tk.Label(text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
@@ -336,7 +341,8 @@ def zone_texte_dis():
 
 def rechercher_dis(event=None):
     effacer_label()
-    ENTREE=zone_dis.get().upper().replace(" ","_")
+    entree=zone_dis.get().replace(" ","_")
+    ENTREE=entree.upper()
     #print (ENTREE)
     y_position = 50
     if main.admin.search_dis(ENTREE)=="ERREUR": #on test si le paus rentré est bien dans les jeux
@@ -443,20 +449,29 @@ def zone_texte_ajout_ath():
 
 def ajout_athlete(event=None):
     effacer_label()
-    Nom=zone_ajout_ath_nom.get().upper()
-    Prénom=zone_ajout_ath_prenom.get().capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
+    Nom=zone_ajout_ath_nom.get()
+    NOM=Nom.upper()
+    prénom=zone_ajout_ath_prenom.get()
+    Prénom=prénom.capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
     Naissance=zone_ajout_ath_naissance.get()
-    Pays=zone_ajout_ath_pays.get().upper().replace(" ","_") #pour ne pas avoir le problème des majuscules et des espaces avec le replace
-    Discipline=zone_ajout_ath_dis.get().upper().replace(" ","_")
+    Pays=zone_ajout_ath_pays.get().replace(" ","_") #pour ne pas avoir de problèmes avec les espaces avec la méthode .replace()
+    PAYS=Pays.upper() #pour ne pas avoir le problème des majuscules 
+    Discipline=zone_ajout_ath_dis.get().replace(" ","_")
+    DISCIPLINE=Discipline.upper()
     #print (ENTREE)
     try:                          # on fait une petite condition selon laquelle si la fonction échoue alors on affiche un message d'erreur
-        main.admin.ad_athlete(Nom,Prénom,Naissance,Pays,Discipline)#on exécute l'ajout de l'athlète grâce à la fonction ad_athlete défini dans le main
-        texte_affichage="L'athlète "+str(Nom)+" "+str(Prénom)+" né le "+str(Naissance)+" est ajouté aux jeux !"
-        affichage = tk.Label(text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
-        affichage.place(x=200, y=90)  # Placer le Label dans la fenêtre
+        if NOM!="NOM" and Prénom!="Prénom":
+            main.admin.ad_athlete(NOM,Prénom,Naissance,PAYS,DISCIPLINE)#on exécute l'ajout de l'athlète grâce à la fonction ad_athlete défini dans le main
+            texte_affichage="L'athlète "+str(NOM)+" "+str(Prénom)+" né le "+str(Naissance)+" est ajouté aux jeux !"
+            affichage = tk.Label(text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
+            affichage.place(x=200, y=90)  # Placer le Label dans la fenêtre
+        else:
+            erreur_1 = tk.Label(text = "Votre saisie est incorrecte ou incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
+            erreur_1.place(x=200, y=100)  # Placer le Label dans la fenêtre
+    
     except Exception:
-        erreur = tk.Label(text = "Votre saisie est incorect, respecter la mise en forme des entrées !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
-        erreur.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_2 = tk.Label(text = "Votre saisie est incorrecte, respecter la mise en forme des entrées !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
+        erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Ajouter un visiteur >> #####################################
@@ -503,21 +518,89 @@ def zone_texte_ajout_visiteur():
 
 def ajout_visiteur(event=None):
     effacer_label()
-    Nom=zone_ajout_visiteur_nom.get().upper()
-    Prénom=zone_ajout_visiteur_prenom.get().capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
-    ENTREE=str(Nom)+" "+str(Prénom)
+    Nom=zone_ajout_visiteur_nom.get()
+    NOM=Nom.upper()
+    prénom=zone_ajout_visiteur_prenom.get()
+    Prénom=prénom.capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
+    ENTREE=str(NOM)+" "+str(Prénom)
     #print (ENTREE)
-    try:
-        main.admin.ad_visiteur(Nom,Prénom)#on exécute l'ajout de l'athlète grâce à la fonction ad_athlete défini dans le main
+    if NOM!="NOM" and Prénom!="Prénom":
+        main.admin.ad_visiteur(NOM,Prénom)#on exécute l'ajout de l'athlète grâce à la fonction ad_athlete défini dans le main
         dic_vis=main.admin.ecriture_visiteur()
-        texte_affichage_1="Le visiteur "+str(Nom)+" "+str(Prénom)+" est enregistré pour les jeux !"
+        texte_affichage_1="Le visiteur "+str(NOM)+" "+str(Prénom)+" est enregistré pour les jeux !"
         affichage_1 = tk.Label(text = texte_affichage_1, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
         affichage_1.place(x=200, y=60)  # Placer le Label dans la fenêtre
         texte_affichage_2="Votre numéro de billet personnel est: "+str(dic_vis[ENTREE].numero)
         affichage_2 = tk.Label(text = texte_affichage_2, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour afficher son numéro de billet
         affichage_2.place(x=200, y=90)  # Placer le Label dans la fenêtre
-    except Exception:
-        erreur = tk.Label(text = "Votre saisie est incorect, respecter la mise en forme des entrées !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
+    else:
+        erreur = tk.Label(text = "Votre saisie est incorrecte ou incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
+        erreur.place(x=200, y=100)  # Placer le Label dans la fenêtre
+
+################################################################################################################################################
+##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Supprimer un visiteur >> #####################################
+################################################################################################################################################
+
+def retire_justi_suppr_visiteur_nom(event=None):
+    if zone_suppr_visiteur_nom.get() == "NOM":
+        zone_suppr_visiteur_nom.delete(0,'end')#les parametres sont les positions des caractères à retirer, ici du début (0) à la fin ("end")
+        zone_suppr_visiteur_nom.config(fg="Black",font=("Tw Cent Mt",13))
+
+def remise_justi_suppr_visiteur_nom(event=None):
+    if zone_suppr_visiteur_nom.get() == "":
+        zone_suppr_visiteur_nom.insert(0,"NOM")
+        zone_suppr_visiteur_nom.config(fg="gray",font=("Tw Cent Mt",13))
+
+def retire_justi_suppr_visiteur_prenom(event=None):
+    if zone_suppr_visiteur_prenom.get() == "Prénom":
+        zone_suppr_visiteur_prenom.delete(0,'end')#les parametres sont les positions des caractères à retirer, ici du débu (0) à la fin ("end")
+        zone_suppr_visiteur_prenom.config(fg="Black",font=("Tw Cent Mt",13))
+
+def remise_justi_suppr_visiteur_prenom(event=None):
+    if zone_suppr_visiteur_prenom.get() == "":
+        zone_suppr_visiteur_prenom.insert(0,"Prénom")
+        zone_suppr_visiteur_prenom.config(fg="gray",font=("Tw Cent Mt",13))
+
+#Création des zones textes pour demandé les différentes entrées à l'utilisateur
+def zone_texte_suppr_visiteur():
+    effacer_label()
+    effacer_texte()
+    global zone_suppr_visiteur_nom
+    zone_suppr_visiteur_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13)) 
+    zone_suppr_visiteur_nom.insert(0,"NOM")
+    zone_suppr_visiteur_nom.bind("<FocusIn>", retire_justi_suppr_visiteur_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
+    zone_suppr_visiteur_nom.bind("<FocusOut>", remise_justi_suppr_visiteur_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
+    zone_suppr_visiteur_nom.pack()
+    global zone_suppr_visiteur_prenom
+    zone_suppr_visiteur_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_suppr_visiteur_prenom.insert(0,"Prénom")
+    zone_suppr_visiteur_prenom.bind("<FocusIn>", retire_justi_suppr_visiteur_prenom)
+    zone_suppr_visiteur_prenom.bind("<FocusOut>", remise_justi_suppr_visiteur_prenom)
+    zone_suppr_visiteur_prenom.pack()
+
+    fenetre.bind("<Return>", supprimer_visiteur) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction ajout_athlete qui s'exécute
+
+def supprimer_visiteur(event=None):
+    effacer_label()
+    Nom=zone_suppr_visiteur_nom.get()
+    NOM=Nom.upper()
+    prénom=zone_suppr_visiteur_prenom.get()
+    Prénom=prénom.capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
+    #print (ENTREE)
+    if NOM!="NOM" and Prénom!="Prénom":
+        if main.admin.del_visiteur(NOM,Prénom)=="ERREUR": #on test si le paus rentré est bien dans les jeux
+            erreur_1 = tk.Label(text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.place(x=400, y=60)
+            redirection = tk.Label(text = "Pour vous enregistrer et obtenir votre ticket, cliquer sur le bouton << Ajouter un visiteur >>", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message de redirection
+            redirection.place(x=170, y=90) 
+        else:
+            infos=main.admin.del_visiteur(NOM,Prénom)
+            #print (infos)
+            texte_affichage="Le visiteur "+str(NOM)+" "+str(Prénom)+" a annulé son billet pour les jeux !"
+            affichage = tk.Label(text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
+            affichage.place(x=200, y=60)  # Placer le Label dans la fenêtre
+    else:
+        erreur = tk.Label(text = "Votre saisie est incorrecte ou incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
         erreur.place(x=200, y=100)  # Placer le Label dans la fenêtre
 
 interface_principale()
