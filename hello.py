@@ -1,4 +1,5 @@
 import tkinter as tk
+import customtkinter as ctk
 import main
 
 # Créer la fenêtre principale
@@ -29,6 +30,9 @@ def creer_bouton(fenetre, texte, commande, largeur, hauteur, couleur, police, ta
     bouton = tk.Button(fenetre, text=texte, command=lambda: commande(), width=largeur, height=hauteur, bg=couleur, font=(police, taille))
     bouton.pack() #permet d'afficher le bouton
     return bouton
+
+def rien(event=None):
+    pass
 
 def interface_principale(): 
     effacer_fenetre()
@@ -129,7 +133,8 @@ def afficher_interface_visiteur():
     # Ajouter les boutons au Frame de droite
     creer_bouton(cadre_droit, "Ajouter un visiteur", zone_texte_ajout_visiteur,20,2, '#ff7070','Tw Cen MT',12)
     creer_bouton(cadre_droit, "Supprimer un visiteur", zone_texte_suppr_visiteur,20,2, '#ff3f3f','Tw Cen MT',12)
-    creer_bouton(fenetre=cadre_droit, texte="",commande=None, largeur=20, hauteur=2, couleur='#cbd4d4',police='Tw Cen MT',taille=12)
+    bouton_visiteur_droit_3=creer_bouton(fenetre=cadre_droit, texte="",commande=rien, largeur=20, hauteur=2, couleur='#cbd4d4',police='Tw Cen MT',taille=12)
+    bouton_visiteur_droit_3.config(border=0,activebackground="#cbd4d4")
     creer_bouton(cadre_droit, "Afficher la map", afficher_athlete, 20, 2, '#00ff73','Tw Cen MT',12)
 
     cadre_bouton_retour2.lift() # permet de placer le cadre cadre_bouton_retour1 au premier plan
@@ -205,7 +210,7 @@ def rechercher_athlete(event=None):
     Prénom=prénom.capitalize()
     ENTREE=NOM+" "+Prénom
     #print (ENTREE)
-    if NOM!="NOM" and Prénom!="Prénom":
+    if NOM!="NOM" and NOM!="" and Prénom!="Prénom"and Prénom!="" :
         SORTIE=main.admin.search_athlete(ENTREE)
         if SORTIE=="ERREUR": #on test si cette personne est bien dans notre dico athlete
             erreur_1 = tk.Label(text = "Réessayer cet(te) athlète ne participe pas aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
@@ -241,7 +246,7 @@ def rechercher_pays(event=None):
     entree=zone_pays.get()
     ENTREE=entree.upper()
     y_position = 50
-    if ENTREE!="PAYS":
+    if ENTREE!="PAYS" and ENTREE!="":
         SORTIE=main.admin.search_pays(ENTREE)
         if SORTIE=="ERREUR": #on test si le pays rentré est bien dans les jeux
             erreur_1 = tk.Label(text = "Réessayer ce pays ne participe pas aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
@@ -279,7 +284,7 @@ def rechercher_recompense(event=None):
     entree=zone_rec.get()
     Entrée=entree.capitalize()
     y_position = 50
-    if Entrée!="Médaille":
+    if Entrée!="Médaille" and Entrée!="":
         SORTIE=main.admin.search_recompense(Entrée)
         if SORTIE=="ERREUR": #on test si la récompense rentré existe bien
             erreur_1 = tk.Label(text = "Réessayer, cette récompense n'existe pas !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
@@ -317,7 +322,7 @@ def rechercher_dis(event=None):
     entree=zone_dis.get().replace(" ","_")
     ENTREE=entree.upper()
     y_position = 50
-    if ENTREE!="DISCIPLINE":
+    if ENTREE!="DISCIPLINE" and ENTREE!="":
         SORTIE=main.admin.search_dis(ENTREE)
         if SORTIE=="ERREUR": #on test si la discipline rentrée est bien dans les jeux
             erreur_1 = tk.Label(text = "Réessayer cette discipline n'est pas présente aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
@@ -379,7 +384,7 @@ def rechercher_visiteur_nom(event=None):
     prénom=zone_visiteur_prenom.get()
     Prénom=prénom.capitalize()
     ENTREE=NOM+" "+Prénom
-    if NOM!="NOM" and Prénom!="Prénom":
+    if NOM!="NOM" and NOM!="" and Prénom!="Prénom"and Prénom!="" :
         SORTIE=main.admin.search_visiteur_nom(ENTREE)
         if SORTIE=="ERREUR": #on test si cette personne est bien dans notre dico athlete
             erreur_1 = tk.Label(text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
@@ -415,7 +420,7 @@ def zone_texte_visi_num():
 def rechercher_visiteur_num(event=None):
     effacer_label()
     ENTREE=zone_visiteur_num.get()
-    if ENTREE!="NUMERO DU BILLET":
+    if ENTREE!="NUMERO DU BILLET" and ENTREE!="":
         SORTIE=main.admin.search_visiteur_num(ENTREE)
         if SORTIE=="ERREUR": #on test si le numéro rentré est bien recenser
             erreur_1 = tk.Label(text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
@@ -532,7 +537,7 @@ def ajout_athlete(event=None):
     Discipline=zone_ajout_ath_dis.get().replace(" ","_")
     DISCIPLINE=Discipline.upper()
     try:                          # on fait une petite condition selon laquelle si la fonction échoue alors on affiche un message d'erreur
-        if NOM!="NOM" and Prénom!="Prénom" and Naissance!="Date de naissance: AAAA-MM-JJ" and PAYS!="PAYS" and DISCIPLINE!="DISCIPLINE":
+        if NOM!="NOM" and Prénom!="Prénom" and Naissance!="Date de naissance: AAAA-MM-JJ" and PAYS!="PAYS" and DISCIPLINE!="DISCIPLINE" and NOM!="" and Prénom!="" and Naissance!="" and PAYS!="" and DISCIPLINE!="":
             main.admin.ad_athlete(NOM,Prénom,Naissance,PAYS,DISCIPLINE)#on exécute l'ajout de l'athlète grâce à la fonction ad_athlete défini dans le main
             texte_affichage="L'athlète "+str(NOM)+" "+str(Prénom)+" né le "+str(Naissance)+" est ajouté aux jeux !"
             affichage = tk.Label(text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
@@ -596,7 +601,7 @@ def ajout_visiteur(event=None):
     Prénom=prénom.capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
     ENTREE=str(NOM)+" "+str(Prénom)
     #print (ENTREE)
-    if NOM!="NOM" and Prénom!="Prénom":
+    if NOM!="NOM" and Prénom!="Prénom" and NOM!="" and Prénom!="":
         main.admin.ad_visiteur(NOM,Prénom)#on exécute l'ajout de l'athlète grâce à la fonction ad_athlete défini dans le main
         dic_vis=main.admin.ecriture_visiteur()
         texte_affichage_1="Le visiteur "+str(NOM)+" "+str(Prénom)+" est enregistré pour les jeux !"
@@ -659,7 +664,7 @@ def supprimer_visiteur(event=None):
     prénom=zone_suppr_visiteur_prenom.get()
     Prénom=prénom.capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
     #print (ENTREE)
-    if NOM!="NOM" and Prénom!="Prénom":
+    if NOM!="NOM" and Prénom!="Prénom" and NOM!="" and Prénom!="":
         SORTIE=main.admin.del_visiteur(NOM,Prénom)
         if SORTIE=="ERREUR": #on test si le paus rentré est bien dans les jeux
             erreur_1 = tk.Label(text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
@@ -725,7 +730,7 @@ def supprimer_athlete(event=None):
     prénom=zone_suppr_ath_prenom.get()
     Prénom=prénom.capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
     #print (ENTREE)
-    if NOM!="NOM" and Prénom!="Prénom":
+    if NOM!="NOM" and Prénom!="Prénom" and NOM!="" and Prénom!="":
         SORTIE=main.admin.del_athlete(NOM,Prénom)
         if SORTIE=="ERREUR": #on test si le paus rentré est bien dans les jeux
             erreur_1 = tk.Label(text = "Cet athlète ne participe pas à ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
@@ -805,7 +810,7 @@ def modifier_recompense(event=None):
     Prénom=prénom.capitalize() #pour transformer la chaine de caractère en minuscule et seulement le premier en MAJ
     médaille=zone_rec_medaille.get()
     Médaille=médaille.capitalize()
-    if NOM!="NOM" and Prénom!="Prénom" and Médaille!="Médaille" and (Médaille=="Or" or Médaille=="Argent" or Médaille=="Bronze" or Médaille=="None" or Médaille=="Rien" or Médaille==" "):
+    if NOM!="NOM" and Prénom!="Prénom" and Médaille!="Médaille" and (Médaille=="Or" or Médaille=="Argent" or Médaille=="Bronze" or Médaille=="None" or Médaille=="Rien" or Médaille==" ") and NOM!="" and Prénom!="" and Médaille!="":
         SORTIE=main.admin.update_recompense(NOM,Prénom,Médaille)
         if SORTIE=="ERREUR": #on test si le paus rentré est bien dans les jeux
             erreur_1 = tk.Label(text = "Cet athlète ne participe pas à ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
