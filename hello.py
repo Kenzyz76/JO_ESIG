@@ -21,8 +21,18 @@ def effacer_label():
         if isinstance(child, tk.Label):
             child.destroy()
 
+def effacer_label_cadre():
+    for child in cadre_scrollbar_ath.winfo_children():
+        if isinstance(child, tk.Label):
+            child.destroy()
+
 def effacer_texte(): #Obligatoire pour pouvoir rafraichir la zone de texte 
     for child in fenetre.winfo_children():
+        if isinstance(child, tk.Entry):
+            child.destroy()
+
+def effacer_texte_cadre():
+    for child in cadre_scrollbar_ath.winfo_children():
         if isinstance(child, tk.Entry):
             child.destroy()
 
@@ -138,8 +148,10 @@ def afficher_interface_visiteur():
 #Définition des fonctions:
 def afficher_athlete():
     effacer_label()
+    effacer_label_cadre()
     effacer_texte()
-    cadre_scrollbar_ath.configure(label_text="Afficher tous les athlètes",)
+    effacer_texte_cadre()
+    cadre_scrollbar_ath.configure(label_text="Afficher tous les athlètes")
     for lignes in main.admin.show_athlete():
         athlete_info = tk.Label(cadre_scrollbar_ath,text = lignes,font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
         athlete_info.pack(pady=10)  # Placer le Label dans la fenêtre
@@ -182,15 +194,18 @@ def remise_justi_ath_prenom(event=None):
 #Création des zones textes pour demandé les différentes entrées à l'utilisateur
 def zone_texte_ath():
     effacer_label()
+    effacer_label_cadre()
     effacer_texte()
+    effacer_texte_cadre()
+    cadre_scrollbar_ath.configure(label_text="Rechercher un athlète")
     global zone_ath_nom
-    zone_ath_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_ath_nom = tk.Entry(cadre_scrollbar_ath, fg="gray",font=("Tw Cent Mt",13))
     zone_ath_nom.insert(0,"NOM")
     zone_ath_nom.bind("<FocusIn>", retire_justi_ath_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_ath_nom.bind("<FocusOut>", remise_justi_ath_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
     zone_ath_nom.pack()
     global zone_ath_prenom
-    zone_ath_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_ath_prenom = tk.Entry(cadre_scrollbar_ath, fg="gray",font=("Tw Cent Mt",13))
     zone_ath_prenom.insert(0,"Prénom")
     zone_ath_prenom.bind("<FocusIn>", retire_justi_ath_prenom)
     zone_ath_prenom.bind("<FocusOut>", remise_justi_ath_prenom)
@@ -199,8 +214,6 @@ def zone_texte_ath():
 
 def rechercher_athlete(event=None):
     effacer_label()
-    cadre_milieu_ath.destroy()
-    cadre_scrollbar_ath.destroy()
     Nom=zone_ath_nom.get()
     NOM=Nom.upper()
     prénom=zone_ath_prenom.get()
@@ -211,10 +224,10 @@ def rechercher_athlete(event=None):
         SORTIE=main.admin.search_athlete(ENTREE)
         if SORTIE=="ERREUR": #on test si cette personne est bien dans notre dico athlete
             erreur_1 = tk.Label(text = "Réessayer cet(te) athlète ne participe pas aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.place(x=400, y=50)  
+            erreur_1.place(x=400, y=100)  
         else:
             athlete_info = tk.Label(text = SORTIE, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
-            athlete_info.place(x=400, y=50)  # Placer le Label dans la fenêtre
+            athlete_info.place(x=400, y=100)  # Placer le Label dans la fenêtre
     else:
         erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
         erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
