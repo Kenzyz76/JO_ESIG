@@ -26,8 +26,24 @@ def effacer_milieu_ath():
     for child in cadre_scrollbar_ath.winfo_children():
         if isinstance(child, tk.Label):
             child.destroy()
+    for child in cadre_scrollbar_ath.winfo_children():
+        if isinstance(child, tk.Entry):
+            child.destroy()
+
+def effacer_infos_milieu_ath():
+     for child in cadre_scrollbar_ath.winfo_children():
+        if isinstance(child, tk.Label):
+            child.destroy()
 
 def effacer_milieu_vis():
+    for child in cadre_scrollbar_vis.winfo_children():
+        if isinstance(child, tk.Label):
+            child.destroy()
+    for child in cadre_scrollbar_vis.winfo_children():
+        if isinstance(child, tk.Entry):
+            child.destroy()
+
+def effacer_infos_milieu_vis():
     for child in cadre_scrollbar_vis.winfo_children():
         if isinstance(child, tk.Label):
             child.destroy()
@@ -94,7 +110,6 @@ def afficher_interface_athlete():
     creer_bouton(cadre_droit, "Modifier une récompense", zone_texte_recompense, 20, 2,'#2969eb','Tw Cen MT',12)
 
     ###################################### CADRE DU MILIEU ##################################################################
-    global cadre_milieu_ath
     cadre_milieu_ath = tk.Frame(fenetre)
     cadre_milieu_ath.pack(expand=True, side="top", fill="both")
     global cadre_scrollbar_ath
@@ -134,7 +149,6 @@ def afficher_interface_visiteur():
     creer_bouton(cadre_droit, "Afficher la map", afficher_plan, 20, 2, '#00ff73','Tw Cen MT',12)
 
     ###################################### CADRE DU MILIEU ##################################################################
-    global cadre_milieu_vis
     cadre_milieu_vis = tk.Frame(fenetre)
     cadre_milieu_vis.pack(expand=True, side="top", fill="both")
     global cadre_scrollbar_vis
@@ -146,8 +160,10 @@ def afficher_interface_visiteur():
 #Définition des fonctions:
 def afficher_plan(event=None):
     effacer_label()
+    effacer_milieu_vis()
     effacer_texte()
-    canvas_image = tk.Canvas(fenetre, width=600, height=600)
+    cadre_scrollbar_vis.configure(label_text="Afficher map")
+    canvas_image = tk.Canvas(cadre_scrollbar_vis, width=600, height=600)
     original_img = Image.open("plan_des_jo.jpg")
     resized_img = original_img.resize((600, 500))
     img = ImageTk.PhotoImage(resized_img)
@@ -161,7 +177,7 @@ def afficher_athlete():
     effacer_texte()
     cadre_scrollbar_ath.configure(label_text="Afficher tous les athlètes")
     for lignes in main.admin.show_athlete():
-        athlete_info = tk.Label(cadre_scrollbar_ath,text = lignes,font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
+        athlete_info = tk.Label(cadre_scrollbar_ath,text = lignes,bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
         athlete_info.pack(pady=10)  # Placer le Label dans la fenêtre
 
 def afficher_visiteur():
@@ -170,7 +186,7 @@ def afficher_visiteur():
     effacer_texte()
     cadre_scrollbar_vis.configure(label_text="Afficher tous les visiteurs")
     for lignes in main.admin.show_visiteur():
-        visiteur_info = tk.Label(cadre_scrollbar_vis,text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations du visiteur
+        visiteur_info = tk.Label(cadre_scrollbar_vis,text = lignes, bg='#ff7070',font=("Tw Cent MT",13))  # Créer un Label avec les informations du visiteur
         visiteur_info.pack(pady=10)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
@@ -221,6 +237,7 @@ def zone_texte_ath():
 
 def rechercher_athlete(event=None):
     effacer_label()
+    effacer_infos_milieu_ath()
     Nom=zone_ath_nom.get()
     NOM=Nom.upper()
     prénom=zone_ath_prenom.get()
@@ -250,9 +267,11 @@ def retire_justi_pays(event=None):
 
 def zone_texte_pays():
     effacer_label()
+    effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath.configure(label_text="Afficher par pays")
     global zone_pays
-    zone_pays = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_pays = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13))
     zone_pays.insert(0,"PAYS")
     zone_pays.bind("<FocusIn>", retire_justi_pays)#le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_pays.pack()
@@ -260,9 +279,9 @@ def zone_texte_pays():
 
 def rechercher_pays(event=None):
     effacer_label()
+    effacer_infos_milieu_ath()
     entree=zone_pays.get()
     ENTREE=entree.upper()
-    y_position = 50
     if ENTREE!="PAYS" and ENTREE!="":
         SORTIE=main.admin.search_pays(ENTREE)
         if SORTIE=="ERREUR": #on test si le pays rentré est bien dans les jeux
@@ -270,9 +289,8 @@ def rechercher_pays(event=None):
             erreur_1.place(x=400, y=50)   
         else:
             for lignes in SORTIE:
-                athlete_infos = tk.Label(text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
-                athlete_infos.place(x=200, y=y_position)  # Place le Label dans la fenêtre
-                y_position += 30
+                athlete_infos = tk.Label(cadre_scrollbar_ath,text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
+                athlete_infos.pack(pady=10)  # Place le Label dans la fenêtre
     else:
         erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
         erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
@@ -288,9 +306,11 @@ def retire_justi_rec(event=None):
 
 def zone_texte_rec():
     effacer_label()
+    effacer_milieu_ath()
     effacer_texte()
     global zone_rec
-    zone_rec = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    cadre_scrollbar_ath.configure(label_text="Afficher par récompense")
+    zone_rec = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13))
     zone_rec.insert(0,"Médaille")
     zone_rec.bind("<FocusIn>", retire_justi_rec)#le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_rec.pack()
@@ -298,9 +318,9 @@ def zone_texte_rec():
 
 def rechercher_recompense(event=None):
     effacer_label()
+    effacer_infos_milieu_ath()
     entree=zone_rec.get()
     Entrée=entree.capitalize()
-    y_position = 50
     if Entrée!="Médaille" and Entrée!="":
         SORTIE=main.admin.search_recompense(Entrée)
         if SORTIE=="ERREUR": #on test si la récompense rentré existe bien
@@ -308,9 +328,8 @@ def rechercher_recompense(event=None):
             erreur_1.place(x=400, y=50)   
         else:
             for lignes in SORTIE:
-                athlete_infos = tk.Label(text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
-                athlete_infos.place(x=200, y=y_position)  # Place le Label dans la fenêtre
-                y_position += 30
+                athlete_infos = tk.Label(cadre_scrollbar_ath,text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
+                athlete_infos.pack(pady=10)  # Place le Label dans la fenêtre
     else:
         erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
         erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
@@ -326,9 +345,11 @@ def retire_justi_dis(event=None):
 
 def zone_texte_dis():
     effacer_label()
+    effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath.configure(label_text="Afficher par discipline")
     global zone_dis
-    zone_dis = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_dis = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13))
     zone_dis.insert(0,"DISCIPLINE")
     zone_dis.bind("<FocusIn>", retire_justi_dis)#le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_dis.pack()
@@ -336,9 +357,9 @@ def zone_texte_dis():
 
 def rechercher_dis(event=None):
     effacer_label()
+    effacer_infos_milieu_ath()
     entree=zone_dis.get().replace(" ","_")
     ENTREE=entree.upper()
-    y_position = 50
     if ENTREE!="DISCIPLINE" and ENTREE!="":
         SORTIE=main.admin.search_dis(ENTREE)
         if SORTIE=="ERREUR": #on test si la discipline rentrée est bien dans les jeux
@@ -346,9 +367,8 @@ def rechercher_dis(event=None):
             erreur_1.place(x=400, y=50)   
         else:
             for lignes in SORTIE:
-                athlete_infos = tk.Label(text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
-                athlete_infos.place(x=200, y=y_position)  # Place le Label dans la fenêtre
-                y_position += 30
+                athlete_infos = tk.Label(cadre_scrollbar_ath,text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
+                athlete_infos.pack(pady=10)  # Place le Label dans la fenêtre
     else:
         erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
         erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
@@ -379,15 +399,17 @@ def remise_justi_visiteur_prenom(event=None):
 
 def zone_texte_visi_nom():
     effacer_label()
+    effacer_milieu_vis()
     effacer_texte()
+    cadre_scrollbar_vis.configure(label_text="Rechercher par identité")
     global zone_visiteur_nom
-    zone_visiteur_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_visiteur_nom = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13))
     zone_visiteur_nom.insert(0,"NOM")
     zone_visiteur_nom.bind("<FocusIn>", retire_justi_visiteur_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_visiteur_nom.bind("<FocusOut>", remise_justi_visiteur_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
     zone_visiteur_nom.pack()
     global zone_visiteur_prenom
-    zone_visiteur_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_visiteur_prenom = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13))
     zone_visiteur_prenom.insert(0,"Prénom")
     zone_visiteur_prenom.bind("<FocusIn>", retire_justi_visiteur_prenom)
     zone_visiteur_prenom.bind("<FocusOut>", remise_justi_visiteur_prenom)
@@ -396,6 +418,7 @@ def zone_texte_visi_nom():
 
 def rechercher_visiteur_nom(event=None):
     effacer_label()
+    effacer_infos_milieu_vis()
     Nom=zone_visiteur_nom.get()
     NOM=Nom.upper()
     prénom=zone_visiteur_prenom.get()
@@ -426,7 +449,9 @@ def retire_justi_visiteur_num(event=None):
 
 def zone_texte_visi_num():
     effacer_label()
+    effacer_milieu_vis()
     effacer_texte()
+    cadre_scrollbar_vis.configure(label_text="Rechercher par numéro")
     global zone_visiteur_num
     zone_visiteur_num = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
     zone_visiteur_num.insert(0,"NUMERO DU BILLET")
@@ -436,6 +461,7 @@ def zone_texte_visi_num():
 
 def rechercher_visiteur_num(event=None):
     effacer_label()
+    effacer_infos_milieu_vis()
     ENTREE=zone_visiteur_num.get()
     if ENTREE!="NUMERO DU BILLET" and ENTREE!="":
         SORTIE=main.admin.search_visiteur_num(ENTREE)
@@ -508,33 +534,35 @@ def remise_justi_ajout_ath_dis(event=None):
 #Création des zones textes pour demandé les différentes entrées à l'utilisateur
 def zone_texte_ajout_ath():
     effacer_label()
+    effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath.configure(label_text="Ajouter un athlète")
     global zone_ajout_ath_nom
-    zone_ajout_ath_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13),width=30) #on augmente le nombre de caractère que la barre peut afficher
+    zone_ajout_ath_nom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13),width=30) #on augmente le nombre de caractère que la barre peut afficher
     zone_ajout_ath_nom.insert(0,"NOM")
     zone_ajout_ath_nom.bind("<FocusIn>", retire_justi_ajout_ath_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_ajout_ath_nom.bind("<FocusOut>", remise_justi_ajout_ath_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
     zone_ajout_ath_nom.pack()
     global zone_ajout_ath_prenom
-    zone_ajout_ath_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13),width=30)
+    zone_ajout_ath_prenom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13),width=30)
     zone_ajout_ath_prenom.insert(0,"Prénom")
     zone_ajout_ath_prenom.bind("<FocusIn>", retire_justi_ajout_ath_prenom)
     zone_ajout_ath_prenom.bind("<FocusOut>", remise_justi_ajout_ath_prenom)
     zone_ajout_ath_prenom.pack()
     global zone_ajout_ath_naissance
-    zone_ajout_ath_naissance = tk.Entry(fg="gray",font=("Tw Cent Mt",13),width=30)#on augmente le nombre de caractère que la barre peut afficher
+    zone_ajout_ath_naissance = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13),width=30)#on augmente le nombre de caractère que la barre peut afficher
     zone_ajout_ath_naissance.insert(0,"Date de naissance: AAAA-MM-JJ")
     zone_ajout_ath_naissance.bind("<FocusIn>", retire_justi_ajout_ath_naissance) 
     zone_ajout_ath_naissance.bind("<FocusOut>", remise_justi_ajout_ath_naissance) 
     zone_ajout_ath_naissance.pack()
     global zone_ajout_ath_pays
-    zone_ajout_ath_pays = tk.Entry(fg="gray",font=("Tw Cent Mt",13),width=30)
+    zone_ajout_ath_pays = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13),width=30)
     zone_ajout_ath_pays.insert(0,"PAYS")
     zone_ajout_ath_pays.bind("<FocusIn>", retire_justi_ajout_ath_pays) 
     zone_ajout_ath_pays.bind("<FocusOut>", remise_justi_ajout_ath_pays) 
     zone_ajout_ath_pays.pack()
     global zone_ajout_ath_dis
-    zone_ajout_ath_dis = tk.Entry(fg="gray",font=("Tw Cent Mt",13),width=30)# ici on précise width=30 pour que date de naissance soit totalement afficher
+    zone_ajout_ath_dis = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13),width=30)# ici on précise width=30 pour que date de naissance soit totalement afficher
     zone_ajout_ath_dis.insert(0,"DISCIPLINE")
     zone_ajout_ath_dis.bind("<FocusIn>", retire_justi_ajout_ath_dis)
     zone_ajout_ath_dis.bind("<FocusOut>", remise_justi_ajout_ath_dis) 
@@ -544,6 +572,7 @@ def zone_texte_ajout_ath():
 
 def ajout_athlete(event=None):
     effacer_label()
+    effacer_infos_milieu_ath()
     Nom=zone_ajout_ath_nom.get()
     NOM=Nom.upper()
     prénom=zone_ajout_ath_prenom.get()
@@ -594,15 +623,17 @@ def remise_justi_ajout_visiteur_prenom(event=None):
 #Création des zones textes pour demandé les différentes entrées à l'utilisateur
 def zone_texte_ajout_visiteur():
     effacer_label()
+    effacer_milieu_vis()
     effacer_texte()
+    cadre_scrollbar_vis.configure(label_text="Ajouter un visiteur")
     global zone_ajout_visiteur_nom
-    zone_ajout_visiteur_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13)) 
+    zone_ajout_visiteur_nom = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13)) 
     zone_ajout_visiteur_nom.insert(0,"NOM")
     zone_ajout_visiteur_nom.bind("<FocusIn>", retire_justi_ajout_visiteur_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_ajout_visiteur_nom.bind("<FocusOut>", remise_justi_ajout_visiteur_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
     zone_ajout_visiteur_nom.pack()
     global zone_ajout_visiteur_prenom
-    zone_ajout_visiteur_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_ajout_visiteur_prenom = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13))
     zone_ajout_visiteur_prenom.insert(0,"Prénom")
     zone_ajout_visiteur_prenom.bind("<FocusIn>", retire_justi_ajout_visiteur_prenom)
     zone_ajout_visiteur_prenom.bind("<FocusOut>", remise_justi_ajout_visiteur_prenom)
@@ -612,6 +643,7 @@ def zone_texte_ajout_visiteur():
 
 def ajout_visiteur(event=None):
     effacer_label()
+    effacer_infos_milieu_vis()
     Nom=zone_ajout_visiteur_nom.get()
     NOM=Nom.upper()
     prénom=zone_ajout_visiteur_prenom.get()
@@ -658,15 +690,17 @@ def remise_justi_suppr_visiteur_prenom(event=None):
 #Création des zones textes pour demandé les différentes entrées à l'utilisateur
 def zone_texte_suppr_visiteur():
     effacer_label()
+    effacer_milieu_vis()
     effacer_texte()
+    cadre_scrollbar_vis.configure(label_text="Supprimer un visiteur")
     global zone_suppr_visiteur_nom
-    zone_suppr_visiteur_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13)) 
+    zone_suppr_visiteur_nom = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13)) 
     zone_suppr_visiteur_nom.insert(0,"NOM")
     zone_suppr_visiteur_nom.bind("<FocusIn>", retire_justi_suppr_visiteur_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_suppr_visiteur_nom.bind("<FocusOut>", remise_justi_suppr_visiteur_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
     zone_suppr_visiteur_nom.pack()
     global zone_suppr_visiteur_prenom
-    zone_suppr_visiteur_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_suppr_visiteur_prenom = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13))
     zone_suppr_visiteur_prenom.insert(0,"Prénom")
     zone_suppr_visiteur_prenom.bind("<FocusIn>", retire_justi_suppr_visiteur_prenom)
     zone_suppr_visiteur_prenom.bind("<FocusOut>", remise_justi_suppr_visiteur_prenom)
@@ -676,6 +710,7 @@ def zone_texte_suppr_visiteur():
 
 def supprimer_visiteur(event=None):
     effacer_label()
+    effacer_infos_milieu_vis()
     Nom=zone_suppr_visiteur_nom.get()
     NOM=Nom.upper()
     prénom=zone_suppr_visiteur_prenom.get()
@@ -724,15 +759,17 @@ def remise_justi_suppr_ath_prenom(event=None):
 #Création des zones textes pour demandé les différentes entrées à l'utilisateur
 def zone_texte_suppr_ath():
     effacer_label()
+    effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath.configure(label_text="Supprimer un athlète")
     global zone_suppr_ath_nom
-    zone_suppr_ath_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13)) 
+    zone_suppr_ath_nom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13)) 
     zone_suppr_ath_nom.insert(0,"NOM")
     zone_suppr_ath_nom.bind("<FocusIn>", retire_justi_suppr_ath_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_suppr_ath_nom.bind("<FocusOut>", remise_justi_suppr_ath_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
     zone_suppr_ath_nom.pack()
     global zone_suppr_ath_prenom
-    zone_suppr_ath_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_suppr_ath_prenom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13))
     zone_suppr_ath_prenom.insert(0,"Prénom")
     zone_suppr_ath_prenom.bind("<FocusIn>", retire_justi_suppr_ath_prenom)
     zone_suppr_ath_prenom.bind("<FocusOut>", remise_justi_suppr_ath_prenom)
@@ -742,6 +779,7 @@ def zone_texte_suppr_ath():
 
 def supprimer_athlete(event=None):
     effacer_label()
+    effacer_infos_milieu_ath()
     Nom=zone_suppr_ath_nom.get()
     NOM=Nom.upper()
     prénom=zone_suppr_ath_prenom.get()
@@ -797,21 +835,23 @@ def remise_justi_rec_medaille(event=None):
 #Création des zones textes pour demandé les différentes entrées à l'utilisateur
 def zone_texte_recompense():
     effacer_label()
+    effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath.configure(label_text="Modifier une récompense")
     global zone_rec_nom
-    zone_rec_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13),width=30)#on augmente le nombre de caractère que la barre peut afficher
+    zone_rec_nom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13),width=30)#on augmente le nombre de caractère que la barre peut afficher
     zone_rec_nom.insert(0,"NOM")
     zone_rec_nom.bind("<FocusIn>", retire_justi_rec_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_rec_nom.bind("<FocusOut>", remise_justi_rec_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
     zone_rec_nom.pack()
     global zone_rec_prenom
-    zone_rec_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13),width=30)#on augmente le nombre de caractère que la barre peut afficher
+    zone_rec_prenom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13),width=30)#on augmente le nombre de caractère que la barre peut afficher
     zone_rec_prenom.insert(0,"Prénom")
     zone_rec_prenom.bind("<FocusIn>", retire_justi_rec_prenom)
     zone_rec_prenom.bind("<FocusOut>", remise_justi_rec_prenom)
     zone_rec_prenom.pack()
     global zone_rec_medaille
-    zone_rec_medaille = tk.Entry(fg="gray",font=("Tw Cent Mt",13),width=30)#on augmente le nombre de caractère que la barre peut afficher
+    zone_rec_medaille = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13),width=30)#on augmente le nombre de caractère que la barre peut afficher
     zone_rec_medaille.insert(0,"Médaille (<<Rien>> pour supprimer)")
     zone_rec_medaille.bind("<FocusIn>", retire_justi_rec_medaille)
     zone_rec_medaille.bind("<FocusOut>", remise_justi_rec_medaille)
@@ -821,6 +861,7 @@ def zone_texte_recompense():
 
 def modifier_recompense(event=None):
     effacer_label()
+    effacer_infos_milieu_ath()
     Nom=zone_rec_nom.get()
     NOM=Nom.upper()
     prénom=zone_rec_prenom.get()
