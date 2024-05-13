@@ -1,5 +1,6 @@
 import tkinter as tk
 import customtkinter as ctk
+from PIL import ImageTk, Image  
 import main
 
 # Créer la fenêtre principale
@@ -18,6 +19,16 @@ def effacer_fenetre():
 
 def effacer_label():
     for child in fenetre.winfo_children():
+        if isinstance(child, tk.Label):
+            child.destroy()
+
+def effacer_milieu_ath():
+    for child in cadre_scrollbar_ath.winfo_children():
+        if isinstance(child, tk.Label):
+            child.destroy()
+
+def effacer_milieu_vis():
+    for child in cadre_scrollbar_vis.winfo_children():
         if isinstance(child, tk.Label):
             child.destroy()
 
@@ -73,24 +84,7 @@ def afficher_interface_athlete():
     creer_bouton(cadre_gauche, "Afficher par pays", zone_texte_pays, 20, 2,'#2969eb','Tw Cen MT',12)
     creer_bouton(cadre_gauche, "Afficher par discipline", zone_texte_dis, 20, 2, '#0a55ea','Tw Cen MT',12)
     creer_bouton(cadre_gauche, "Afficher par récompense", zone_texte_rec, 20, 2, '#0b49c3','Tw Cen MT',12)
-    
-    ###################################### CADRE DU MILIEU ##################################################################
-#    cadre_milieu_ath = tk.Frame(fenetre,bg='#ffffff')
-#    cadre_milieu_ath.pack(expand=True, fill="both") 
-    # On ajoute un canvas dans ce cadre du milieu (utilise ce widjet pour prendre en charge le défilement si le contenu dépasse ses dimensions visibles)
-#    global canvas_milieu_ath
-#    canvas_milieu_ath = tk.Canvas(cadre_milieu_ath)
-#    canvas_milieu_ath.pack(side="left", expand=True, fill="both")
-#    # on ajoute une barre de défilement pour le canvas
-#    scrollbar = tk.Scrollbar(cadre_milieu_ath, orient="vertical", command=canvas_milieu_ath.yview)
-#    scrollbar.pack(side="right", fill="y")
-#    canvas_milieu_ath.configure(yscrollcommand=scrollbar.set)
-#    # On ajouter un autre cadre dans le Canvas pour contenir les éléments que vous souhaitez afficher
-#    global frame_interieur_ath
-#    frame_interieur_ath = tk.Frame(canvas_milieu_ath)
-#    canvas_milieu_ath.create_window((0, 0), window=frame_interieur_ath, anchor="nw")
-#    frame_interieur_ath.bind("<Configure>", canvas_configure_ath)
-
+                      
     ###################################### CADRE DE DROITE ##################################################################
     cadre_droit = tk.Frame(fenetre,bg='#cbd4d4')
     cadre_droit.pack(side="right", fill="y")
@@ -99,27 +93,29 @@ def afficher_interface_athlete():
     creer_bouton(cadre_droit, "Supprimer un athlète", zone_texte_suppr_ath, 20, 2,'#6ecaf2','Tw Cen MT',12)
     creer_bouton(cadre_droit, "Modifier une récompense", zone_texte_recompense, 20, 2,'#2969eb','Tw Cen MT',12)
 
-    # permet de placer le cadre cadre_bouton_retour1 au premier plan
-    cadre_bouton_retour1.lift() 
+    ###################################### CADRE DU MILIEU ##################################################################
+    global cadre_milieu_ath
+    cadre_milieu_ath = tk.Frame(fenetre)
+    cadre_milieu_ath.pack(expand=True, side="top", fill="both")
+    global cadre_scrollbar_ath
+    cadre_scrollbar_ath = ctk.CTkScrollableFrame(cadre_milieu_ath, fg_color="white")
+    cadre_scrollbar_ath.pack(expand=True, fill="both")
 
-#def canvas_configure_ath(event=None):                    # cette fonction sera appelé lorsque la taille du widjet changera
-#    canvas_milieu_ath.configure(scrollregion=canvas_milieu_ath.bbox("all"))# pour que le canva puisse prendre en charge le défilement pour tous les objets
-                                                                                 # (bbox) renvoie les coordonnées de tous les objets dans le canvas
-
+    cadre_bouton_retour1.lift() # permet de placer le cadre cadre_bouton_retour1 au premier plan
 
 def afficher_interface_visiteur():
-    # Supprimer les boutons initiaux
+    # On supprime les boutons initiaux
     effacer_fenetre()
     effacer_label()
     effacer_texte()
 
-    #Créer un cadre pour le bouton retour
+    ###################################### CADRE BOUTON RETOUR ############################################################
     cadre_bouton_retour2 = tk.Frame(fenetre, width=100, height=100, bg='grey')
     cadre_bouton_retour2.place(x=0, y=500, anchor='sw')
     #On créer le bouton retour
     creer_bouton(cadre_bouton_retour2, "Retour", interface_principale, 5, 1, '#b50000' , 'Tw Cen MT',20)
 
-    # Créer un Frame à gauche pour les boutons de gauche
+    ###################################### CADRE GAUCHE ##################################################################
     cadre_gauche = tk.Frame(fenetre,bg='#cbd4d4')
     cadre_gauche.pack(side="left", fill="y")#fill=y pour créer un cadre a gauche de haut en bas et pour fill=x un cadre à gauche en haut
     # Ajouter les boutons au Frame de gauche
@@ -127,7 +123,7 @@ def afficher_interface_visiteur():
     creer_bouton(cadre_gauche, "Rechercher par une identité", zone_texte_visi_nom, 20, 2, '#ff3f3f','Tw Cen MT',11)
     creer_bouton(cadre_gauche, "Rechercher par un numéro", zone_texte_visi_num, 20, 2,'#ff0000','Tw Cen MT',12)
 
-    # Créer un Frame à droite pour les boutons de droite
+    ###################################### CADRE DE DROITE ##################################################################
     cadre_droit = tk.Frame(fenetre,bg='#cbd4d4')
     cadre_droit.pack(side="right", fill="both")
     # Ajouter les boutons au Frame de droite
@@ -135,28 +131,47 @@ def afficher_interface_visiteur():
     creer_bouton(cadre_droit, "Supprimer un visiteur", zone_texte_suppr_visiteur,20,2, '#ff3f3f','Tw Cen MT',12)
     bouton_visiteur_droit_3=creer_bouton(fenetre=cadre_droit, texte="",commande=rien, largeur=20, hauteur=2, couleur='#cbd4d4',police='Tw Cen MT',taille=12)
     bouton_visiteur_droit_3.config(border=0,activebackground="#cbd4d4")
-    creer_bouton(cadre_droit, "Afficher la map", afficher_athlete, 20, 2, '#00ff73','Tw Cen MT',12)
+    creer_bouton(cadre_droit, "Afficher la map", afficher_plan, 20, 2, '#00ff73','Tw Cen MT',12)
+
+    ###################################### CADRE DU MILIEU ##################################################################
+    global cadre_milieu_vis
+    cadre_milieu_vis = tk.Frame(fenetre)
+    cadre_milieu_vis.pack(expand=True, side="top", fill="both")
+    global cadre_scrollbar_vis
+    cadre_scrollbar_vis = ctk.CTkScrollableFrame(cadre_milieu_vis, fg_color="white")
+    cadre_scrollbar_vis.pack(expand=True, fill="both")
 
     cadre_bouton_retour2.lift() # permet de placer le cadre cadre_bouton_retour1 au premier plan
 
 #Définition des fonctions:
-def afficher_athlete():
+def afficher_plan(event=None):
     effacer_label()
     effacer_texte()
-    y_position = 10
+    canvas_image = tk.Canvas(fenetre, width=600, height=600)
+    original_img = Image.open("plan_des_jo.jpg")
+    resized_img = original_img.resize((600, 500))
+    img = ImageTk.PhotoImage(resized_img)
+    canvas_image.create_image(0,0,anchor="nw",image=img)
+    canvas_image.image = img
+    canvas_image.pack()
+
+def afficher_athlete():
+    effacer_label()
+    effacer_milieu_ath()
+    effacer_texte()
+    cadre_scrollbar_ath.configure(label_text="Afficher tous les athlètes")
     for lignes in main.admin.show_athlete():
-        athlete_info = tk.Label(fenetre,text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
-        athlete_info.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
-        y_position += 30
+        athlete_info = tk.Label(cadre_scrollbar_ath,text = lignes,font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
+        athlete_info.pack(pady=10)  # Placer le Label dans la fenêtre
 
 def afficher_visiteur():
     effacer_label()
+    effacer_milieu_vis()
     effacer_texte()
-    y_position = 10
+    cadre_scrollbar_vis.configure(label_text="Afficher tous les visiteurs")
     for lignes in main.admin.show_visiteur():
-        visiteur_info = tk.Label(text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations du visiteur
-        visiteur_info.place(x=200, y=y_position)  # Placer le Label dans la fenêtre
-        y_position += 30
+        visiteur_info = tk.Label(cadre_scrollbar_vis,text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations du visiteur
+        visiteur_info.pack(pady=10)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Rechercher un athlète >> ###################################
@@ -187,15 +202,17 @@ def remise_justi_ath_prenom(event=None):
 #Création des zones textes pour demandé les différentes entrées à l'utilisateur
 def zone_texte_ath():
     effacer_label()
+    effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath.configure(label_text="Rechercher un athlète")
     global zone_ath_nom
-    zone_ath_nom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_ath_nom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13))
     zone_ath_nom.insert(0,"NOM")
     zone_ath_nom.bind("<FocusIn>", retire_justi_ath_nom) #le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_ath_nom.bind("<FocusOut>", remise_justi_ath_nom) #perd le focus, c-a-d lorsque l'utilisateur cesse de taper dans l'entrée ou passe à un autre widget ou quitte la fenêtre
     zone_ath_nom.pack()
     global zone_ath_prenom
-    zone_ath_prenom = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_ath_prenom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13))
     zone_ath_prenom.insert(0,"Prénom")
     zone_ath_prenom.bind("<FocusIn>", retire_justi_ath_prenom)
     zone_ath_prenom.bind("<FocusOut>", remise_justi_ath_prenom)
@@ -835,4 +852,4 @@ def modifier_recompense(event=None):
         erreur_3.place(x=200, y=100)  # Placer le Label dans la fenêtre
 
 interface_principale()
-fenetre.mainloop()
+fenetre.mainloop() #on démarre la boucle de l'I.G, ce qui permet à la fenetre de rester active et de réagir aux événements de l'utilisateur jusqu'à ce que la fenêtre soit fermée
