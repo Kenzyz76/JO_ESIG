@@ -1,6 +1,5 @@
 from athlete import Athlete #on appel les différentes classes dans les différents modules
 from visiteur import Visiteur
-from pays import Pays
 from mysql.connector import connect
 import random
 dic_ath={}
@@ -116,22 +115,6 @@ class Administrateur:
                 return("DEJA LA MEDAILLE")
         else:
             return("ERREUR")
-
-    def show_athlete(self):
-        dic_ath=admin.ecriture_athlete()
-        liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
-        for cle in dic_ath:
-            athlete_infos=dic_ath[cle].afficher()
-            liste_SORTIE.append(athlete_infos)
-        return(liste_SORTIE)
-
-    def show_visiteur(self):
-        dic_vis=admin.ecriture_visiteur()
-        list_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque visiteur dans une liste pour seulement à faire un for element dans notre I.G
-        for cle in dic_vis:
-            visiteur_infos=dic_vis[cle].afficher()
-            list_SORTIE.append(visiteur_infos)
-        return(list_SORTIE)
 
     def search_athlete(self,ENTREE):
         dic_ath=admin.ecriture_athlete()

@@ -7,6 +7,7 @@ import main
 fenetre = tk.Tk()
 fenetre.title("Gestion des JO")
 fenetre.configure(bg='#f4fefe')
+fenetre.iconbitmap("logo_jo.ico")
 fenetre.geometry("1000x500")
 fenetre.maxsize(1000,500)
 fenetre.minsize(1000,500)
@@ -31,7 +32,7 @@ def effacer_milieu_ath():
             child.destroy()
 
 def effacer_infos_milieu_ath():
-     for child in cadre_scrollbar_ath.winfo_children():
+    for child in cadre_scrollbar_ath.winfo_children():
         if isinstance(child, tk.Label):
             child.destroy()
 
@@ -41,6 +42,9 @@ def effacer_milieu_vis():
             child.destroy()
     for child in cadre_scrollbar_vis.winfo_children():
         if isinstance(child, tk.Entry):
+            child.destroy()
+    for child in cadre_scrollbar_vis.winfo_children():
+        if isinstance(child, tk.Canvas):
             child.destroy()
 
 def effacer_infos_milieu_vis():
@@ -71,7 +75,7 @@ def interface_principale():
     cadre_bouton_visiteur = tk.Frame(fenetre)
     cadre_bouton_visiteur.pack(side="right", fill="x", expand=True)
     cadre_bouton_visiteur.configure(bg = '#f4fefe')
-    cadre_bouton_retour = tk.Frame(fenetre, width=100, height=100, bg='green')
+    cadre_bouton_retour = tk.Frame(fenetre, width=100, height=100)
     cadre_bouton_retour.place(x=0, y=500, anchor='sw')
 
     # on créer et place deux boutons initiaux au centre
@@ -113,7 +117,7 @@ def afficher_interface_athlete():
     cadre_milieu_ath = tk.Frame(fenetre)
     cadre_milieu_ath.pack(expand=True, side="top", fill="both")
     global cadre_scrollbar_ath
-    cadre_scrollbar_ath = ctk.CTkScrollableFrame(cadre_milieu_ath, fg_color="white")
+    cadre_scrollbar_ath = ctk.CTkScrollableFrame(cadre_milieu_ath, fg_color="#e7e6e6")
     cadre_scrollbar_ath.pack(expand=True, fill="both")
 
     cadre_bouton_retour1.lift() # permet de placer le cadre cadre_bouton_retour1 au premier plan
@@ -152,7 +156,7 @@ def afficher_interface_visiteur():
     cadre_milieu_vis = tk.Frame(fenetre)
     cadre_milieu_vis.pack(expand=True, side="top", fill="both")
     global cadre_scrollbar_vis
-    cadre_scrollbar_vis = ctk.CTkScrollableFrame(cadre_milieu_vis, fg_color="white")
+    cadre_scrollbar_vis = ctk.CTkScrollableFrame(cadre_milieu_vis, fg_color="#e7e6e6")
     cadre_scrollbar_vis.pack(expand=True, fill="both")
 
     cadre_bouton_retour2.lift() # permet de placer le cadre cadre_bouton_retour1 au premier plan
@@ -166,28 +170,72 @@ def afficher_plan(event=None):
     canvas_image = tk.Canvas(cadre_scrollbar_vis, width=600, height=600)
     original_img = Image.open("plan_des_jo.jpg")
     resized_img = original_img.resize((600, 500))
-    img = ImageTk.PhotoImage(resized_img)
-    canvas_image.create_image(0,0,anchor="nw",image=img)
-    canvas_image.image = img
+    img_carte = ImageTk.PhotoImage(resized_img)
+    canvas_image.create_image(0,0,anchor="nw",image=img_carte)
+    canvas_image.image = img_carte
     canvas_image.pack()
 
 def afficher_athlete():
     effacer_label()
     effacer_milieu_ath()
     effacer_texte()
+    img="img.jpeg"
     cadre_scrollbar_ath.configure(label_text="Afficher tous les athlètes")
-    for lignes in main.admin.show_athlete():
-        athlete_info = tk.Label(cadre_scrollbar_ath,text = lignes,bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
-        athlete_info.pack(pady=10)  # Placer le Label dans la fenêtre
+    for athlete_infos in main.admin.ecriture_athlete().values():
+        NOM=athlete_infos.nom
+        Prénom=athlete_infos.prenom
+        #DATE=athlete_infos.nais
+        Pays=athlete_infos.pays
+        if Pays=="FRANCE":
+            img="france.jpeg"
+        elif Pays=="CHINE":
+            img="chine.jpeg"
+        elif Pays=="ALGÉRIE":
+            img="algerie.jpeg"
+        elif Pays=="JAMAÏQUE":
+            img="jamaique.jpeg"
+        elif Pays=="JAPON":
+            img="japon.jpeg"
+        DISCIPLINE=athlete_infos.dis
+        REC=athlete_infos.rec
+        affichage_NOM = tk.Label(cadre_scrollbar_ath,text = NOM,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_NOM.pack()  # Placer le Label dans la fenêtre
+        affichage_Prénom = tk.Label(cadre_scrollbar_ath,text = Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_Prénom.pack()  # Placer le Label dans la fenêtre
+
+        img_drapeau = tk.PhotoImage(file=img) #on ouvre l'image
+        affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau,bg="#e7e6e6")
+        affichage_Pays.image = img_drapeau  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé par le garbage collector
+        affichage_Pays.pack()
+
+        affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
+        affichage_REC = tk.Label(cadre_scrollbar_ath,text = REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_REC.pack()  # Placer le Label dans la fenêtre
+        underscore="_______________________________________________________________"
+        affichage_underscore = tk.Label(cadre_scrollbar_ath,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_underscore.pack()  # Placer le Label dans la fenêtre"""
 
 def afficher_visiteur():
     effacer_label()
     effacer_milieu_vis()
     effacer_texte()
     cadre_scrollbar_vis.configure(label_text="Afficher tous les visiteurs")
-    for lignes in main.admin.show_visiteur():
-        visiteur_info = tk.Label(cadre_scrollbar_vis,text = lignes, bg='#ff7070',font=("Tw Cent MT",13))  # Créer un Label avec les informations du visiteur
-        visiteur_info.pack(pady=10)  # Placer le Label dans la fenêtre
+    for visiteur_infos in main.admin.ecriture_visiteur().values():
+        NOM=visiteur_infos.nom
+        Prénom=visiteur_infos.prenom
+        NUMERO=visiteur_infos.numero
+        affichage_NOM = tk.Label(cadre_scrollbar_vis,text ="NOM: "+NOM,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_NOM.pack()  # Placer le Label dans la fenêtre
+        affichage_Prénom = tk.Label(cadre_scrollbar_vis,text ="Prénom: " +Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_Prénom.pack()  # Placer le Label dans la fenêtre
+
+        affichage_NUMERO = tk.Label(cadre_scrollbar_vis,text ="Numéro du billet: "+NUMERO,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_NUMERO.pack()  # Placer le Label dans la fenêtre
+
+        underscore="_______________________________________________________________"
+        affichage_underscore = tk.Label(cadre_scrollbar_vis,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_underscore.pack()  # Placer le Label dans la fenêtre"""
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Rechercher un athlète >> ###################################
@@ -374,7 +422,7 @@ def rechercher_dis(event=None):
         erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
-##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Rechercher par identité >> #################################
+##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Rechercher par une identité >> #################################
 ################################################################################################################################################
 
 def retire_justi_visiteur_nom(event=None):
@@ -401,7 +449,7 @@ def zone_texte_visi_nom():
     effacer_label()
     effacer_milieu_vis()
     effacer_texte()
-    cadre_scrollbar_vis.configure(label_text="Rechercher par identité")
+    cadre_scrollbar_vis.configure(label_text="Rechercher par une identité")
     global zone_visiteur_nom
     zone_visiteur_nom = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13))
     zone_visiteur_nom.insert(0,"NOM")
@@ -453,7 +501,7 @@ def zone_texte_visi_num():
     effacer_texte()
     cadre_scrollbar_vis.configure(label_text="Rechercher par numéro")
     global zone_visiteur_num
-    zone_visiteur_num = tk.Entry(fg="gray",font=("Tw Cent Mt",13))
+    zone_visiteur_num = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13))
     zone_visiteur_num.insert(0,"NUMERO DU BILLET")
     zone_visiteur_num.bind("<FocusIn>", retire_justi_visiteur_num)#le focus, c-a-d lorsque l'utilisateur commence à taper dans l'entrée
     zone_visiteur_num.pack()
