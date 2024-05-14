@@ -185,35 +185,26 @@ def afficher_athlete():
         NOM=athlete_infos.nom
         Prénom=athlete_infos.prenom
         #DATE=athlete_infos.nais
-        Pays=athlete_infos.pays
-        if Pays=="FRANCE":
-            img="france.jpeg"
-        elif Pays=="CHINE":
-            img="chine.jpeg"
-        elif Pays=="ALGÉRIE":
-            img="algerie.jpeg"
-        elif Pays=="JAMAÏQUE":
-            img="jamaique.jpeg"
-        elif Pays=="JAPON":
-            img="japon.jpeg"
+        PAYS=athlete_infos.pays
         DISCIPLINE=athlete_infos.dis
         REC=athlete_infos.rec
-        affichage_NOM = tk.Label(cadre_scrollbar_ath,text = NOM,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+
+        affichage_NOM = tk.Label(cadre_scrollbar_ath,text = NOM,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le nom de l'athlète
         affichage_NOM.pack()  # Placer le Label dans la fenêtre
-        affichage_Prénom = tk.Label(cadre_scrollbar_ath,text = Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_Prénom = tk.Label(cadre_scrollbar_ath,text = Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le prénom de l'athlète
         affichage_Prénom.pack()  # Placer le Label dans la fenêtre
 
-        img_drapeau = tk.PhotoImage(file=img) #on ouvre l'image
+        img_drapeau = tk.PhotoImage(file=PAYS+".jpeg") #on ouvre l'image
         affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau,bg="#e7e6e6")
-        affichage_Pays.image = img_drapeau  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé par le garbage collector
+        affichage_Pays.image = img_drapeau  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé
         affichage_Pays.pack()
 
-        affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la discipline de l'athlète
         affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
-        affichage_REC = tk.Label(cadre_scrollbar_ath,text = REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_REC = tk.Label(cadre_scrollbar_ath,text = REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
         affichage_REC.pack()  # Placer le Label dans la fenêtre
         underscore="_______________________________________________________________"
-        affichage_underscore = tk.Label(cadre_scrollbar_ath,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_underscore = tk.Label(cadre_scrollbar_ath,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")
         affichage_underscore.pack()  # Placer le Label dans la fenêtre"""
 
 def afficher_visiteur():
@@ -225,16 +216,15 @@ def afficher_visiteur():
         NOM=visiteur_infos.nom
         Prénom=visiteur_infos.prenom
         NUMERO=visiteur_infos.numero
-        affichage_NOM = tk.Label(cadre_scrollbar_vis,text ="NOM: "+NOM,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_NOM = tk.Label(cadre_scrollbar_vis,text ="NOM: "+NOM,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le nom du visiteur
         affichage_NOM.pack()  # Placer le Label dans la fenêtre
-        affichage_Prénom = tk.Label(cadre_scrollbar_vis,text ="Prénom: " +Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_Prénom = tk.Label(cadre_scrollbar_vis,text ="Prénom: " +Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le prénom du visiteur
         affichage_Prénom.pack()  # Placer le Label dans la fenêtre
-
-        affichage_NUMERO = tk.Label(cadre_scrollbar_vis,text ="Numéro du billet: "+NUMERO,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_NUMERO = tk.Label(cadre_scrollbar_vis,text ="Numéro du billet: "+NUMERO,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le numéro de billet du visiteur
         affichage_NUMERO.pack()  # Placer le Label dans la fenêtre
 
         underscore="_______________________________________________________________"
-        affichage_underscore = tk.Label(cadre_scrollbar_vis,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec les informations de l'athlète
+        affichage_underscore = tk.Label(cadre_scrollbar_vis,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")
         affichage_underscore.pack()  # Placer le Label dans la fenêtre"""
 
 ################################################################################################################################################
@@ -291,18 +281,35 @@ def rechercher_athlete(event=None):
     prénom=zone_ath_prenom.get()
     Prénom=prénom.capitalize()
     ENTREE=NOM+" "+Prénom
-    #print (ENTREE)
     if NOM!="NOM" and NOM!="" and Prénom!="Prénom"and Prénom!="" :
         SORTIE=main.admin.search_athlete(ENTREE)
         if SORTIE=="ERREUR": #on test si cette personne est bien dans notre dico athlete
-            erreur_1 = tk.Label(text = "Réessayer cet(te) athlète ne participe pas aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.place(x=400, y=50)  
+            erreur_1 = tk.Label(cadre_scrollbar_ath,text = "Réessayer cet(te) athlète ne participe pas aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.pack(pady=25) 
         else:
-            athlete_info = tk.Label(text = SORTIE, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
-            athlete_info.place(x=400, y=50)  # Placer le Label dans la fenêtre
+            PAYS=SORTIE[2]
+            #NAISSANCE=SORTIE[3]
+            DISCIPLINE=SORTIE[4]
+            REC=SORTIE[5]
+            if REC==None:
+                REC="Pas de médaille"
+            affichage_NOM = tk.Label(cadre_scrollbar_ath,text = "NOM: "+NOM,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le nom de l'athlète
+            affichage_NOM.pack()  # Placer le Label dans la fenêtre
+            affichage_Prénom = tk.Label(cadre_scrollbar_ath,text = "Prénom: "+Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le prénom de l'athlète
+            affichage_Prénom.pack()  # Placer le Label dans la fenêtre
+
+            img_drapeau = tk.PhotoImage(file=PAYS+".jpeg") #on ouvre l'image
+            affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau,bg="#e7e6e6")
+            affichage_Pays.image = img_drapeau  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé
+            affichage_Pays.pack()
+
+            affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = "DISCIPLINE: "+DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la discipline de l'athlète
+            affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
+            affichage_REC = tk.Label(cadre_scrollbar_ath,text = "Médaille : "+REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
+            affichage_REC.pack()  # Placer le Label dans la fenêtre
     else:
-        erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_2 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur_2.pack(pady=25) # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Afficher par pays >> #######################################
