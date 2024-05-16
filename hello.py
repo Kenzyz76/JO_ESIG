@@ -65,7 +65,14 @@ def creer_bouton(fenetre, texte, commande, largeur, hauteur, couleur, police, ta
 def rien(event=None):
     pass
 
-def interface_principale(): 
+def interface_accueil():
+    img_accueil = ImageTk.PhotoImage(file="AccueilJO.jpeg") #on ouvre l'image
+    affichage_accueil = tk.Label(fenetre, image=img_accueil,bg="#e7e6e6")
+    affichage_accueil.image = img_accueil  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé
+    affichage_accueil.pack()
+    fenetre.bind("<Return>", interface_principale) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction rechercher_athlete qui s'exécute
+
+def interface_principale(event=None): 
     effacer_fenetre()
     effacer_label()
     effacer_texte()
@@ -203,6 +210,17 @@ def afficher_athlete():
         affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
         affichage_REC = tk.Label(cadre_scrollbar_ath,text = REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
         affichage_REC.pack()  # Placer le Label dans la fenêtre
+        
+        try:
+            img_portrait = Image.open(NOM+"_"+Prénom+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+            img_portrait = ImageTk.PhotoImage(img_portrait)#on ouvre l'image avec tkinter
+        except FileNotFoundError:
+            img_portrait = ImageTk.PhotoImage(Image.open("anonymous.jpeg"))
+
+        affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait, bg="#e7e6e6")
+        affichage_portrait.image = img_portrait
+        affichage_portrait.pack()
+
         underscore="_______________________________________________________________"
         affichage_underscore = tk.Label(cadre_scrollbar_ath,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")
         affichage_underscore.pack()  # Placer le Label dans la fenêtre"""
@@ -307,6 +325,12 @@ def rechercher_athlete(event=None):
             affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
             affichage_REC = tk.Label(cadre_scrollbar_ath,text = "Médaille : "+REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
             affichage_REC.pack()  # Placer le Label dans la fenêtre
+
+            img_portrait = ImageTk.PhotoImage(file=NOM+"_"+Prénom+".jpeg") #on ouvre l'image
+            affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait,bg="#e7e6e6")
+            affichage_portrait.image = img_portrait  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé
+            affichage_portrait.pack()
+
     else:
         erreur_2 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
         erreur_2.pack(pady=25) # Placer le Label dans la fenêtre
@@ -947,5 +971,5 @@ def modifier_recompense(event=None):
         erreur_3 = tk.Label(text = "Votre saisie est incomplète ou incorrecte, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
         erreur_3.place(x=200, y=100)  # Placer le Label dans la fenêtre
 
-interface_principale()
+interface_accueil()
 fenetre.mainloop() #on démarre la boucle de l'I.G, ce qui permet à la fenetre de rester active et de réagir aux événements de l'utilisateur jusqu'à ce que la fenêtre soit fermée
