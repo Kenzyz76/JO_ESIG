@@ -318,7 +318,7 @@ def rechercher_athlete(event=None):
             affichage_Prénom = tk.Label(cadre_scrollbar_ath,text = "Prénom: "+Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le prénom de l'athlète
             affichage_Prénom.pack()  # Placer le Label dans la fenêtre
 
-            img_drapeau = tk.PhotoImage(file=PAYS+".jpeg") #on ouvre l'image
+            img_drapeau = tk.PhotoImage(file="img/"+PAYS+".jpeg") #on ouvre l'image
             affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau,bg="#e7e6e6")
             affichage_Pays.image = img_drapeau  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé
             affichage_Pays.pack()
@@ -327,8 +327,12 @@ def rechercher_athlete(event=None):
             affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
             affichage_REC = tk.Label(cadre_scrollbar_ath,text = "Médaille : "+REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
             affichage_REC.pack()  # Placer le Label dans la fenêtre
+            try:
+                    img_portrait = Image.open("img/"+NOM+"_"+Prénom+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+                    img_portrait = ImageTk.PhotoImage(img_portrait)#on ouvre l'image avec tkinter
+            except FileNotFoundError:
+                    img_portrait = ImageTk.PhotoImage(Image.open("img/anonymous.jpeg"))
 
-            img_portrait = ImageTk.PhotoImage(file=NOM+"_"+Prénom+".jpeg") #on ouvre l'image
             affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait,bg="#e7e6e6")
             affichage_portrait.image = img_portrait  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé
             affichage_portrait.pack()
@@ -366,15 +370,50 @@ def rechercher_pays(event=None):
     if ENTREE!="PAYS" and ENTREE!="":
         SORTIE=main.admin.search_pays(ENTREE)
         if SORTIE=="ERREUR": #on test si le pays rentré est bien dans les jeux
-            erreur_1 = tk.Label(text = "Réessayer ce pays ne participe pas aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.place(x=400, y=50)   
+            erreur_1 = tk.Label(cadre_scrollbar_ath,text = "Réessayer ce pays ne participe pas aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.pack(pady=25)   
         else:
             for lignes in SORTIE:
-                athlete_infos = tk.Label(cadre_scrollbar_ath,text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
-                athlete_infos.pack(pady=10)  # Place le Label dans la fenêtre
+                NOM=lignes[0]
+                Prénom=lignes[1]
+                PAYS=lignes[2]
+                #DATE=athlete_infos.nais
+                DISCIPLINE=lignes[4]
+                REC=lignes[5]
+
+                affichage_NOM = tk.Label(cadre_scrollbar_ath,text = NOM,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le nom de l'athlète
+                affichage_NOM.pack()  # Placer le Label dans la fenêtre
+                affichage_Prénom = tk.Label(cadre_scrollbar_ath,text = Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le prénom de l'athlète
+                affichage_Prénom.pack()  # Placer le Label dans la fenêtre
+
+                img_drapeau = Image.open("img/"+PAYS+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+                img_drapeau = ImageTk.PhotoImage(img_drapeau)#on ouvre l'image avec tkinter
+                affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau, bg="#e7e6e6")
+                affichage_Pays.image = img_drapeau
+                affichage_Pays.pack()
+
+                affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la discipline de l'athlète
+                affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
+                affichage_REC = tk.Label(cadre_scrollbar_ath,text = REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
+                affichage_REC.pack()  # Placer le Label dans la fenêtre
+                
+                try:
+                    img_portrait = Image.open("img/"+NOM+"_"+Prénom+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+                    img_portrait = ImageTk.PhotoImage(img_portrait)#on ouvre l'image avec tkinter
+                except FileNotFoundError:
+                    img_portrait = ImageTk.PhotoImage(Image.open("img/anonymous.jpeg"))
+
+                affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait, bg="#e7e6e6")
+                affichage_portrait.image = img_portrait
+                affichage_portrait.pack()
+
+                underscore="_______________________________________________________________"
+                affichage_underscore = tk.Label(cadre_scrollbar_ath,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")
+                affichage_underscore.pack()  # Placer le Label dans la fenêtre"""
+
     else:
-        erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_2 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur_2.pack(pady=25)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Afficher par récompense >> #######################################
@@ -405,15 +444,50 @@ def rechercher_recompense(event=None):
     if Entrée!="Médaille" and Entrée!="":
         SORTIE=main.admin.search_recompense(Entrée)
         if SORTIE=="ERREUR": #on test si la récompense rentré existe bien
-            erreur_1 = tk.Label(text = "Réessayer, cette récompense n'existe pas !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.place(x=400, y=50)   
+            erreur_1 = tk.Label(cadre_scrollbar_ath,text = "Réessayer, cette récompense n'existe pas !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.pack(pady=25)    
         else:
             for lignes in SORTIE:
-                athlete_infos = tk.Label(cadre_scrollbar_ath,text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
-                athlete_infos.pack(pady=10)  # Place le Label dans la fenêtre
+                NOM=lignes[0]
+                Prénom=lignes[1]
+                PAYS=lignes[2]
+                #DATE=athlete_infos.nais
+                DISCIPLINE=lignes[4]
+                REC=lignes[5]
+
+                affichage_NOM = tk.Label(cadre_scrollbar_ath,text = NOM,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le nom de l'athlète
+                affichage_NOM.pack()  # Placer le Label dans la fenêtre
+                affichage_Prénom = tk.Label(cadre_scrollbar_ath,text = Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le prénom de l'athlète
+                affichage_Prénom.pack()  # Placer le Label dans la fenêtre
+
+                img_drapeau = Image.open("img/"+PAYS+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+                img_drapeau = ImageTk.PhotoImage(img_drapeau)#on ouvre l'image avec tkinter
+                affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau, bg="#e7e6e6")
+                affichage_Pays.image = img_drapeau
+                affichage_Pays.pack()
+
+                affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la discipline de l'athlète
+                affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
+                affichage_REC = tk.Label(cadre_scrollbar_ath,text = REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
+                affichage_REC.pack()  # Placer le Label dans la fenêtre
+                
+                try:
+                    img_portrait = Image.open("img/"+NOM+"_"+Prénom+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+                    img_portrait = ImageTk.PhotoImage(img_portrait)#on ouvre l'image avec tkinter
+                except FileNotFoundError:
+                    img_portrait = ImageTk.PhotoImage(Image.open("img/anonymous.jpeg"))
+
+                affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait, bg="#e7e6e6")
+                affichage_portrait.image = img_portrait
+                affichage_portrait.pack()
+
+                underscore="_______________________________________________________________"
+                affichage_underscore = tk.Label(cadre_scrollbar_ath,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")
+                affichage_underscore.pack()  # Placer le Label dans la fenêtre"""
+
     else:
-        erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_2 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur_2.pack(pady=25)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Afficher par discipline >> #################################
@@ -444,15 +518,49 @@ def rechercher_dis(event=None):
     if ENTREE!="DISCIPLINE" and ENTREE!="":
         SORTIE=main.admin.search_dis(ENTREE)
         if SORTIE=="ERREUR": #on test si la discipline rentrée est bien dans les jeux
-            erreur_1 = tk.Label(text = "Réessayer cette discipline n'est pas présente aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.place(x=400, y=50)   
+            erreur_1 = tk.Label(cadre_scrollbar_ath,text = "Réessayer cette discipline n'est pas présente aux jeux !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.pack(pady=25)   
         else:
             for lignes in SORTIE:
-                athlete_infos = tk.Label(cadre_scrollbar_ath,text = lignes, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec les informations de l'athlète
-                athlete_infos.pack(pady=10)  # Place le Label dans la fenêtre
+                NOM=lignes[0]
+                Prénom=lignes[1]
+                PAYS=lignes[2]
+                #DATE=athlete_infos.nais
+                DISCIPLINE=lignes[4]
+                REC=lignes[5]
+
+                affichage_NOM = tk.Label(cadre_scrollbar_ath,text = NOM,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le nom de l'athlète
+                affichage_NOM.pack()  # Placer le Label dans la fenêtre
+                affichage_Prénom = tk.Label(cadre_scrollbar_ath,text = Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le prénom de l'athlète
+                affichage_Prénom.pack()  # Placer le Label dans la fenêtre
+
+                img_drapeau = Image.open("img/"+PAYS+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+                img_drapeau = ImageTk.PhotoImage(img_drapeau)#on ouvre l'image avec tkinter
+                affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau, bg="#e7e6e6")
+                affichage_Pays.image = img_drapeau
+                affichage_Pays.pack()
+
+                affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la discipline de l'athlète
+                affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
+                affichage_REC = tk.Label(cadre_scrollbar_ath,text = REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
+                affichage_REC.pack()  # Placer le Label dans la fenêtre
+                
+                try:
+                    img_portrait = Image.open("img/"+NOM+"_"+Prénom+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+                    img_portrait = ImageTk.PhotoImage(img_portrait)#on ouvre l'image avec tkinter
+                except FileNotFoundError:
+                    img_portrait = ImageTk.PhotoImage(Image.open("img/anonymous.jpeg"))
+
+                affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait, bg="#e7e6e6")
+                affichage_portrait.image = img_portrait
+                affichage_portrait.pack()
+
+                underscore="_______________________________________________________________"
+                affichage_underscore = tk.Label(cadre_scrollbar_ath,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")
+                affichage_underscore.pack()  # Placer le Label dans la fenêtre"""
     else:
-        erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_2 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur_2.pack(pady=25)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Rechercher par une identité >> #################################
@@ -508,16 +616,16 @@ def rechercher_visiteur_nom(event=None):
     if NOM!="NOM" and NOM!="" and Prénom!="Prénom"and Prénom!="" :
         SORTIE=main.admin.search_visiteur_nom(ENTREE)
         if SORTIE=="ERREUR": #on test si cette personne est bien dans notre dico athlete
-            erreur_1 = tk.Label(text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.place(x=400, y=60)
-            redirection = tk.Label(text = "Pour vous enregistrer et obtenir votre ticket, cliquer sur le bouton << Ajouter un visiteur >>", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message de redirection
-            redirection.place(x=170, y=90)
+            erreur_1 = tk.Label(cadre_scrollbar_vis,text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.pack(pady=25)
+            redirection = tk.Label(cadre_scrollbar_vis,text = "Pour vous enregistrer et obtenir votre ticket, cliquer sur le bouton << Ajouter un visiteur >>", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message de redirection
+            redirection.pack(pady=25)
         else:
-            visiteur_info = tk.Label(text = SORTIE, bg='#3399FF',font=("Tw Cent MT",14))  # Créer un Label avec les informations de l'athlète
-            visiteur_info.place(x=400, y=50)  # Placer le Label dans la fenêtre
+            visiteur_info = tk.Label(cadre_scrollbar_vis,text = SORTIE, bg='#3399FF',font=("Tw Cent MT",14))  # Créer un Label avec les informations de l'athlète
+            visiteur_info.pack(pady=25)  # Placer le Label dans la fenêtre
     else:
-        erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_2 = tk.Label(cadre_scrollbar_vis,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur_2.pack(pady=25)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Rechercher par numéro >> ###################################
@@ -547,16 +655,16 @@ def rechercher_visiteur_num(event=None):
     if ENTREE!="NUMERO DU BILLET" and ENTREE!="":
         SORTIE=main.admin.search_visiteur_num(ENTREE)
         if SORTIE=="ERREUR": #on test si le numéro rentré est bien recenser
-            erreur_1 = tk.Label(text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.place(x=400, y=60)
-            redirection = tk.Label(text = "Pour vous enregistrer et obtenir votre ticket, cliquer sur le bouton << Ajouter un visiteur >>", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message de redirection
-            redirection.place(x=170, y=90) 
+            erreur_1 = tk.Label(cadre_scrollbar_vis,text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.pack(pady=25)
+            redirection = tk.Label(cadre_scrollbar_vis,text = "Pour vous enregistrer et obtenir votre ticket, cliquer sur le bouton << Ajouter un visiteur >>", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message de redirection
+            redirection.pack(pady=25) 
         else:
-            athlete_infos = tk.Label(text = SORTIE, bg='#3399FF',font=("Tw Cent MT",14))  # Créer un Label avec les informations de l'athlète
-            athlete_infos.place(x=200, y=70)  # Place le Label dans la fenêtre
+            athlete_infos = tk.Label(cadre_scrollbar_vis,text = SORTIE, bg='#3399FF',font=("Tw Cent MT",14))  # Créer un Label avec les informations de l'athlète
+            athlete_infos.pack(pady=25)  # Place le Label dans la fenêtre
     else:
-        erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_2 = tk.Label(cadre_scrollbar_vis,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur_2.pack(pady=25)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Ajouter un athlète >> ######################################
@@ -667,15 +775,15 @@ def ajout_athlete(event=None):
         if NOM!="NOM" and Prénom!="Prénom" and Naissance!="Date de naissance: AAAA-MM-JJ" and PAYS!="PAYS" and DISCIPLINE!="DISCIPLINE" and NOM!="" and Prénom!="" and Naissance!="" and PAYS!="" and DISCIPLINE!="":
             main.admin.ad_athlete(NOM,Prénom,Naissance,PAYS,DISCIPLINE)#on exécute l'ajout de l'athlète grâce à la fonction ad_athlete défini dans le main
             texte_affichage="L'athlète "+str(NOM)+" "+str(Prénom)+" né le "+str(Naissance)+" est ajouté aux jeux !"
-            affichage = tk.Label(text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
-            affichage.place(x=200, y=90)  # Placer le Label dans la fenêtre
+            affichage = tk.Label(cadre_scrollbar_ath,text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que l'athlète est bien ajouter
+            affichage.pack(pady=25)  # Placer le Label dans la fenêtre
         else:
-            erreur_1 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))
-            erreur_1.place(x=200, y=100)  # Placer le Label dans la fenêtre
+            erreur_1 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))
+            erreur_1.pack(pady=25)  # Placer le Label dans la fenêtre
 
     except Exception:
-        erreur_2 = tk.Label(text = "Votre saisie est incorrecte, respecter la mise en forme des entrées !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier qu'il faut respecter les entry
-        erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_2 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incorrecte, respecter la mise en forme des entrées !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier qu'il faut respecter les entry
+        erreur_2.pack(pady=25)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Ajouter un visiteur >> #####################################
@@ -735,14 +843,14 @@ def ajout_visiteur(event=None):
         main.admin.ad_visiteur(NOM,Prénom)#on exécute l'ajout de l'athlète grâce à la fonction ad_athlete défini dans le main
         dic_vis=main.admin.ecriture_visiteur()
         texte_affichage_1="Le visiteur "+str(NOM)+" "+str(Prénom)+" est enregistré pour les jeux !"
-        affichage_1 = tk.Label(text = texte_affichage_1, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
-        affichage_1.place(x=200, y=60)  # Placer le Label dans la fenêtre
+        affichage_1 = tk.Label(cadre_scrollbar_vis,text = texte_affichage_1, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
+        affichage_1.pack(pady=25)  # Placer le Label dans la fenêtre
         texte_affichage_2="Votre numéro de billet personnel est: "+str(dic_vis[ENTREE].numero)
-        affichage_2 = tk.Label(text = texte_affichage_2, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour afficher son numéro de billet
-        affichage_2.place(x=200, y=90)  # Placer le Label dans la fenêtre
+        affichage_2 = tk.Label(cadre_scrollbar_vis,text = texte_affichage_2, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour afficher son numéro de billet
+        affichage_2.pack(pady=25)  # Placer le Label dans la fenêtre
     else:
-        erreur = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur = tk.Label(cadre_scrollbar_vis,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur.pack(pady=25)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Supprimer un visiteur >> #####################################
@@ -800,18 +908,18 @@ def supprimer_visiteur(event=None):
     if NOM!="NOM" and Prénom!="Prénom" and NOM!="" and Prénom!="":
         SORTIE=main.admin.del_visiteur(NOM,Prénom)
         if SORTIE=="ERREUR": #on test si le paus rentré est bien dans les jeux
-            erreur_1 = tk.Label(text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.place(x=400, y=60)
+            erreur_1 = tk.Label(cadre_scrollbar_vis,text = "Ce visiteur n'est pas enregistré pour ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.pack(pady=25)
             redirection = tk.Label(text = "Pour vous enregistrer et obtenir votre ticket, cliquer sur le bouton << Ajouter un visiteur >>", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message de redirection
             redirection.place(x=170, y=90) 
         else:
             texte_affichage="Le visiteur "+str(NOM)+" "+str(Prénom)+" a annulé son billet pour les jeux !"
-            affichage = tk.Label(text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
-            affichage.place(x=200, y=60)  # Placer le Label dans la fenêtre
+            affichage = tk.Label(cadre_scrollbar_vis,text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
+            affichage.pack(pady=25)  # Placer le Label dans la fenêtre
             
     else:
-        erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_2 = tk.Label(cadre_scrollbar_vis,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur_2.pack(pady=25)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Supprimer un athlète >> #####################################
@@ -869,15 +977,15 @@ def supprimer_athlete(event=None):
     if NOM!="NOM" and Prénom!="Prénom" and NOM!="" and Prénom!="":
         SORTIE=main.admin.del_athlete(NOM,Prénom)
         if SORTIE=="ERREUR": #on test si le paus rentré est bien dans les jeux
-            erreur_1 = tk.Label(text = "Cet athlète ne participe pas à ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.place(x=400, y=60)
+            erreur_1 = tk.Label(cadre_scrollbar_ath,text = "Cet athlète ne participe pas à ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.pack(pady=25)
         else:
             texte_affichage="L'athlète "+str(NOM)+" "+str(Prénom)+" ne participe plus à ces jeux !"
-            affichage = tk.Label(text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
-            affichage.place(x=200, y=60)  # Placer le Label dans la fenêtre
+            affichage = tk.Label(cadre_scrollbar_ath,text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
+            affichage.pack(pady=25)  # Placer le Label dans la fenêtre
     else:
-        erreur_2 = tk.Label(text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur_2.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_2 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incomplète, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur_2.pack(pady=25)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Modifier une récompense >> #####################################
@@ -952,26 +1060,26 @@ def modifier_recompense(event=None):
     if NOM!="NOM" and Prénom!="Prénom" and Médaille!="Médaille" and (Médaille=="Or" or Médaille=="Argent" or Médaille=="Bronze" or Médaille=="None" or Médaille=="Rien" or Médaille==" ") and NOM!="" and Prénom!="" and Médaille!="":
         SORTIE=main.admin.update_recompense(NOM,Prénom,Médaille)
         if SORTIE=="ERREUR": #on test si le paus rentré est bien dans les jeux
-            erreur_1 = tk.Label(text = "Cet athlète ne participe pas à ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.place(x=400, y=60)
+            erreur_1 = tk.Label(cadre_scrollbar_ath,text = "Cet athlète ne participe pas à ces jeux !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.pack(pady=25)
         elif SORTIE=="DEJA LA MEDAILLE":
-            erreur_2 = tk.Label(text = "Cet athlète possède déjà cette médaille !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_2.place(x=400, y=60)
+            erreur_2 = tk.Label(cadre_scrollbar_ath,text = "Cet athlète possède déjà cette médaille !"+"\n", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_2.pack(pady=25)
         elif Médaille=="Or" or Médaille=="Argent":
             texte_affichage_1="L'athlète "+str(NOM)+" "+str(Prénom)+" possède maintenant la médaille d'"+Médaille+" !"
-            affichage_1 = tk.Label(text = texte_affichage_1, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
-            affichage_1.place(x=200, y=60)  # Placer le Label dans la fenêtre
+            affichage_1 = tk.Label(cadre_scrollbar_ath,text = texte_affichage_1, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
+            affichage_1.pack(pady=25)  # Placer le Label dans la fenêtre
         elif Médaille=="Bronze":
             texte_affichage_2="L'athlète "+str(NOM)+" "+str(Prénom)+" possède maintenant la médaille de Bronze !"
-            affichage_2 = tk.Label(text = texte_affichage_2, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
-            affichage_2.place(x=200, y=60)  # Placer le Label dans la fenêtre
+            affichage_2 = tk.Label(cadre_scrollbar_ath,text = texte_affichage_2, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
+            affichage_2.pack(pady=25)  # Placer le Label dans la fenêtre
         else:
             texte_affichage="L'athlète "+str(NOM)+" "+str(Prénom)+" ne possède plus de médaille !"
-            affichage = tk.Label(text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
-            affichage.place(x=200, y=60)  # Placer le Label dans la fenêtre
+            affichage = tk.Label(cadre_scrollbar_ath,text = texte_affichage, bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte pour signifier que le visiteur est bien ajouter
+            affichage.pack(pady=25)  # Placer le Label dans la fenêtre
     else:
-        erreur_3 = tk.Label(text = "Votre saisie est incomplète ou incorrecte, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur_3.place(x=200, y=100)  # Placer le Label dans la fenêtre
+        erreur_3 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incomplète ou incorrecte, réessayer !", bg='#3399FF',font=("Tw Cent MT",13))  # Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur_3.pady(pady=25)  # Placer le Label dans la fenêtre
 
 interface_accueil()
 fenetre.mainloop() #on démarre la boucle de l'I.G, ce qui permet à la fenetre de rester active et de réagir aux événements de l'utilisateur jusqu'à ce que la fenêtre soit fermée

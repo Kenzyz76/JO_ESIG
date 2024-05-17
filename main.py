@@ -79,6 +79,7 @@ class Administrateur:
             ordre="""DELETE FROM Athletes 
                     WHERE ath_nom=%s AND ath_prenom=%s"""#on donne l'ordre
             cursor_del.execute(ordre,(nom0,prenom0))
+            del(dic_ath[ENTREE])
             lien.commit()#pour que la modification soit conservée
             cursor_del.close()
         else:
@@ -92,6 +93,7 @@ class Administrateur:
             ordre="""DELETE FROM Visiteurs 
                     WHERE vis_nom=%s AND vis_prenom=%s""" #on donne l'ordre
             cursor_del.execute(ordre,(nom0,prenom0))
+            del(dic_vis[ENTREE])
             lien.commit()#pour que la modification soit conservée
             cursor_del.close()
         else:
