@@ -7,7 +7,7 @@ import main
 fenetre = tk.Tk()
 fenetre.title("Gestion des JO")
 fenetre.configure(bg='#f4fefe')
-fenetre.iconbitmap("logo_jo.ico")
+fenetre.iconbitmap("img/logo_jo.ico")
 fenetre.geometry("1000x500")
 fenetre.maxsize(1000,500)
 fenetre.minsize(1000,500)
@@ -66,9 +66,10 @@ def rien(event=None):
     pass
 
 def interface_accueil():
-    img_accueil = ImageTk.PhotoImage(file="AccueilJO.jpeg") #on ouvre l'image
-    affichage_accueil = tk.Label(fenetre, image=img_accueil,bg="#e7e6e6")
-    affichage_accueil.image = img_accueil  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé
+    img_accueil = Image.open("img/AccueilJO.jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+    img_accueil = ImageTk.PhotoImage(img_accueil)#on ouvre l'image avec tkinter
+    affichage_accueil = tk.Label(fenetre, image=img_accueil, bg="#e7e6e6")
+    affichage_accueil.image = img_accueil
     affichage_accueil.pack()
     fenetre.bind("<Return>", interface_principale) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction rechercher_athlete qui s'exécute
 
@@ -175,7 +176,7 @@ def afficher_plan(event=None):
     effacer_texte()
     cadre_scrollbar_vis.configure(label_text="Afficher map")
     canvas_image = tk.Canvas(cadre_scrollbar_vis, width=600, height=600)
-    original_img = Image.open("plan_des_jo.jpg")
+    original_img = Image.open("img/plan_des_jo.jpg")
     resized_img = original_img.resize((600, 500))
     img_carte = ImageTk.PhotoImage(resized_img)
     canvas_image.create_image(0,0,anchor="nw",image=img_carte)
@@ -201,7 +202,7 @@ def afficher_athlete():
         affichage_Prénom = tk.Label(cadre_scrollbar_ath,text = Prénom,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec le prénom de l'athlète
         affichage_Prénom.pack()  # Placer le Label dans la fenêtre
 
-        img_drapeau = Image.open(PAYS+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+        img_drapeau = Image.open("img/"+PAYS+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
         img_drapeau = ImageTk.PhotoImage(img_drapeau)#on ouvre l'image avec tkinter
         affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau, bg="#e7e6e6")
         affichage_Pays.image = img_drapeau
@@ -213,10 +214,10 @@ def afficher_athlete():
         affichage_REC.pack()  # Placer le Label dans la fenêtre
         
         try:
-            img_portrait = Image.open(NOM+"_"+Prénom+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
+            img_portrait = Image.open("img/"+NOM+"_"+Prénom+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
             img_portrait = ImageTk.PhotoImage(img_portrait)#on ouvre l'image avec tkinter
         except FileNotFoundError:
-            img_portrait = ImageTk.PhotoImage(Image.open("anonymous.jpeg"))
+            img_portrait = ImageTk.PhotoImage(Image.open("img/anonymous.jpeg"))
 
         affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait, bg="#e7e6e6")
         affichage_portrait.image = img_portrait
