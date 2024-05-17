@@ -36,6 +36,17 @@ def effacer_infos_milieu_ath():
         if isinstance(child, tk.Label):
             child.destroy()
 
+def reset_scrollbar_ath():
+    cadre_scrollbar_ath.destroy()
+    cadre_scrollbar_ath = ctk.CTkScrollableFrame(cadre_milieu_ath, fg_color="#e7e6e6")
+    cadre_scrollbar_ath.pack(expand=True, fill="both")
+
+def reset_scrollbar_vis():
+    cadre_scrollbar_vis.destroy()
+    cadre_scrollbar_vis = ctk.CTkScrollableFrame(cadre_milieu_vis, fg_color="#e7e6e6")
+    cadre_scrollbar_vis.pack(expand=True, fill="both")
+
+
 def effacer_milieu_vis():
     for child in cadre_scrollbar_vis.winfo_children():
         if isinstance(child, tk.Label):
@@ -122,6 +133,7 @@ def afficher_interface_athlete():
     creer_bouton(cadre_droit, "Modifier une récompense", zone_texte_recompense, 20, 2,'#2969eb','Tw Cen MT',12)
 
     ###################################### CADRE DU MILIEU ##################################################################
+    global cadre_milieu_ath
     cadre_milieu_ath = tk.Frame(fenetre)
     cadre_milieu_ath.pack(expand=True, side="top", fill="both")
     global cadre_scrollbar_ath
@@ -161,6 +173,7 @@ def afficher_interface_visiteur():
     creer_bouton(cadre_droit, "Afficher la map", afficher_plan, 20, 2, '#00ff73','Tw Cen MT',12)
 
     ###################################### CADRE DU MILIEU ##################################################################
+    global cadre_milieu_vis
     cadre_milieu_vis = tk.Frame(fenetre)
     cadre_milieu_vis.pack(expand=True, side="top", fill="both")
     global cadre_scrollbar_vis
@@ -174,6 +187,7 @@ def afficher_plan(event=None):
     effacer_label()
     effacer_milieu_vis()
     effacer_texte()
+    cadre_scrollbar_vis._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_vis.configure(label_text="Afficher map")
     canvas_image = tk.Canvas(cadre_scrollbar_vis, width=600, height=600)
     original_img = Image.open("img/plan_des_jo.jpg")
@@ -278,6 +292,7 @@ def zone_texte_ath():
     effacer_label()
     effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_ath.configure(label_text="Rechercher un athlète")
     global zone_ath_nom
     zone_ath_nom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13))
@@ -354,6 +369,7 @@ def zone_texte_pays():
     effacer_label()
     effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_ath.configure(label_text="Afficher par pays")
     global zone_pays
     zone_pays = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13))
@@ -428,6 +444,7 @@ def zone_texte_rec():
     effacer_label()
     effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     global zone_rec
     cadre_scrollbar_ath.configure(label_text="Afficher par récompense")
     zone_rec = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13))
@@ -502,6 +519,7 @@ def zone_texte_dis():
     effacer_label()
     effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_ath.configure(label_text="Afficher par discipline")
     global zone_dis
     zone_dis = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13))
@@ -590,6 +608,7 @@ def zone_texte_visi_nom():
     effacer_label()
     effacer_milieu_vis()
     effacer_texte()
+    cadre_scrollbar_vis._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_vis.configure(label_text="Rechercher par une identité")
     global zone_visiteur_nom
     zone_visiteur_nom = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13))
@@ -640,6 +659,7 @@ def zone_texte_visi_num():
     effacer_label()
     effacer_milieu_vis()
     effacer_texte()
+    cadre_scrollbar_vis._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_vis.configure(label_text="Rechercher par numéro")
     global zone_visiteur_num
     zone_visiteur_num = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13))
@@ -725,6 +745,7 @@ def zone_texte_ajout_ath():
     effacer_label()
     effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_ath.configure(label_text="Ajouter un athlète")
     global zone_ajout_ath_nom
     zone_ajout_ath_nom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13),width=30) #on augmente le nombre de caractère que la barre peut afficher
@@ -814,6 +835,7 @@ def zone_texte_ajout_visiteur():
     effacer_label()
     effacer_milieu_vis()
     effacer_texte()
+    cadre_scrollbar_vis._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_vis.configure(label_text="Ajouter un visiteur")
     global zone_ajout_visiteur_nom
     zone_ajout_visiteur_nom = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13)) 
@@ -881,6 +903,7 @@ def zone_texte_suppr_visiteur():
     effacer_label()
     effacer_milieu_vis()
     effacer_texte()
+    cadre_scrollbar_vis._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_vis.configure(label_text="Supprimer un visiteur")
     global zone_suppr_visiteur_nom
     zone_suppr_visiteur_nom = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13)) 
@@ -950,6 +973,7 @@ def zone_texte_suppr_ath():
     effacer_label()
     effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_ath.configure(label_text="Supprimer un athlète")
     global zone_suppr_ath_nom
     zone_suppr_ath_nom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13)) 
@@ -1026,6 +1050,7 @@ def zone_texte_recompense():
     effacer_label()
     effacer_milieu_ath()
     effacer_texte()
+    cadre_scrollbar_ath._parent_canvas.yview_moveto(0.0) #permet de faire remonter la scrollbar tout en haut
     cadre_scrollbar_ath.configure(label_text="Modifier une récompense")
     global zone_rec_nom
     zone_rec_nom = tk.Entry(cadre_scrollbar_ath,fg="gray",font=("Tw Cent Mt",13),width=30)#on augmente le nombre de caractère que la barre peut afficher
