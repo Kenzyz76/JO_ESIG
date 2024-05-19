@@ -121,7 +121,7 @@ class Administrateur:
     def search_athlete(self,ENTREE):
         dic_ath=admin.ecriture_athlete()
         if ENTREE in dic_ath.keys(): #on test si l'athlète rentrée par l'utilisateur est dans notre dico
-            infos=dic_ath[ENTREE].afficher()
+            infos=dic_ath[ENTREE].listing()
             return(infos)
         else:
             return ("ERREUR")
@@ -135,7 +135,7 @@ class Administrateur:
         if ENTREE in liste_pays: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
             for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
                 if ENTREE==athlete.pays: 
-                    athlete_infos=dic_ath[cle].afficher()
+                    athlete_infos=dic_ath[cle].listing()
                     liste_SORTIE.append(athlete_infos)
             return(liste_SORTIE)
         else:
@@ -149,25 +149,28 @@ class Administrateur:
             ENTREE=None
         for (cle,athlete) in dic_ath.items(): #on lit notre dico pour ajouter toutes les récompenses dans la liste_rec
             liste_rec.append(athlete.rec)
-        if ENTREE in liste_rec: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
-            for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
-                if ENTREE==athlete.rec: 
-                    athlete_infos=dic_ath[cle].afficher()
-                    liste_SORTIE.append(athlete_infos)
-            return(liste_SORTIE)
+        if ENTREE=="Or" or ENTREE=="Argent" or ENTREE=="Bronze" or ENTREE==None:
+            if ENTREE in liste_rec: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
+                for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete aillant la récompense rentrée par l'utilisateur 
+                    if ENTREE==athlete.rec: 
+                        athlete_infos=dic_ath[cle].listing()
+                        liste_SORTIE.append(athlete_infos)
+                return(liste_SORTIE)
+            else:
+                return("ERREUR PAS DE ATH AILLANT CETTE REC")
         else:
-            return("ERREUR")
+            return("ERREUR CETTE REC N'EXISTE PAS")
         
     def search_dis(self,ENTREE):
         dic_ath=admin.ecriture_athlete()
         liste_dis=[]
         liste_SORTIE=[] #on est obligé de mettre tous les infos (une liste) de chaque athlète dans une liste pour seulement à faire un for element dans notre I.G
-        for (cle,athlete) in dic_ath.items(): #on lit notre dico pour ajouter tous les pays dans la liste_pays
+        for (cle,athlete) in dic_ath.items(): #on lit notre dico pour ajouter tous les pays dans la liste_dis
             liste_dis.append(athlete.dis)
         if ENTREE in liste_dis: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
-            for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant au pays rentré par l'utilisateur 
+            for (cle,athlete) in dic_ath.items(): #et on re-parcours le dico pour afficher les infos de chaque athlete appartenant à la discipline rentré par l'utilisateur 
                 if ENTREE==athlete.dis: 
-                    athlete_infos=dic_ath[cle].afficher()
+                    athlete_infos=dic_ath[cle].listing()
                     liste_SORTIE.append(athlete_infos)
             return(liste_SORTIE)
         else:
@@ -175,8 +178,8 @@ class Administrateur:
         
     def search_visiteur_nom(self,ENTREE):
         dic_vis=admin.ecriture_visiteur()
-        if ENTREE in dic_vis.keys(): #on test si l'athlète rentrée par l'utilisateur est dans notre dico
-            infos=dic_vis[ENTREE].afficher()
+        if ENTREE in dic_vis.keys(): #on test si le visiteur rentrée par l'utilisateur est dans notre dico
+            infos=dic_vis[ENTREE].listing()
             return(infos)
         else:
             return ("ERREUR")
@@ -186,10 +189,10 @@ class Administrateur:
         liste_num=[]
         for (cle,athlete) in dic_vis.items(): #on lit notre dico pour ajouter tous les numeros dans la liste_num
             liste_num.append(athlete.numero)
-        if ENTREE in liste_num: #on vérifie bien que le pays entrée par l'utilisateur figure dans la liste
+        if ENTREE in liste_num: #on vérifie bien que le numéro entrée par l'utilisateur figure dans la liste
             for (cle,visiteur) in dic_vis.items(): #et on re-parcours le dico pour afficher les infos du visiteur aillant le m^me numéro que celui rentré par l'utilisateur 
                 if ENTREE==visiteur.numero: 
-                    visiteur_infos=dic_vis[cle].afficher()
+                    visiteur_infos=dic_vis[cle].listing()
             return(visiteur_infos)
         else:
             return("ERREUR")

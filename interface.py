@@ -460,9 +460,12 @@ def rechercher_recompense(event=None):
     Entrée=entree.capitalize()
     if Entrée!="Médaille" and Entrée!="":
         SORTIE=main.admin.search_recompense(Entrée)
-        if SORTIE=="ERREUR": #on test si la récompense rentré existe bien
-            erreur_1 = tk.Label(cadre_scrollbar_ath,text = "Réessayer, cette récompense n'existe pas !", bg='#ff3939',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
-            erreur_1.pack(pady=25)    
+        if SORTIE=="ERREUR PAS DE ATH AILLANT CETTE REC": #on test si la récompense rentré existe bien
+            erreur_1 = tk.Label(cadre_scrollbar_ath,text = "Cette récompense n'est assignée à aucun athlète, réessayer !", bg='#ff3939',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_1.pack(pady=25)
+        elif SORTIE=="ERREUR CETTE REC N'EXISTE PAS": 
+            erreur_2 = tk.Label(cadre_scrollbar_ath,text = "Cette récompense n'existe pas, réessayer !", bg='#ff3939',font=("Tw Cent MT",13))  # Créer un Label avec le message d'erreur
+            erreur_2.pack(pady=25)
         else:
             for lignes in SORTIE:
                 NOM=lignes[0]
@@ -487,7 +490,7 @@ def rechercher_recompense(event=None):
                 affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
                 affichage_REC = tk.Label(cadre_scrollbar_ath,text = REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
                 affichage_REC.pack()  # Placer le Label dans la fenêtre
-                
+                    
                 try:
                     img_portrait = Image.open("img/"+NOM+"_"+Prénom+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
                     img_portrait = ImageTk.PhotoImage(img_portrait)#on ouvre l'image avec tkinter
@@ -501,10 +504,9 @@ def rechercher_recompense(event=None):
                 underscore="_______________________________________________________________"
                 affichage_underscore = tk.Label(cadre_scrollbar_ath,text = underscore,font=("Tw Cent MT",13),bg="#e7e6e6")
                 affichage_underscore.pack()  # Placer le Label dans la fenêtre"""
-
     else:
-        erreur_2 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incomplète, réessayer !", bg='#ff3939',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
-        erreur_2.pack(pady=25)  # Placer le Label dans la fenêtre
+        erreur_3 = tk.Label(cadre_scrollbar_ath,text = "Votre saisie est incomplète, réessayer !", bg='#ff3939',font=("Tw Cent MT",13)) #Créer un Label avec du texte d'erreur comme quoi il n'a pas tout renseigner
+        erreur_3.pack(pady=25)  # Placer le Label dans la fenêtre
 
 ################################################################################################################################################
 ##################################### CREATION DES ENTRY ET FONCTIONS DU BOUTON: << Afficher par discipline >> #################################
