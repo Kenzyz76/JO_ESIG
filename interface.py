@@ -72,7 +72,7 @@ def interface_accueil():
     img_accueil = Image.open("img/AccueilJO.jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
     img_accueil = ImageTk.PhotoImage(img_accueil)#on ouvre l'image avec tkinter
     affichage_accueil = tk.Label(fenetre, image=img_accueil, bg="#e7e6e6")
-    affichage_accueil.image = img_accueil
+    affichage_accueil.image = img_accueil #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
     affichage_accueil.pack()
     fenetre.bind("<Return>", interface_principale) #lorsque la touche "entrée" du clavier est actionné, c'est la fonction rechercher_athlete qui s'exécute
 
@@ -84,7 +84,7 @@ def interface_principale(event=None):
     img_menu = Image.open("img/MENU.jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
     img_menu = ImageTk.PhotoImage(img_menu)#on ouvre l'image avec tkinter
     affichage_menu = tk.Label(fenetre, image=img_menu)
-    affichage_menu.image = img_menu
+    affichage_menu.image = img_menu #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
     affichage_menu.place(x=0,y=0)
 
     FONT_MENU=tkFont.Font(family="Tw Cen MT",size=25, underline=True)
@@ -191,13 +191,13 @@ def afficher_plan(event=None):
     effacer_label()
     effacer_milieu_vis()
     effacer_texte()
-    cadre_scrollbar_vis.configure(label_text="Afficher map")
+    cadre_scrollbar_vis.configure(label_text="Afficher la map")
     canvas_image = tk.Canvas(cadre_scrollbar_vis, width=600, height=600)
     original_img = Image.open("img/plan_des_jo.jpg")
     resized_img = original_img.resize((600, 500))
     img_carte = ImageTk.PhotoImage(resized_img)
     canvas_image.create_image(0,0,anchor="nw",image=img_carte)
-    canvas_image.image = img_carte
+    canvas_image.image = img_carte #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
     canvas_image.pack()
 
 def afficher_athlete():
@@ -222,7 +222,7 @@ def afficher_athlete():
         img_drapeau = Image.open("img/"+PAYS+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
         img_drapeau = ImageTk.PhotoImage(img_drapeau)#on ouvre l'image avec tkinter
         affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau, bg="#e7e6e6")
-        affichage_Pays.image = img_drapeau
+        affichage_Pays.image = img_drapeau #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
         affichage_Pays.pack()
 
         affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la discipline de l'athlète
@@ -237,7 +237,7 @@ def afficher_athlete():
             img_portrait = ImageTk.PhotoImage(Image.open("img/anonymous.jpeg"))
 
         affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait, bg="#e7e6e6")
-        affichage_portrait.image = img_portrait
+        affichage_portrait.image = img_portrait #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
         affichage_portrait.pack()
 
         underscore="_______________________________________________________________"
@@ -337,12 +337,12 @@ def rechercher_athlete(event=None):
 
             img_drapeau = tk.PhotoImage(file="img/"+PAYS+".jpeg") #on ouvre l'image
             affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau,bg="#e7e6e6")
-            affichage_Pays.image = img_drapeau  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé
+            affichage_Pays.image = img_drapeau  #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
             affichage_Pays.pack()
 
             affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = "DISCIPLINE: "+DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la discipline de l'athlète
             affichage_DISCIPLINE.pack()  # Placer le Label dans la fenêtre
-            affichage_REC = tk.Label(cadre_scrollbar_ath,text = "Médaille : "+REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
+            affichage_REC = tk.Label(cadre_scrollbar_ath,text = "Médaille: "+REC,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la récompense de l'athlète
             affichage_REC.pack()  # Placer le Label dans la fenêtre
             try:
                     img_portrait = Image.open("img/"+NOM+"_"+Prénom+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
@@ -351,7 +351,7 @@ def rechercher_athlete(event=None):
                     img_portrait = ImageTk.PhotoImage(Image.open("img/anonymous.jpeg"))
 
             affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait,bg="#e7e6e6")
-            affichage_portrait.image = img_portrait  # Gardez une référence à l'objet PhotoImage pour éviter qu'il ne soit supprimé
+            affichage_portrait.image = img_portrait #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
             affichage_portrait.pack()
 
     else:
@@ -406,7 +406,7 @@ def rechercher_pays(event=None):
                 img_drapeau = Image.open("img/"+PAYS+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
                 img_drapeau = ImageTk.PhotoImage(img_drapeau)#on ouvre l'image avec tkinter
                 affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau, bg="#e7e6e6")
-                affichage_Pays.image = img_drapeau
+                affichage_Pays.image = img_drapeau #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
                 affichage_Pays.pack()
 
                 affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la discipline de l'athlète
@@ -421,7 +421,7 @@ def rechercher_pays(event=None):
                     img_portrait = ImageTk.PhotoImage(Image.open("img/anonymous.jpeg"))
 
                 affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait, bg="#e7e6e6")
-                affichage_portrait.image = img_portrait
+                affichage_portrait.image = img_portrait #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
                 affichage_portrait.pack()
 
                 underscore="_______________________________________________________________"
@@ -483,7 +483,7 @@ def rechercher_recompense(event=None):
                 img_drapeau = Image.open("img/"+PAYS+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
                 img_drapeau = ImageTk.PhotoImage(img_drapeau)#on ouvre l'image avec tkinter
                 affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau, bg="#e7e6e6")
-                affichage_Pays.image = img_drapeau
+                affichage_Pays.image = img_drapeau #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
                 affichage_Pays.pack()
 
                 affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la discipline de l'athlète
@@ -498,7 +498,7 @@ def rechercher_recompense(event=None):
                     img_portrait = ImageTk.PhotoImage(Image.open("img/anonymous.jpeg"))
 
                 affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait, bg="#e7e6e6")
-                affichage_portrait.image = img_portrait
+                affichage_portrait.image = img_portrait #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
                 affichage_portrait.pack()
 
                 underscore="_______________________________________________________________"
@@ -556,7 +556,7 @@ def rechercher_dis(event=None):
                 img_drapeau = Image.open("img/"+PAYS+".jpeg")#on ouvre l'image avec pill pour pas de problème d'objet
                 img_drapeau = ImageTk.PhotoImage(img_drapeau)#on ouvre l'image avec tkinter
                 affichage_Pays = tk.Label(cadre_scrollbar_ath, image=img_drapeau, bg="#e7e6e6")
-                affichage_Pays.image = img_drapeau
+                affichage_Pays.image = img_drapeau #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
                 affichage_Pays.pack()
 
                 affichage_DISCIPLINE = tk.Label(cadre_scrollbar_ath,text = DISCIPLINE,font=("Tw Cent MT",13),bg="#e7e6e6")  # Créer un Label avec la discipline de l'athlète
@@ -571,7 +571,7 @@ def rechercher_dis(event=None):
                     img_portrait = ImageTk.PhotoImage(Image.open("img/anonymous.jpeg"))
 
                 affichage_portrait = tk.Label(cadre_scrollbar_ath, image=img_portrait, bg="#e7e6e6")
-                affichage_portrait.image = img_portrait
+                affichage_portrait.image = img_portrait #pour garder en mémoire la photo part sa variable, si python considere la variable inutile alors pas de photo stocker
                 affichage_portrait.pack()
 
                 underscore="_______________________________________________________________"
@@ -666,7 +666,7 @@ def zone_texte_visi_num():
     effacer_label()
     effacer_milieu_vis()
     effacer_texte()
-    cadre_scrollbar_vis.configure(label_text="Rechercher par numéro")
+    cadre_scrollbar_vis.configure(label_text="Rechercher par un numéro")
     global zone_visiteur_num
     zone_visiteur_num = tk.Entry(cadre_scrollbar_vis,fg="gray",font=("Tw Cent Mt",13))
     zone_visiteur_num.insert(0,"NUMERO DU BILLET")
